@@ -16,7 +16,7 @@ class CsvController < ApplicationController
 
   def download_unaccepted
     submissions_unaccepted = SubmissionRepository.new.unaccepted
-    csv = CsvGenerator.new.call(submissions_unaccepted, 'unaccepted.csv')
+    csv = CsvGenerator.new.call(submissions_unaccepted, 'rejected.csv')
 
     send_data csv.file, csv.properties
   end
