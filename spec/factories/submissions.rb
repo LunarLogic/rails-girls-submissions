@@ -54,10 +54,11 @@ FactoryGirl.define do
     trait :rated do
       transient do
         required_rates_num 3
+        rate_value 1
       end
 
-      after(:create) do |submission, evaluator|
-        create_list(:rate, evaluator.required_rates_num, submission: submission)
+      after(:build, :create) do |submission, evaluator|
+        create_list(:rate, evaluator.required_rates_num, submission: submission, value: evaluator.rate_value)
       end
     end
   end
