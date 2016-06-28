@@ -5,25 +5,29 @@ class SubmissionsController < ApplicationController
   def all
     submissions = Submission.all
 
-    render :all, locals: { submission_presenters: create_submission_presenters(submissions) }
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions),
+      show_average: true, show_rates_count: true }
   end
 
   def rated
     submissions_rated = SubmissionRepository.new.rated
 
-    render :rated, locals: { submissions_rated: submissions_rated }
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions_rated),
+      show_average: true, show_rates_count: true }
   end
 
   def to_rate
     submissions_to_rate = SubmissionRepository.new.to_rate
 
-    render :to_rate, locals: { submissions_to_rate: submissions_to_rate }
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions_to_rate),
+      show_average: false, show_rates_count: true }
   end
 
   def rejected
     submissions_rejected = SubmissionRepository.new.rejected
 
-    render :rejected, locals: { submissions_rejected: submissions_rejected }
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions_rejected),
+      show_average: false, show_rates_count: false  }
   end
 
   def results
