@@ -106,13 +106,14 @@
     </p>
 
     <aside class="aside-widget aside-widget-absolute">
-      <%= form_tag(submission_rate_path(submission)) do %>
-        <% 5.downto(1) do |rate| %>
-          <%= label_tag("value_" + rate.to_s, rate) %>
-          <%= radio_button_tag("value", rate) %>
-          <br>
-        <% end %>
-        <%= submit_tag("Rate!") %>
+      <%= form_tag(submission_rate_path(submission), class: "submission-rating-form") do %>
+        <fieldset class="starability-fade fieldset-inline">
+          <% 5.downto(1) do |rate| %>
+            <%= radio_button_tag("value", rate) %>
+            <%= label_tag("value_" + rate.to_s, rate) %>
+          <% end %>
+        </fieldset>
+        <%= submit_tag("Rate!", class: "btn-small btn-space-left")%>
       <% end %>
 
       <section class="submission-rates">

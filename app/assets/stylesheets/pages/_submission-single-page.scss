@@ -44,6 +44,16 @@
   }
 }
 
+.submission-rating-form {
+  margin-bottom: $bs1;
+  border-bottom: 3px solid $rg-red;
+  line-height: $bs4;
+
+  > * {
+    vertical-align: middle;
+  }
+}
+
 .submission-rates {
   margin-top: $bs1;
   text-align: left;

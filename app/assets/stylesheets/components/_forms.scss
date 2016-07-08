@@ -98,6 +98,10 @@ $input-height: $bs2;
   margin-bottom: $input-height/2;
 }
 
+.fieldset-inline {
+  display: inline-block !important;
+}
+
 /* styles for errors in forms */
 
 .form-error-box {
