@@ -19,6 +19,7 @@
 .aside-widget-absolute {
 
   @include media($big-screen) {
+    margin: 0 auto $bs2;
     position: absolute;
     right: -100%;
     top: 0;

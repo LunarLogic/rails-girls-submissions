@@ -46,8 +46,9 @@
 
 .submission-rating-form {
   margin-bottom: $bs1;
+  padding-bottom: $bs1;
   border-bottom: 2px solid $rg-red;
-  line-height: $bs4;
+  line-height: $bs3;
 
   > * {
     vertical-align: middle;
