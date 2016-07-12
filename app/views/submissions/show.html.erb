@@ -116,8 +116,8 @@
         <%= submit_tag("Rate!", class: "btn-small btn-space-left")%>
       <% end %>
 
-      <section class="submission-rates">
-        <% if submission.rated? %>
+      <% if submission.rated? %>
+        <section class="submission-rates">
           <h2 class="aside-widget-header">Rates:</h2>
           <% rate_presenters.each do |presenter| %>
             <div class="submission-rate">
@@ -136,8 +136,8 @@
               <%= submission.average_rate.round(2) %>
             </strong>
           </span>
-        <% end %>
-      </section>
+        </section>
+      <% end %>
       <section class="submission-comments">
         <h2 class="aside-widget-header"> Comments </h2>
         <% comment_presenters.each do |presenter| %>
