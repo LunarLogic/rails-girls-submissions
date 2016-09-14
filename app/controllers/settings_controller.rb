@@ -19,11 +19,13 @@ class SettingsController < ApplicationController
 
   def setting_params
     params.require(:setting).permit(:accepted_threshold, :waitlist_threshold, :required_rates_num,
-      :beginning_of_preparation_period, :beginning_of_registration_period, :beginning_of_closed_period)
+      :beginning_of_preparation_period, :beginning_of_registration_period, :beginning_of_closed_period,
+      :event_start_date, :event_end_date, :event_url)
   end
 
   def dates_order_ok?(params)
     params[:beginning_of_preparation_period] < params[:beginning_of_registration_period] &&
-    params[:beginning_of_registration_period] < params[:beginning_of_closed_period]
+    params[:beginning_of_registration_period] < params[:beginning_of_closed_period] &&
+    params[:event_start_date] < params[:event_end_date]
   end
 end
