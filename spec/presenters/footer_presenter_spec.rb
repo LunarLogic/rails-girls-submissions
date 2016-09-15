@@ -1,11 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe FooterPresenter do
-  let!(:setting) { FactoryGirl.create(:setting,
-                     event_start_date: "2016-07-09",
-                     event_end_date: "2016-07-10",
-                     event_url: "railsgirls.com/lodz")
-                  }
+  let!(:setting) do
+    FactoryGirl.create(:setting,
+      event_start_date: "2016-07-09",
+      event_end_date: "2016-07-10",
+      event_url: "railsgirls.com/lodz"
+    )
+  end
+
   subject { described_class.new(setting) }
 
   it 'presents event dates' do
