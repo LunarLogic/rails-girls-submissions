@@ -44,7 +44,10 @@ $input-height: $bs2;
     &:focus {
       outline: none;
       border: 1px solid $rg-navy;
+    }
 
+    &.event-url-field {
+      padding-left: $event-url-prefix-w;
     }
   }
 
@@ -100,6 +103,19 @@ $input-height: $bs2;
 
 .fieldset-inline {
   display: inline-block !important;
+}
+
+/* styles for event url field */
+
+.event-url-prefix {
+  position: absolute;
+  text-align: center;
+  margin-top: 1px;
+  margin-left: 1px;
+  padding: 0 $bs-1;
+  line-height: $input-height;
+  color: $grey-default;
+  background-color: $grey-super-light;
 }
 
 /* styles for errors in forms */

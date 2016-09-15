@@ -1,0 +1,31 @@
+<thead class="submissions-table-header">
+  <tr>
+    <th class="submission-header-name">Full name</th>
+    <th class="submission-header-narrow submission-mobile-hidden">Age</th>
+    <% if show_average %>
+      <th class="submission-header-narrow submission-mobile-hidden">Average</th>
+    <% end %>
+    <% if show_rates_count %>
+      <th class="submission-header-narrow submission-mobile-hidden">Rate count</th>
+    <% end %>
+    <th class="submission-header-narrow submission-mobile-hidden">Date</th>
+    <th class="submission-header-narrow" colspan="3"></th>
+  </tr>
+</thead>
+
+<tbody class="submissions-table-body">
+  <% submission_presenters.each do |submission| %>
+  <tr>
+    <td class="submission-body-name"><%= submission.full_name %></td>
+    <td class="submission-mobile-hidden"><%= submission.age %></td>
+    <% if show_average %>
+      <td class="submission-mobile-hidden"><%= submission.average_rate %></td>
+    <% end %>
+    <% if show_rates_count %>
+      <td class="submission-mobile-hidden"><%= submission.rates_count %></td>
+    <% end %>
+    <td class="submission-mobile-hidden"><%= submission.created_at %></td>
+    <td><%= link_to 'Show', submission %></td>
+  </tr>
+  <% end %>
+</tbody>
