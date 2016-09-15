@@ -85,6 +85,21 @@
   color: $rg-red;
 }
 
+.submission-navigation {
+  @include clearfix();
+  display: block;
+  padding-bottom: $bs1;
+  border-bottom: 2px solid $rg-red;
+}
+
+.link-prev {
+  float: left;
+}
+
+.link-next {
+  float: right;
+}
+
 .submission-comments {
   text-align: left;
   margin-top: $bs1;

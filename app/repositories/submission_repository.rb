@@ -4,11 +4,19 @@ class SubmissionRepository
   end
 
   def rated
-    with_rates_if_any.having('count("rates") >= ?',  Setting.get.required_rates_num).to_a
+    rated_scope.to_a
   end
 
   def to_rate
-    with_rates_if_any.having('count("rates") < ?', Setting.get.required_rates_num).to_a
+    to_rate_scope.to_a
+  end
+
+  def next_to_rate(current_id)
+    to_rate_scope.where('submissions.id > ?', current_id).order('id ASC').first || to_rate_scope.first
+  end
+
+  def previous_to_rate(current_id)
+    to_rate_scope.where('submissions.id < ?', current_id).order('id DESC').first || to_rate_scope.last
   end
 
   def accepted
@@ -26,6 +34,14 @@ class SubmissionRepository
   end
 
   private
+
+  def rated_scope
+    with_rates_if_any.having('count("rates") >= ?',  Setting.get.required_rates_num)
+  end
+
+  def to_rate_scope
+    with_rates_if_any.having('count("rates") < ?', Setting.get.required_rates_num)
+  end
 
   def with_rates_if_any
     Submission.where(rejected: false).joins("LEFT JOIN rates ON submissions.id = rates.submission_id").

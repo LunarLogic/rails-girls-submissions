@@ -42,12 +42,15 @@ class SubmissionsController < ApplicationController
   def show
     submission = Submission.find(params[:id])
     comment = Comment.new
+    next_to_rate = SubmissionRepository.new.next_to_rate(submission.id)
+    previous_to_rate = SubmissionRepository.new.previous_to_rate(submission.id)
 
     rate_presenters = create_rate_presenters(submission.rates)
     comment_presenters = create_comment_presenters(submission.comments)
 
     render :show, locals: { comment: comment, submission: submission,
-      comment_presenters: comment_presenters, rate_presenters: rate_presenters }
+      comment_presenters: comment_presenters, rate_presenters: rate_presenters,
+      next_to_rate: next_to_rate, previous_to_rate: previous_to_rate }
   end
 
   def new
