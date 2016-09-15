@@ -8,7 +8,10 @@ class Setting < ActiveRecord::Base
       required_rates_num: 3,
       beginning_of_preparation_period: "Thu, 21 Jun 2016 00:00:00 CEST +02:00",
       beginning_of_registration_period: "Thu, 22 Jun 2016 00:00:00 CEST +02:00",
-      beginning_of_closed_period: "Thu, 23 Jun 2016 00:00:00 CEST +02:00"
+      beginning_of_closed_period: "Thu, 23 Jun 2016 00:00:00 CEST +02:00",
+      event_start_date: "Sat, 16 Apr 2016",
+      event_end_date: "Sun, 17 Apr 2016",
+      event_url: "railsgirls.com/krakow"
     })
   end
 
@@ -20,6 +23,9 @@ class Setting < ActiveRecord::Base
     settings.beginning_of_preparation_period = setting_params[:beginning_of_preparation_period]
     settings.beginning_of_registration_period = setting_params[:beginning_of_registration_period]
     settings.beginning_of_closed_period = setting_params[:beginning_of_closed_period]
+    settings.event_start_date = setting_params[:event_start_date]
+    settings.event_end_date = setting_params[:event_end_date]
+    settings.event_url = setting_params[:event_url]
 
     settings.save!
   end

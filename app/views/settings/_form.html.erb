@@ -1,6 +1,19 @@
 <%= form_for(settings, url: settings_update_path, method: :put, html: {class: "form"}) do |f| %>
   <h1 class="form-header"> Settings </h1>
   <div class="form-field">
+    <%= f.label :event_start_date %>
+    <%= f.date_field :event_start_date %>
+  </div>
+  <div class="form-field">
+    <%= f.label :event_end_date %>
+    <%= f.date_field :event_end_date %>
+  </div>
+  <div class="form-field">
+    <%= f.label :event_url %>
+    <span class="event-url-prefix">http://</span>
+    <%= f.text_field :event_url, class: "event-url-field" %>
+  </div>
+  <div class="form-field">
     <%= f.label :accepted_threshold %>
     <%= f.number_field :accepted_threshold %>
   </div>

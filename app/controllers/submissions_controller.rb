@@ -51,7 +51,8 @@ class SubmissionsController < ApplicationController
       render :preparation
     elsif Setting.registration_period?
       submission = Submission.new
-      render :new, locals: { submission: submission }
+      footer_presenter = FooterPresenter.new(Setting.get)
+      render :new, locals: { submission: submission, footer_presenter: footer_presenter }
     else
       render :closed
     end
