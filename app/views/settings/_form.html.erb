@@ -10,8 +10,8 @@
   </div>
   <div class="form-field">
     <%= f.label :event_url %>
-    <span>http://</span>
-    <%= f.text_field :event_url %>
+    <span class="event-url-prefix">http://</span>
+    <%= f.text_field :event_url, class: "event-url-field" %>
   </div>
   <div class="form-field">
     <%= f.label :accepted_threshold %>
