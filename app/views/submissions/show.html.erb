@@ -138,6 +138,10 @@
           </span>
         </section>
       <% end %>
+      <section class="submission-navigation">
+        <%= link_to "← Previous submission", previous_to_rate, class: "link-prev" %>
+        <%= link_to "Next submission →", next_to_rate, class: "link-next" %>
+      </section>
       <section class="submission-comments">
         <h2 class="aside-widget-header"> Comments </h2>
         <% comment_presenters.each do |presenter| %>
@@ -151,8 +155,6 @@
 
         <%= render 'comments/form', { submission: submission, comment: comment } %>
       </comments>
-      <%= link_to "Previous submission", previous_to_rate %>
-      <%= link_to "Next submission", next_to_rate %>
     </aside>
   </article>
 </div>
