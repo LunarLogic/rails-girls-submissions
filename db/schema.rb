@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 20160914125410) do
   add_index "rates", ["user_id"], name: "index_rates_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.integer  "accepted_threshold"
-    t.integer  "waitlist_threshold"
+    t.float    "accepted_threshold"
+    t.float    "waitlist_threshold"
     t.integer  "required_rates_num"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
