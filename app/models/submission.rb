@@ -33,3 +33,4 @@ class Submission < ActiveRecord::Base
     rates.count == 0 ? 0 : (rates.sum(:value).to_f / rates.count)
   end
 end
+

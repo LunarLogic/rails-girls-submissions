@@ -151,6 +151,8 @@
 
         <%= render 'comments/form', { submission: submission, comment: comment } %>
       </comments>
+      <%= link_to "Previous submission", previous_to_rate %>
+      <%= link_to "Next submission", next_to_rate %>
     </aside>
   </article>
 </div>
