@@ -43,3 +43,61 @@
     margin-bottom: $bs1;
   }
 }
+
+.submission-rating-form {
+  margin-bottom: $bs1;
+  padding-bottom: $bs1;
+  border-bottom: 2px solid $rg-red;
+  line-height: $bs3;
+
+  > * {
+    vertical-align: middle;
+  }
+}
+
+.submission-rates {
+  margin-top: $bs1;
+  text-align: left;
+  padding-bottom: $bs1;
+  border-bottom: 2px solid $rg-red;
+}
+
+.submission-rate {
+  margin-bottom: $bs-1;
+}
+
+.submission-rate-author {
+  font-weight: bold;
+}
+
+.submission-rate-value {
+  padding-left: $bs-2;
+  color: $rg-red;
+}
+
+.submission-rate-avg {
+  display: block;
+  margin-top: $bs1;
+  text-align: right;
+}
+
+.submission-rate-avg-number {
+  color: $rg-red;
+}
+
+.submission-comments {
+  text-align: left;
+  margin-top: $bs1;
+}
+
+.submission-comment {
+  text-align: left;
+}
+
+.submission-comment-author {
+  font-weight: bold;
+}
+
+.submission-comment-date {
+  color: $grey-default;
+}

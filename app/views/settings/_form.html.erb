@@ -1,4 +1,5 @@
-<%= form_for(settings, url: settings_update_path, method: :put) do |f| %>
+<%= form_for(settings, url: settings_update_path, method: :put, html: {class: "form"}) do |f| %>
+  <h1 class="form-header"> Settings </h1>
   <div class="form-field">
     <%= f.label :accepted_threshold %>
     <%= f.number_field :accepted_threshold %>
@@ -23,5 +24,7 @@
     <%= f.label :beginning_of_closed_period %>
     <%= f.date_field :beginning_of_closed_period %>
   </div>
-  <%= f.submit "Save settings" %>
+  <div class="form-field">
+    <%= f.submit "Save settings", class: "btn-small" %>
+  </div>
 <% end  %>

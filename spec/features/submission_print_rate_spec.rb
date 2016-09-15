@@ -17,8 +17,8 @@ describe "printing submission's rates in submission show view" do
       login_as(user, scope: :user)
       visit submission_path(submission.id)
 
-      expect(page).to have_selector('table tr', count: rates_number)
-      expect(page).to have_text("#{sample_nickname}: #{sample_value}")
+      expect(page).to have_css('div.submission-rate', count: rates_number)
+      expect(page).to have_text("#{sample_nickname} rated #{sample_value}")
     end
   end
 
@@ -26,7 +26,7 @@ describe "printing submission's rates in submission show view" do
     it "does not show rates in submission view" do
       login_as(user, scope: :user)
       visit submission_path(submission.id)
-      expect(page).to have_selector('table tr', count: 0)
+      expect(page).to have_css('div.submission-rate', count: 0)
     end
   end
 end

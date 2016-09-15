@@ -5,10 +5,3 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Submission.destroy_all
-
-unless Rails.env.production?
-  2.times {
-    FactoryGirl.create(:submission)
-  }
-end

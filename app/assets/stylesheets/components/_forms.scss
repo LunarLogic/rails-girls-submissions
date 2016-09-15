@@ -4,6 +4,10 @@ $input-height: $bs2;
   margin: 2 * $input-height 0;
 }
 
+.form-centered {
+  text-align: center;
+}
+
 .form-header {
   text-align: center;
   margin-bottom: 2 * $input-height;
@@ -28,7 +32,8 @@ $input-height: $bs2;
   input[type="text"],
   input[type="email"],
   input[type="search"],
-  input[type="number"] {
+  input[type="number"],
+  input[type="date"] {
     width: 100%;
     display: block;
     line-height: $input-height;
@@ -49,6 +54,7 @@ $input-height: $bs2;
   }
 
   input[type="submit"] {
+    display: block;
     margin: $bs1 auto;
   }
 
@@ -86,6 +92,14 @@ $input-height: $bs2;
     vertical-align: middle;
     margin-bottom: 0;
   }
+}
+
+.form-field-close {
+  margin-bottom: $input-height/2;
+}
+
+.fieldset-inline {
+  display: inline-block !important;
 }
 
 /* styles for errors in forms */

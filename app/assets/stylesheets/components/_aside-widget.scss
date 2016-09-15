@@ -1,11 +1,40 @@
 .aside-widget {
   text-align: center;
-  margin: $bs2 0;
+  margin: $bs2 auto;
+
+  @include media($big-screen) {
+    width: 400px;
+  }
+}
+
+.aside-widget-fixed {
 
   @include media($big-screen) {
     position: fixed;
-    width: 400px;
+    right: 10%;
     top: 2 * $bs2;
+  }
+}
+
+.aside-widget-absolute {
+
+  @include media($big-screen) {
+    margin: 0 auto $bs2;
+    position: absolute;
+    right: -100%;
+    top: 0;
+  }
+}
+
+.aside-widget-dashboard {
+  width: 200px;
+
+  @include media($big-screen) {
+    margin-top: $bs2+$bs3;
+    right: 0;
+  }
+
+  @include media($very-big-screen) {
     right: 10%;
   }
 }
@@ -19,4 +48,8 @@
     font-size: $bs1;
     font-weight: 400;
   }
+}
+
+.aside-widget-header {
+  margin-bottom: $bs-1;
 }

@@ -2,10 +2,11 @@
 <%= render 'submissions/result_table', { submissions: submissions_waitlist } %>
 <%= render 'submissions/result_table', { submissions: submissions_unaccepted } %>
 
-Download:
-<br/>
-<%= link_to "Accepted", csv_download_accepted_path %>
-<br/>
-<%= link_to "Waitlist", csv_download_waitlist_path %>
-<br/>
-<%= link_to "Unaccepted", csv_download_unaccepted_path %>
+<aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
+  <h2 class="aside-widget-header">Download:</h2>
+  <ul class="download-list">
+    <li><%= link_to "Accepted", csv_download_accepted_path %></li>
+    <li><%= link_to "Waitlist", csv_download_waitlist_path %></li>
+    <li><%= link_to "Unaccepted", csv_download_unaccepted_path %></li>
+  </ul>
+</aside>

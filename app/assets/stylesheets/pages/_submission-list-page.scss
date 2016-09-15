@@ -20,12 +20,12 @@
   @include transform(translateY(100%));
   display: inline-block;
   width: 100%;
-  max-width: 600px;
+  max-width: 650px;
   padding: 0;
 
   li {
     display: block;
-    width: 25%;
+    width: 20%;
     float: left;
     list-style-type: none;
     border: 2px solid white;
@@ -69,8 +69,17 @@
 
 .submissions-table {
   width: 100%;
-  border: 2px solid $grey-default;
+  border-left: 2px solid $grey-default;
+  border-right: 2px solid $grey-default;
   border-spacing: 2rem;
+
+  &:first-of-type {
+    border-top: 2px solid $grey-default;
+  }
+
+  &:last-of-type {
+    border-bottom: 2px solid $grey-default;
+  }
 }
 
 .submission-mobile-hidden {

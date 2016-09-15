@@ -1,0 +1,25 @@
+<table class="submissions-table">
+  <thead class="submissions-table-header">
+    <tr>
+      <th class="submission-header-name">Full name</th>
+      <th class="submission-header-narrow submission-mobile-hidden">Age</th>
+      <th class="submission-header-narrow submission-mobile-hidden">Average</th>
+      <th class="submission-header-narrow submission-mobile-hidden">Rate count</th>
+      <th class="submission-header-narrow submission-mobile-hidden">Date</th>
+      <th class="submission-header-narrow" colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="submissions-table-body">
+    <% submissions_rated.each do |submission| %>
+    <tr>
+      <td class="submission-body-name"><%= submission.full_name %></td>
+      <td class="submission-mobile-hidden"><%= submission.age %></td>
+      <td class="submission-mobile-hidden"><%= submission.average_rate.round(2) %></td>
+      <td class="submission-mobile-hidden"><%= submission.rates.count %></td>
+      <td class="submission-mobile-hidden"><%= submission.created_at.strftime("%m-%d-%Y") %></td>
+      <td><%= link_to 'Show', submission %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

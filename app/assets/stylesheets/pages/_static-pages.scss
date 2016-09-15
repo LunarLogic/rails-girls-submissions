@@ -1,0 +1,41 @@
+.l-static-container-whole {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.l-static-container {
+  width: 100%;
+  margin-top: $bs3;
+  text-align: center;
+
+  .btn-small {
+    margin: 0 auto;
+  }
+
+  @include media($tablet) {
+
+    background: center top no-repeat;
+  }
+}
+
+.login-page {
+  background-image: image-url('rails-girls-krakow-2016.png');
+  background-size: auto 500px;
+  padding-top: 550px;
+}
+
+.closed-page {
+  background-image: image-url('fb.png');
+  background-size: auto auto;
+  padding-top: 350px;
+}
+
+.soon-page {
+  background-color: $rg-red;
+  text-align: center;
+}

@@ -1,6 +1,6 @@
 .btn {
   @include appearance(none);
-  display: block;
+  display: inline-block;
   padding: $baseline $bs1;
   background-color: $rg-red;
   border: none;
@@ -13,12 +13,26 @@
   &:focus {
     transition: background-color .4s;
     background-color: lighten($rg-red, 10);
+    color: white;
+    text-decoration: none;
   }
 }
 
 .btn-small {
   @extend .btn;
   padding: $bs-1 $baseline;
+}
+
+.btn-right-align {
+  float: right;
+}
+
+.btn-space-left {
+  margin-left: $bs1;
+}
+
+.btn-space-right {
+  margin-right: $bs1;
 }
 
 .link-return {
