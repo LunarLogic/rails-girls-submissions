@@ -17,5 +17,6 @@
 /tmp
 
 /config/secrets.yml
+/config/allowed_users.yml
 
 /vendor/.byebug_history

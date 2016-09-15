@@ -9,6 +9,7 @@
      gem install bundler
      bundle
      cp config/secrets.yml.example config/secrets.yml
+     cp config/allowed_users.yml.example config/allowed_users.yml
      bundle exec rake db:setup
      rails s
  
