@@ -80,6 +80,20 @@
   &:last-of-type {
     border-bottom: 2px solid $grey-default;
   }
+
+  tbody {
+    counter-reset: rowNumber;
+
+    tr {
+      counter-increment: rowNumber;
+
+      td:first-child::before {
+        content: counter(rowNumber);
+        min-width: 1em;
+        margin-right: 0.5em;
+      }
+    }
+  }
 }
 
 .submission-mobile-hidden {
