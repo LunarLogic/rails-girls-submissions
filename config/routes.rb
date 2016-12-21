@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get "/csv/download_waitlist", to: "csv#download_waitlist"
   get "/csv/download_unaccepted", to: "csv#download_unaccepted"
 
+  get "/send_emails", to: "mailings#send_emails"
+
   devise_for :users, skip: [:passwords, :registrations], controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   root 'submissions#new'
