@@ -2,6 +2,17 @@ class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new, :create, :thank_you]
   layout 'dashboard', only: [:all, :rated, :to_rate, :rejected, :results]
 
+  def confirm #TODO: add views
+    token = params[:confirmation_token]
+    submission = Submission.find_by(confirmation_token: token)
+    if submission.confirmation_token_created_at < 1.week.ago
+      render text: "Time for confirmation expired!"
+    else
+      submission.confirm!
+      render text: "You confirmed your submission!"
+    end
+  end
+
   def all
     submissions = Submission.all
 

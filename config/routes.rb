@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "/submissions/results", to: "submissions#results"
   get "/submissions/closed", to: "submissions#closed"
   get "/submissions/preparation", to: "submissions#preparation"
+  get "/submissions/confirm", to: "submissions#confirm"
   get "/settings/", to: "settings#index"
   put "/settings/update", to: "settings#update"
 

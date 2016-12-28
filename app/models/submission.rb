@@ -32,5 +32,15 @@ class Submission < ActiveRecord::Base
   def average_rate
     rates.count == 0 ? 0 : (rates.sum(:value).to_f / rates.count)
   end
-end
 
+  def generate_confirmation_token!
+    self.confirmation_token = "submission id: #{id}"
+    self.confirmation_token_created_at = Time.now
+    save
+  end
+
+  def confirm!
+    self.confirmed = true
+    save
+  end
+end
