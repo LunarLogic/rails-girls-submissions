@@ -116,6 +116,15 @@
         <%= submit_tag("Rate!", class: "btn-small btn-space-left")%>
       <% end %>
 
+      <section class="submission-navigation">
+        <%= link_to "← Previous submission", submission_presenter.previous, class: "link-prev" %>
+        <%= link_to "Next submission →", submission_presenter.next, class: "link-next" %>
+      </section>
+
+      <% if user_has_already_rated %>
+        <h2 class="aside-widget-header">You have already rated this submission</h2>
+      <% end %>
+
       <% if submission.rated? %>
         <section class="submission-rates">
           <h2 class="aside-widget-header">Rates:</h2>
@@ -138,10 +147,6 @@
           </span>
         </section>
       <% end %>
-      <section class="submission-navigation">
-        <%= link_to "← Previous submission", submission_presenter.previous_to_rate, class: "link-prev" %>
-        <%= link_to "Next submission →", submission_presenter.next_to_rate, class: "link-next" %>
-      </section>
       <section class="submission-comments">
         <h2 class="aside-widget-header"> Comments </h2>
         <% comment_presenters.each do |presenter| %>
