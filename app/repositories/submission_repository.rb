@@ -1,6 +1,6 @@
 class SubmissionRepository
   def rejected
-    Submission.where(rejected: true)
+    Submission.where(rejected: true).order('created_at DESC')
   end
 
   def rated
@@ -38,11 +38,11 @@ class SubmissionRepository
   private
 
   def rated_scope
-    with_rates_if_any.having('count("rates") >= ?',  required_rates_number)
+    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).sort_by(&:average_rate).reverse
   end
 
   def to_rate_scope
-    with_rates_if_any.having('count("rates") < ?', required_rates_number)
+    with_rates_if_any.having('count("rates") < ?', required_rates_number).order('created_at DESC')
   end
 
   def with_rates_if_any
