@@ -11,6 +11,8 @@ class RateChecker
 
   def current_user_rate_value
     rate = Rate.find_by(submission_id: submission_id, user_id: user_id)
+    return 0 unless rate
+
     rate.value
   end
 
