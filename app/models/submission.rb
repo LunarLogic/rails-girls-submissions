@@ -34,7 +34,7 @@ class Submission < ActiveRecord::Base
   end
 
   def generate_confirmation_token!
-    self.confirmation_token = "submission id: #{id}"
+    self.confirmation_token = Devise.friendly_token
     self.confirmation_token_created_at = Time.now
     save
   end
