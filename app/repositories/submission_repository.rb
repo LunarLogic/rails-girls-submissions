@@ -12,13 +12,11 @@ class SubmissionRepository
   end
 
   def next(current_created_at)
-    not_rejected.where('submissions.created_at > ?', current_created_at).order('created_at ASC')
-      .first || not_rejected.first
+    get_next_submission(current_created_at) || get_first_submission
   end
 
   def previous(current_created_at)
-    not_rejected.where('submissions.created_at < ?', current_created_at).order('created_at DESC')
-      .first || not_rejected.last
+    get_previous_submission(current_created_at) || get_last_submission
   end
 
   def accepted
@@ -37,8 +35,24 @@ class SubmissionRepository
 
   private
 
+  def get_next_submission(current_created_at)
+    not_rejected.where('submissions.created_at > ?', current_created_at).order('created_at ASC').first
+  end
+
+  def get_previous_submission(current_created_at)
+    not_rejected.where('submissions.created_at < ?', current_created_at).order('created_at DESC').first
+  end
+
+  def get_first_submission
+    not_rejected.order('created_at ASC').first
+  end
+
+  def get_last_submission
+    not_rejected.order('created_at DESC').first
+  end
+
   def rated_scope
-    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).sort_by(&:average_rate).reverse
+    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).order('AVG(value) DESC')
   end
 
   def to_rate_scope

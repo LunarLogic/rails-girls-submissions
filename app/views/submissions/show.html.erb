@@ -107,7 +107,7 @@
 
     <aside class="aside-widget aside-widget-absolute">
       <%= form_tag(submission_rate_path(submission), class: "submission-rating-form") do %>
-        <fieldset class="starability-fade fieldset-inline", id="user-rating", data-rate="<%= current_user_rate_value %>">
+        <fieldset class="starability-fade fieldset-inline" id="user-rating" data-rate="<%= current_user_rate_value %>">
           <% 5.downto(1) do |rate| %>
             <%= radio_button_tag("value", rate) %>
             <%= label_tag("value_" + rate.to_s, rate) %>
