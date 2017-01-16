@@ -1,5 +1,5 @@
 class WaitingSubmissionsAcceptor
-  def self.call
+  def call
     #TODO: Confirm if submissions first in waiting line come first
     waiting_submissions.each do |waiting_submission|
       expired_submission = not_rejected_expired_submission
