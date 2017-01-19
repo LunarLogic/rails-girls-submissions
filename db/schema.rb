@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914125410) do
+ActiveRecord::Schema.define(version: 20170119181854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 20160914125410) do
   add_index "rates", ["user_id"], name: "index_rates_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.integer  "accepted_threshold"
-    t.integer  "waitlist_threshold"
+    t.float    "accepted_threshold"
+    t.float    "waitlist_threshold"
     t.integer  "required_rates_num"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
@@ -63,16 +63,19 @@ ActiveRecord::Schema.define(version: 20160914125410) do
     t.boolean  "first_time"
     t.text     "goals"
     t.text     "problems"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
     t.string   "html"
     t.string   "css"
     t.string   "js"
     t.string   "ror"
     t.string   "db"
     t.string   "programming_others"
-    t.boolean  "rejected",            default: false
-    t.string   "codecademy_status",   default: "pending"
+    t.boolean  "rejected",                      default: false
+    t.string   "codecademy_status",             default: "pending"
+    t.boolean  "confirmed"
+    t.string   "confirmation_token"
+    t.datetime "confirmation_token_created_at"
   end
 
   add_index "submissions", ["email"], name: "index_submissions_on_email", unique: true, using: :btree
