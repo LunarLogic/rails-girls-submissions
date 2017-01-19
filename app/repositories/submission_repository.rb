@@ -22,13 +22,12 @@ class SubmissionRepository
   end
 
   def accepted
-    with_rates_if_any.having('count("rates") >= ? AND avg(value) >= ?', Setting.get.required_rates_num,
-      Setting.get.accepted_threshold).to_a
+    rated_scope.having('avg(value) >= ?', Setting.get.accepted_threshold).to_a
   end
 
   def waitlist
-    with_rates_if_any.having('count("rates") >= ? AND avg(value) < ? AND avg(value) >= ?',
-      Setting.get.required_rates_num, Setting.get.accepted_threshold, Setting.get.waitlist_threshold).to_a
+    rated_scope.having('avg(value) < ? AND avg(value) >= ?',
+      Setting.get.accepted_threshold, Setting.get.waitlist_threshold).to_a
   end
 
   def unaccepted
@@ -38,7 +37,7 @@ class SubmissionRepository
   private
 
   def rated_scope
-    with_rates_if_any.having('count("rates") >= ?',  required_rates_number)
+    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).order('AVG(value) DESC')
   end
 
   def to_rate_scope

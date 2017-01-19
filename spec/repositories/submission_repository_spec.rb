@@ -20,12 +20,15 @@ describe SubmissionRepository do
   let!(:to_rate_submission_1) { FactoryGirl.create(:to_rate_submission, created_at: 1.hour.ago) }
   let!(:to_rate_submission_2) { FactoryGirl.create(:to_rate_submission) }
   let(:to_rate_submissions) { [to_rate_submission_2, to_rate_submission_1] }
+  let!(:better_accepted_submission) {
+    FactoryGirl.create(:accepted_submission, :with_settings, accepted_threshold: FactoryGirl.build(:setting).accepted_threshold + 1)
+  }
 
   describe "#accepted" do
     subject { submission_repository.accepted }
 
     it "returns submissions that are not rejected or are rated and the average rate is equal to or above accepted_threshold" do
-      expect(subject).to eq [accepted_submission]
+      expect(subject).to eq [better_accepted_submission, accepted_submission]
     end
   end
 
@@ -58,7 +61,7 @@ describe SubmissionRepository do
     subject { submission_repository.rated }
 
     it "returns submissions that are rated" do
-      lists_diff = subject - [accepted_submission, waitlist_submission, unaccepted_not_rejected_submission]
+      lists_diff = subject - [accepted_submission, waitlist_submission, unaccepted_not_rejected_submission, better_accepted_submission]
       expect(lists_diff).to eq []
     end
   end
