@@ -17,9 +17,8 @@ describe SubmissionRepository do
   let!(:waitlist_submission) { FactoryGirl.create(:waitlist_submission, :with_settings, setting_values) }
   let!(:unaccepted_not_rejected_submission) { FactoryGirl.create(:unaccepted_not_rejected_submission, :with_settings, setting_values) }
   let!(:unaccepted_rejected_submission)  { FactoryGirl.create(:unaccepted_rejected_submission, :with_settings, setting_values) }
-  let!(:to_rate_submission_1) { FactoryGirl.create(:to_rate_submission, created_at: 1.hour.ago) }
-  let!(:to_rate_submission_2) { FactoryGirl.create(:to_rate_submission) }
-  let(:to_rate_submissions) { [to_rate_submission_2, to_rate_submission_1] }
+  let!(:to_rate_submission) { FactoryGirl.create(:submission, created_at: 1.hour.from_now) }
+  let(:to_rate_submissions) { [to_rate_submission] }
 
   describe "#accepted" do
     subject { submission_repository.accepted }
@@ -36,7 +35,6 @@ describe SubmissionRepository do
       expect(subject).to eq [waitlist_submission]
     end
   end
-
   describe "#unaccepted" do
     subject { submission_repository.unaccepted }
 
@@ -71,38 +69,38 @@ describe SubmissionRepository do
     end
   end
 
-  describe "#next_to_rate" do
-    context "when there is a next submission to rate" do
-      subject { submission_repository.next_to_rate(to_rate_submission_1.created_at) }
+  describe "#next" do
+    context "when there is a next submission" do
+      subject { submission_repository.next(accepted_submission.created_at) }
 
-        it "returns the next submission to rate" do
-          expect(subject).to eq to_rate_submission_2
+        it "returns the next submission ordered by creation date" do
+          expect(subject).to eq waitlist_submission
         end
       end
 
     context "when there are no more submissions after" do
-      subject { submission_repository.next_to_rate(to_rate_submission_2.created_at) }
+      subject { submission_repository.next(to_rate_submission.created_at) }
 
       it "wraps around the submissions" do
-        expect(subject).to eq to_rate_submission_1
+        expect(subject).to eq accepted_submission
       end
     end
   end
 
-  describe "#previous_to_rate" do
+  describe "#previous" do
     context "when there is a previous submission to rate" do
-      subject { submission_repository.previous_to_rate(to_rate_submission_2.created_at) }
+      subject { submission_repository.previous(to_rate_submission.created_at) }
 
         it "returns the previous submission to rate" do
-          expect(subject).to eq to_rate_submission_1
+          expect(subject).to eq unaccepted_not_rejected_submission
         end
       end
 
     context "when there are no more submissions before" do
-      subject { submission_repository.previous_to_rate(to_rate_submission_1.created_at) }
+      subject { submission_repository.previous(accepted_submission.created_at) }
 
       it "wraps around the submissions" do
-        expect(subject).to eq to_rate_submission_2
+        expect(subject).to eq to_rate_submission
       end
     end
   end

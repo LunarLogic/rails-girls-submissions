@@ -107,7 +107,7 @@
 
     <aside class="aside-widget aside-widget-absolute">
       <%= form_tag(submission_rate_path(submission), class: "submission-rating-form") do %>
-        <fieldset class="starability-fade fieldset-inline">
+        <fieldset class="starability-fade fieldset-inline" id="user-rating" data-rate="<%= current_user_rate_value %>">
           <% 5.downto(1) do |rate| %>
             <%= radio_button_tag("value", rate) %>
             <%= label_tag("value_" + rate.to_s, rate) %>
@@ -115,6 +115,11 @@
         </fieldset>
         <%= submit_tag("Rate!", class: "btn-small btn-space-left")%>
       <% end %>
+
+      <section class="submission-navigation">
+        <%= link_to "← Previous submission", submission_presenter.previous, class: "link-prev" %>
+        <%= link_to "Next submission →", submission_presenter.next, class: "link-next" %>
+      </section>
 
       <% if submission.rated? %>
         <section class="submission-rates">
@@ -138,10 +143,6 @@
           </span>
         </section>
       <% end %>
-      <section class="submission-navigation">
-        <%= link_to "← Previous submission", submission_presenter.previous_to_rate, class: "link-prev" %>
-        <%= link_to "Next submission →", submission_presenter.next_to_rate, class: "link-next" %>
-      </section>
       <section class="submission-comments">
         <h2 class="aside-widget-header"> Comments </h2>
         <% comment_presenters.each do |presenter| %>

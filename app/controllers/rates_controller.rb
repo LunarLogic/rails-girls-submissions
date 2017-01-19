@@ -7,7 +7,7 @@ class RatesController < ApplicationController
     rate_creator = RateCreator.build(value, submission_id, user_id)
     result = rate_creator.call
     if !result.success
-      flash[:error] = result.errors
+      flash[:error] = "Something went wrong."
       redirect_to submission_path(submission_id)
     else
       redirect_to submission_path(submission_id), notice: 'Rate was successfully created.'

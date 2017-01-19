@@ -51,17 +51,17 @@ RSpec.describe SubmissionPresenter do
   describe "delegates methods to submissions_repository" do
     let!(:submission) { FactoryGirl.create(:submission) }
 
-    context "#next_to_rate" do
+    context "#next" do
       it do
-        expect(submissions_repository).to receive(:next_to_rate).with(submission.created_at)
-        subject.next_to_rate
+        expect(submissions_repository).to receive(:next).with(submission.created_at)
+        subject.next
       end
     end
 
-    context "#previous_to_rate" do
+    context "#previous" do
       it do
-        expect(submissions_repository).to receive(:previous_to_rate).with(submission.created_at)
-        subject.previous_to_rate
+        expect(submissions_repository).to receive(:previous).with(submission.created_at)
+        subject.previous
       end
     end
   end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RateChecker do
 describe '#user_has_already_rated?' do
-    subject { described_class.new.user_has_already_rated?(submission.id, user.id) }
+    subject { described_class.new(submission.id, user.id).user_has_already_rated? }
 
     context 'when the submmission has already been rated by the user' do
       let!(:submission) { FactoryGirl.create(:submission) }
