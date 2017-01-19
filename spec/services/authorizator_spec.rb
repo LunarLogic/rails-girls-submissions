@@ -6,7 +6,7 @@ RSpec.describe Authorizator do
 
     subject { described_class.new.allowed_to_log_in?(user) }
 
-    context "when test_email 'jo.wojtowicz@gmail.com' is in the allowed_users.yml file" do
+    context "when test_email is in the allowed_users.yml file" do
       let!(:user) { FactoryGirl.create(:user, email: test_email ) }
       it { expect(subject).to equal(true) }
     end
