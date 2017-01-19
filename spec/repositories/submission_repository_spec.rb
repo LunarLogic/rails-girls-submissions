@@ -67,7 +67,7 @@ describe SubmissionRepository do
     subject { submission_repository.to_rate }
 
     it "returns submissions that are not rejected, but are not rated yet" do
-      expect(subject).to eq to_rate_submissions
+      expect(subject).to match_array to_rate_submissions
     end
   end
 
