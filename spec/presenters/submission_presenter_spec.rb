@@ -1,68 +1,89 @@
 require 'rails_helper'
 
 RSpec.describe SubmissionPresenter do
-  subject { described_class.new(submission, rates, submissions_repository) }
-  let!(:rates) { submission.rates }
-  let!(:submissions_repository) { double }
+  let(:submission) { instance_double(Submission) }
+  let(:submission_repository) { double }
+  let(:submission_presenter) { described_class.new(submission, rates, submission_repository) }
 
-  describe do
-    let!(:submission) { FactoryGirl.build(:submission) }
+  describe "is a delegator" do
+    let(:rates) { double }
+    subject { submission_presenter }
 
     it "acts like a Submission" do
-      expect(subject).to eq(submission)
-      expect(subject).not_to be_a(Submission)
+      is_expected.to eq(submission)
+      is_expected.not_to be_a(Submission)
     end
   end
 
   describe "#average_rate" do
     describe "when submission is unrated" do
-      let!(:submission) { FactoryGirl.build(:submission) }
+      let(:rates) { double }
+      subject { submission_presenter.average_rate }
 
-      it { expect(subject.average_rate).to eq(nil) }
+      before { allow(submission).to receive(:rated?).and_return(false) }
+
+      it { is_expected.to eq(nil) }
     end
 
-    describe "when submission is rated and has no rates" do
-      before do
-        allow(Setting).to receive(:get).and_return(
-          FactoryGirl.create(:setting, required_rates_num: 0))
-      end
+    describe "when submission is rated" do
+      # overriden with real object since average is calculated in the db
+      let(:submission) { FactoryGirl.create(:submission, :rated, rate_value: 2) }
+      let(:rates) { submission.rates }
+      subject { submission_presenter.average_rate }
 
-      let!(:submission) do
-        FactoryGirl.build(:submission, :rated, required_rates_num: 0)
-      end
-
-      it { expect(subject.average_rate).to eq(0) }
-    end
-
-    describe "when submission is rated and has some rates" do
-      before do
-        allow(Setting).to receive(:get).and_return(
-          FactoryGirl.create(:setting, required_rates_num: 3))
-      end
-
-      let!(:submission) do
-        FactoryGirl.build(:submission, :rated, { required_rates_num: 3, rate_value: 2 })
-      end
-
-      it { expect(subject.average_rate).to eq(2) }
+      it { is_expected.to eq(2) }
     end
   end
 
-  describe "delegates methods to submissions_repository" do
-    let!(:submission) { FactoryGirl.create(:submission) }
+  describe "delegates methods to submission_repository" do
+    describe "#next_to_rate" do
+      let(:rates) { double }
+      let(:result) { double }
+      subject { submission_presenter.next_to_rate }
 
-    context "#next_to_rate" do
-      it do
-        expect(submissions_repository).to receive(:next_to_rate).with(submission.created_at)
-        subject.next_to_rate
+      before do
+        date = double
+        allow(submission).to receive(:created_at).and_return(date)
+        allow(submission_repository).to receive(:next_to_rate).with(date).and_return(result)
       end
+
+      it { is_expected.to eq(result) }
     end
 
-    context "#previous_to_rate" do
-      it do
-        expect(submissions_repository).to receive(:previous_to_rate).with(submission.created_at)
-        subject.previous_to_rate
+    describe "#previous_to_rate" do
+      let(:rates) { double }
+      let(:result) { double }
+      subject { submission_presenter.previous_to_rate }
+
+      before do
+        date = double
+        allow(submission).to receive(:created_at).and_return(date)
+        allow(submission_repository).to receive(:previous_to_rate).with(date).and_return(result)
       end
+
+      it { is_expected.to eq(result) }
     end
+  end
+
+  describe "#rates_count" do
+    let(:rates) { double }
+    subject { submission_presenter.rates_count }
+
+    before { allow(rates).to receive(:count).and_return(1) }
+
+    it { is_expected.to eq(1) }
+  end
+
+  describe "#created_at" do
+    let(:rates) { double }
+    subject { submission_presenter.created_at }
+
+    before do
+      date = double
+      allow(submission).to receive(:created_at).and_return(date)
+      allow(date).to receive(:strftime).with("%m-%d-%Y").and_return("01-01-2000")
+    end
+
+    it { is_expected.to eq("01-01-2000") }
   end
 end
