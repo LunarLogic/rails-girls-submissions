@@ -15,11 +15,11 @@
   </div>
   <div class="form-field">
     <%= f.label :accepted_threshold %>
-    <%= f.number_field :accepted_threshold %>
+    <%= f.number_field :accepted_threshold, step: 'any' %>
   </div>
   <div class="form-field">
     <%= f.label :waitlist_threshold %>
-    <%= f.number_field :waitlist_threshold %>
+    <%= f.number_field :waitlist_threshold, step: 'any'%>
   </div>
   <div class="form-field">
     <%= f.label :required_rates_num %>
