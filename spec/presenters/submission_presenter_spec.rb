@@ -26,8 +26,10 @@ RSpec.describe SubmissionPresenter do
     end
 
     describe "when submission is rated" do
+      before { FactoryGirl.create(:setting, required_rates_num: 2) }
+
       # overriden with real object since average is calculated in the db
-      let(:submission) { FactoryGirl.create(:submission, :rated, rate_value: 2) }
+      let(:submission) { FactoryGirl.create(:submission, :with_rates, rates_num: 2, rates_val: 2) }
       let(:rates) { submission.rates }
       subject { submission_presenter.average_rate }
 

@@ -1,10 +1,13 @@
 describe "testing submissions views:" do
+  let(:user) { FactoryGirl.create(:user) }
 
-  let!(:user) { FactoryGirl.create(:user) }
-  let!(:submission_to_rate) { FactoryGirl.create(:submission, full_name: "Applicant To Rate") }
-  let!(:submissions_rated) { FactoryGirl.create(:submission, :rated,
-    required_rates_num: FactoryGirl.create(:setting).required_rates_num, full_name: "Applicant Rated") }
-  let!(:submission_rejected) { FactoryGirl.create(:submission, rejected: true, full_name: "Applicant Rejected") }
+  before do
+    setting = FactoryGirl.create(:setting)
+    FactoryGirl.create(:submission, full_name: "Applicant To Rate")
+    FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num,
+      full_name: "Applicant Rated")
+    FactoryGirl.create(:submission, rejected: true, full_name: "Applicant Rejected")
+  end
 
   it "moves to to_rate view" do
     login_as(user, scope: :user)

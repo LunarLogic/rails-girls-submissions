@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RailsGirlsSubmissions</title>
+  <link rel="stylesheet" media="all" href="/assets/application-1fe6899f36dd2b3b76ae2b49ffcfde9c78e3f22a990c9b91f4a43758c495d7e4.css" data-turbolinks-track="true" />
+  <link rel="stylesheet" media="screen" href="https://fonts.googleapis.com/css?family=Lato:400,300,700&amp;subset=latin,latin-ext" />
+  <script src="/assets/application-a0cf18fe32e9650569e2044e136f2eb5251f35ff95747b55cea3e7c38086eb92.js" data-turbolinks-track="true"></script>
+  
+</head>
+<body>
+  <p id="notice"></p>
+
+  <header>
+  <form class="button_to" method="post" action="/users/sign_out"><input type="hidden" name="_method" value="delete" /><input class="btn-small btn-logout" type="submit" value="Log out" /></form>
+  <form class="button_to" method="get" action="/settings"><input class="btn-small btn-logout" type="submit" value="Settings" /></form>
+</header>
+
+
+  <div class="l-wrapper">
+    <article class="l-submissions-container">
+      <nav class="submission-filters">
+  <ul class="submission-filters-list">
+    <li ><a href="/submissions">All</a></li>
+    <li><a href="/submissions/to_rate">To rate</a></li>
+    <li><a class="active" href="/submissions/rated">Rated</a></li>
+    <li><a href="/submissions/rejected">Rejected</a></li>
+    <li><a href="/submissions/results">Results</a></li>
+  </ul>
+</nav>
+
+      <table class="submissions-table">
+  <thead class="submissions-table-header">
+    <tr>
+      <th class="submission-header-name">Full name</th>
+      <th class="submission-header-narrow submission-mobile-hidden">Age</th>
+        <th class="submission-header-narrow submission-mobile-hidden">Average</th>
+        <th class="submission-header-narrow submission-mobile-hidden">Rate count</th>
+      <th class="submission-header-narrow submission-mobile-hidden">Date</th>
+      <th class="submission-header-narrow" colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="submissions-table-body">
+  </tbody>
+</table>
+
+    </article>
+  </div>
+  <footer role="contentinfo">
+  Made by <a title="Lunar Logic - Offshore Agile Software House" href="http://lunarlogic.io">Lunar Logic</a> with ♡
+</footer>
+</body>
+</html>

@@ -6,7 +6,6 @@ class Setting < ActiveRecord::Base
   def self.get
     self.first || self.create({
       accepted_threshold: 0,
-      waitlist_threshold: 0,
       required_rates_num: 3,
       beginning_of_preparation_period: "Tue, 21 Jun 2016 00:00:00 CEST +02:00",
       beginning_of_registration_period: "Wed, 22 Jun 2016 00:00:00 CEST +02:00",
@@ -20,7 +19,6 @@ class Setting < ActiveRecord::Base
   def self.set(setting_params)
     settings = self.get
     settings.accepted_threshold = setting_params[:accepted_threshold]
-    settings.waitlist_threshold = setting_params[:waitlist_threshold]
     settings.required_rates_num = setting_params[:required_rates_num]
     settings.beginning_of_preparation_period = setting_params[:beginning_of_preparation_period]
     settings.beginning_of_registration_period = setting_params[:beginning_of_registration_period]
