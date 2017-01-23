@@ -8,11 +8,15 @@ RSpec.describe Submission, type: :model do
   it "validates accepted_threshold" do
     expect(FactoryGirl.build(:setting, accepted_threshold: -1)).not_to be_valid
     expect(FactoryGirl.build(:setting, accepted_threshold: 6)).not_to be_valid
+    expect(FactoryGirl.build(:setting, accepted_threshold: "a")).not_to be_valid
+    expect(FactoryGirl.build(:setting, accepted_threshold: 4.32)).to be_valid
   end
 
   it "validates waitlist_threshold" do
     expect(FactoryGirl.build(:setting, waitlist_threshold: -1)).not_to be_valid
     expect(FactoryGirl.build(:setting, waitlist_threshold: 6)).not_to be_valid
+    expect(FactoryGirl.build(:setting, waitlist_threshold: "a")).not_to be_valid
+    expect(FactoryGirl.build(:setting, waitlist_threshold: 4.32)).to be_valid
   end
 
   it "validates that preparation comes before registration" do
