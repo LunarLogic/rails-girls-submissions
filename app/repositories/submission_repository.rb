@@ -16,11 +16,11 @@ class SubmissionRepository
   end
 
   def accepted
-    rated_scope.having('avg(value) >= ?', Setting.get.accepted_threshold).to_a
+    rated_scope.limit(Setting.get.available_spots).to_a
   end
 
   def waitlist
-    rated_scope.having('avg(value) < ?', Setting.get.accepted_threshold).to_a
+    rated_scope.offset(Setting.get.available_spots).to_a
   end
 
   def next_to_rate(current_created_at)
@@ -40,7 +40,7 @@ class SubmissionRepository
   end
 
   def rated_scope
-    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).order('AVG(value) DESC')
+    with_rates_if_any.having('count("rates") >= ?', required_rates_number).order('AVG(value) DESC')
   end
 
   def with_rates_if_any
