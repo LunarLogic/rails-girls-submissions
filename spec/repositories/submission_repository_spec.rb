@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe SubmissionRepository do
-  let(:setting) { FactoryGirl.build(:setting) }
+  let(:setting) { FactoryGirl.build(:setting, available_spots: 1) }
   let(:submission_repository) { described_class.new }
 
   before { allow(Setting).to receive(:get).and_return(setting) }
@@ -48,14 +48,14 @@ describe SubmissionRepository do
 
   context "rated submissions are divided into accepted and waitlist" do
     let!(:accepted_sub) { FactoryGirl.create(:submission, :with_rates,
-      rates_num: setting.required_rates_num, rates_val: setting.accepted_threshold) }
+      rates_num: setting.required_rates_num, rates_val: 2) }
     let!(:waitlist_sub) { FactoryGirl.create(:submission, :with_rates,
-      rates_num: setting.required_rates_num, rates_val: (setting.accepted_threshold - 1)) }
+      rates_num: setting.required_rates_num, rates_val: 1) }
 
     describe "#accepted" do
       subject { submission_repository.accepted }
 
-      it "returns rated submissions which average rate is equal to or above accepted_threshold" do
+      it "returns first available_spots number of rated submissions ordered by the average rate" do
         expect(subject).to eq [accepted_sub]
       end
     end
@@ -63,7 +63,7 @@ describe SubmissionRepository do
     describe "#waitlist" do
       subject { submission_repository.waitlist }
 
-      it "returns rated submissions which average rate is lesser than accepted_threshold" do
+      it "returns the rest of rated submissions ordered by the average rate" do
         expect(subject).to eq [waitlist_sub]
       end
     end

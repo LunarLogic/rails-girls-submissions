@@ -5,11 +5,10 @@ RSpec.describe Submission, type: :model do
     expect(FactoryGirl.build(:setting)).to be_valid
   end
 
-  it "validates accepted_threshold" do
-    expect(FactoryGirl.build(:setting, accepted_threshold: -1)).not_to be_valid
-    expect(FactoryGirl.build(:setting, accepted_threshold: 6)).not_to be_valid
-    expect(FactoryGirl.build(:setting, accepted_threshold: "a")).not_to be_valid
-    expect(FactoryGirl.build(:setting, accepted_threshold: 4.32)).to be_valid
+  it "validates available_spots" do
+    expect(FactoryGirl.build(:setting, available_spots: -1)).not_to be_valid
+    expect(FactoryGirl.build(:setting, available_spots: "a")).not_to be_valid
+    expect(FactoryGirl.build(:setting, available_spots: 4.32)).not_to be_valid
   end
 
   it "validates that preparation comes before registration" do
