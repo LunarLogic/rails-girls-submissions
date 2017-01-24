@@ -3,12 +3,24 @@ class SubmissionRepository
     Submission.where(rejected: true)
   end
 
-  def rated
-    rated_scope.to_a
+  def valid
+    Submission.where(rejected: false)
   end
 
   def to_rate
     to_rate_scope.to_a
+  end
+
+  def rated
+    rated_scope.to_a
+  end
+
+  def accepted
+    rated_scope.having('avg(value) >= ?', Setting.get.accepted_threshold).to_a
+  end
+
+  def waitlist
+    rated_scope.having('avg(value) < ?', Setting.get.accepted_threshold).to_a
   end
 
   def next_to_rate(current_created_at)
@@ -21,27 +33,14 @@ class SubmissionRepository
       .first || to_rate_scope.last
   end
 
-  def accepted
-    rated_scope.having('avg(value) >= ?', Setting.get.accepted_threshold).to_a
-  end
-
-  def waitlist
-    rated_scope.having('avg(value) < ? AND avg(value) >= ?',
-      Setting.get.accepted_threshold, Setting.get.waitlist_threshold).to_a
-  end
-
-  def unaccepted
-    with_rates_if_any.having('avg(value) < ?', Setting.get.waitlist_threshold).to_a + rejected
-  end
-
   private
-
-  def rated_scope
-    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).order('AVG(value) DESC')
-  end
 
   def to_rate_scope
     with_rates_if_any.having('count("rates") < ?', required_rates_number)
+  end
+
+  def rated_scope
+    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).order('AVG(value) DESC')
   end
 
   def with_rates_if_any

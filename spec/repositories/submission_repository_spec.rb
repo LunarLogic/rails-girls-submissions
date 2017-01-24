@@ -1,111 +1,111 @@
 require 'rails_helper'
 
 describe SubmissionRepository do
+  let(:setting) { FactoryGirl.build(:setting) }
+  let(:submission_repository) { described_class.new }
 
-  before do
-    allow(Setting).to receive(:get).and_return(FactoryGirl.create(:setting))
-  end
+  before { allow(Setting).to receive(:get).and_return(setting) }
 
-  let!(:setting_values) do
-    { accepted_threshold: FactoryGirl.build(:setting).accepted_threshold,
-      waitlist_threshold: FactoryGirl.build(:setting).waitlist_threshold,
-      required_rates_num: FactoryGirl.build(:setting).required_rates_num }
-  end
+  context "all submissions are divided into valid and (automatically) rejected" do
+    let!(:valid_sub) { FactoryGirl.create(:submission) }
+    let!(:rejected_sub) { FactoryGirl.create(:submission, rejected: true) }
 
-  let!(:submission_repository) { described_class.new }
-  let!(:accepted_submission) { FactoryGirl.create(:accepted_submission, :with_settings, setting_values) }
-  let!(:waitlist_submission) { FactoryGirl.create(:waitlist_submission, :with_settings, setting_values) }
-  let!(:unaccepted_not_rejected_submission) { FactoryGirl.create(:unaccepted_not_rejected_submission, :with_settings, setting_values) }
-  let!(:unaccepted_rejected_submission)  { FactoryGirl.create(:unaccepted_rejected_submission, :with_settings, setting_values) }
-  let!(:to_rate_submission_1) { FactoryGirl.create(:to_rate_submission, created_at: 1.hour.ago) }
-  let!(:to_rate_submission_2) { FactoryGirl.create(:to_rate_submission) }
-  let(:to_rate_submissions) { [to_rate_submission_2, to_rate_submission_1] }
-  let!(:better_accepted_submission) {
-    FactoryGirl.create(:accepted_submission, :with_settings, accepted_threshold: FactoryGirl.build(:setting).accepted_threshold + 1)
-  }
+    describe "#rejected" do
+      subject { submission_repository.rejected }
 
-  describe "#accepted" do
-    subject { submission_repository.accepted }
+      it { is_expected.to eq [rejected_sub] }
+    end
 
-    it "returns submissions that are not rejected or are rated and the average rate is equal to or above accepted_threshold" do
-      expect(subject).to eq [better_accepted_submission, accepted_submission]
+    describe "#valid" do
+      subject { submission_repository.valid }
+
+      it { is_expected.to eq [valid_sub] }
     end
   end
 
-  describe "#waitlist" do
-    subject { submission_repository.waitlist }
+  context "valid submissions are divided into rated and to rate" do
+    let!(:rated_sub) { FactoryGirl.create(:submission, :with_rates,
+      rates_num: setting.required_rates_num) }
+    let!(:unrated_sub) { FactoryGirl.create(:submission, :with_rates,
+      rates_num: (setting.required_rates_num - 1)) }
 
-    it "returns submissions that are not rejected or are rated and the average rate is equal to or above waitlist_threshold and their average is below accepted_threshold" do
-      expect(subject).to eq [waitlist_submission]
+    describe "#rated" do
+      subject { submission_repository.rated }
+
+      it "returns valid submissions with a required rates number" do
+        expect(subject).to eq [rated_sub]
+      end
+    end
+
+    describe "#to_rate" do
+      subject { submission_repository.to_rate }
+
+      it "returns valid submissions that don't have a required rates number" do
+        expect(subject).to eq [unrated_sub]
+      end
     end
   end
 
-  describe "#unaccepted" do
-    subject { submission_repository.unaccepted }
+  context "rated submissions are divided into accepted and waitlist" do
+    let!(:accepted_sub) { FactoryGirl.create(:submission, :with_rates,
+      rates_num: setting.required_rates_num, rates_val: setting.accepted_threshold) }
+    let!(:waitlist_sub) { FactoryGirl.create(:submission, :with_rates,
+      rates_num: setting.required_rates_num, rates_val: (setting.accepted_threshold - 1)) }
 
-    it "returns submissions that are either rejected or are rated and the average rate is below waitlist_threshold" do
-      lists_diff = subject - [unaccepted_rejected_submission, unaccepted_not_rejected_submission]
-      expect(lists_diff).to eq []
+    describe "#accepted" do
+      subject { submission_repository.accepted }
+
+      it "returns rated submissions which average rate is equal to or above accepted_threshold" do
+        expect(subject).to eq [accepted_sub]
+      end
+    end
+
+    describe "#waitlist" do
+      subject { submission_repository.waitlist }
+
+      it "returns rated submissions which average rate is lesser than accepted_threshold" do
+        expect(subject).to eq [waitlist_sub]
+      end
     end
   end
 
-  describe "#rejected" do
-    subject { submission_repository.rejected }
+  context "navigation between submissions" do
+    let!(:to_rate_submission_1) { FactoryGirl.create(:to_rate_submission, created_at: 1.hour.ago) }
+    let!(:to_rate_submission_2) { FactoryGirl.create(:to_rate_submission) }
 
-    it "returns submissions that are rejected" do
-      expect(subject).to eq [unaccepted_rejected_submission]
-    end
-  end
+    describe "#next_to_rate" do
+      context "when there is a next submission to rate" do
+        subject { submission_repository.next_to_rate(to_rate_submission_1.created_at) }
 
-  describe "#rated" do
-    subject { submission_repository.rated }
-
-    it "returns submissions that are rated" do
-      lists_diff = subject - [accepted_submission, waitlist_submission, unaccepted_not_rejected_submission, better_accepted_submission]
-      expect(lists_diff).to eq []
-    end
-  end
-
-  describe "#to_rate" do
-    subject { submission_repository.to_rate }
-
-    it "returns submissions that are not rejected, but are not rated yet" do
-      expect(subject).to match_array to_rate_submissions
-    end
-  end
-
-  describe "#next_to_rate" do
-    context "when there is a next submission to rate" do
-      subject { submission_repository.next_to_rate(to_rate_submission_1.created_at) }
-
-        it "returns the next submission to rate" do
-          expect(subject).to eq to_rate_submission_2
+          it "returns the next submission to rate" do
+            expect(subject).to eq to_rate_submission_2
+          end
         end
-      end
 
-    context "when there are no more submissions after" do
-      subject { submission_repository.next_to_rate(to_rate_submission_2.created_at) }
+      context "when there are no more submissions after" do
+        subject { submission_repository.next_to_rate(to_rate_submission_2.created_at) }
 
-      it "wraps around the submissions" do
-        expect(subject).to eq to_rate_submission_1
-      end
-    end
-  end
-
-  describe "#previous_to_rate" do
-    context "when there is a previous submission to rate" do
-      subject { submission_repository.previous_to_rate(to_rate_submission_2.created_at) }
-
-        it "returns the previous submission to rate" do
+        it "wraps around the submissions" do
           expect(subject).to eq to_rate_submission_1
         end
       end
+    end
 
-    context "when there are no more submissions before" do
-      subject { submission_repository.previous_to_rate(to_rate_submission_1.created_at) }
+    describe "#previous_to_rate" do
+      context "when there is a previous submission to rate" do
+        subject { submission_repository.previous_to_rate(to_rate_submission_2.created_at) }
 
-      it "wraps around the submissions" do
-        expect(subject).to eq to_rate_submission_2
+          it "returns the previous submission to rate" do
+            expect(subject).to eq to_rate_submission_1
+          end
+        end
+
+      context "when there are no more submissions before" do
+        subject { submission_repository.previous_to_rate(to_rate_submission_1.created_at) }
+
+        it "wraps around the submissions" do
+          expect(subject).to eq to_rate_submission_2
+        end
       end
     end
   end

@@ -13,11 +13,4 @@ class CsvController < ApplicationController
 
     send_data csv.file, csv.properties
   end
-
-  def download_unaccepted
-    submissions_unaccepted = SubmissionRepository.new.unaccepted
-    csv = CsvGenerator.new.call(submissions_unaccepted, 'unaccepted.csv')
-
-    send_data csv.file, csv.properties
-  end
 end
