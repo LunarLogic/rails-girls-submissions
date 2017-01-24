@@ -1,9 +1,8 @@
 <nav class="submission-filters">
   <ul class="submission-filters-list">
-    <li ><%= link_to 'All', submissions_path, class: is_active?("all") %></li>
-    <li><%= link_to 'To rate', submissions_to_rate_path, class: is_active?("to_rate") %></li>
-    <li><%= link_to 'Rated', submissions_rated_path, class: is_active?("rated") %></li>
+    <li><%= link_to 'Valid', submissions_valid_path, class: is_active?("valid") %></li>
     <li><%= link_to 'Rejected', submissions_rejected_path, class: is_active?("rejected") %></li>
+    <li><%= link_to 'To rate', submissions_to_rate_path, class: is_active?("to_rate") %></li>
     <li><%= link_to 'Results', submissions_results_path, class: is_active?("results") %></li>
   </ul>
 </nav>

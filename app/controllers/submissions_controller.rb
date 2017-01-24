@@ -1,26 +1,12 @@
 class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new, :create, :thank_you]
-  layout 'dashboard', only: [:all, :rated, :to_rate, :rejected, :results]
+  layout 'dashboard', only: [:valid, :rated, :to_rate, :rejected, :results]
 
-  def all
-    submissions = Submission.all
+  def valid
+    submissions_valid = SubmissionRepository.new.valid
 
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions),
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions_valid),
       show_average: true, show_rates_count: true }
-  end
-
-  def rated
-    submissions_rated = SubmissionRepository.new.rated
-
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions_rated),
-      show_average: true, show_rates_count: true }
-  end
-
-  def to_rate
-    submissions_to_rate = SubmissionRepository.new.to_rate
-
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions_to_rate),
-      show_average: false, show_rates_count: true }
   end
 
   def rejected
@@ -28,6 +14,13 @@ class SubmissionsController < ApplicationController
 
     render :list, locals: { submission_presenters: create_submission_presenters(submissions_rejected),
       show_average: false, show_rates_count: false  }
+  end
+
+  def to_rate
+    submissions_to_rate = SubmissionRepository.new.to_rate
+
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions_to_rate),
+      show_average: false, show_rates_count: true }
   end
 
   def results
