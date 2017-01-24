@@ -1,7 +1,6 @@
 class Setting < ActiveRecord::Base
   validate :preparation_is_before_registration, :registration_is_before_closed
   validates :accepted_threshold, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
-  validates :waitlist_threshold, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
 
   def self.get
     self.first || self.create({

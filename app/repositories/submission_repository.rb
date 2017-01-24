@@ -33,10 +33,6 @@ class SubmissionRepository
       .first || to_rate_scope.last
   end
 
-  def unaccepted
-    with_rates_if_any.having('avg(value) < ?', Setting.get.accepted_threshold).to_a + rejected
-  end
-
   private
 
   def to_rate_scope

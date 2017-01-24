@@ -33,23 +33,26 @@ class SubmissionsController < ApplicationController
   def results
     submissions_accepted = SubmissionRepository.new.accepted
     submissions_waitlist = SubmissionRepository.new.waitlist
-    submissions_unaccepted = SubmissionRepository.new.unaccepted
 
-    render :results, locals: { submissions_accepted: submissions_accepted, submissions_waitlist: submissions_waitlist,
-    submissions_unaccepted: submissions_unaccepted }
+    render :results, locals: {
+      submissions_accepted: submissions_accepted,
+      submissions_waitlist: submissions_waitlist
+    }
   end
 
   def show
     submission = Submission.find(params[:id])
-    comment = Comment.new
-
     submission_presenter = SubmissionPresenter.new(submission, submission.rates, SubmissionRepository.new)
     rate_presenters = create_rate_presenters(submission.rates)
     comment_presenters = create_comment_presenters(submission.comments)
 
-    render :show, locals: { comment: comment, submission: submission,
-      comment_presenters: comment_presenters, rate_presenters: rate_presenters,
-      submission_presenter: submission_presenter }
+    render :show, locals: {
+      comment: Comment.new,
+      submission: submission,
+      comment_presenters: comment_presenters,
+      rate_presenters: rate_presenters,
+      submission_presenter: submission_presenter
+    }
   end
 
   def new
