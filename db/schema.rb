@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170124082009) do
+ActiveRecord::Schema.define(version: 20170124102506) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,7 +39,6 @@ ActiveRecord::Schema.define(version: 20170124082009) do
   add_index "rates", ["user_id"], name: "index_rates_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.float    "accepted_threshold"
     t.integer  "required_rates_num"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170124082009) do
     t.date     "event_start_date",                 null: false
     t.date     "event_end_date",                   null: false
     t.string   "event_url",                        null: false
+    t.integer  "available_spots"
   end
 
   create_table "submissions", force: :cascade do |t|
