@@ -2,36 +2,36 @@
   <h1 class="form-header"> Settings </h1>
   <div class="form-field">
     <%= f.label :event_start_date %>
-    <%= f.date_field :event_start_date %>
+    <%= f.date_field :event_start_date, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :event_end_date %>
-    <%= f.date_field :event_end_date %>
+    <%= f.date_field :event_end_date, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :event_url %>
     <span class="event-url-prefix">http://</span>
-    <%= f.text_field :event_url, class: "event-url-field" %>
+    <%= f.text_field :event_url, class: "event-url-field", required: true %>
   </div>
   <div class="form-field">
-    <%= f.label :available_spots %>
-    <%= f.number_field :available_spots %>
+    <%= f.label :available_spots, min: 0, required: true %>
+    <%= f.number_field :available_spots%>
   </div>
   <div class="form-field">
     <%= f.label :required_rates_num %>
-    <%= f.number_field :required_rates_num %>
+    <%= f.number_field :required_rates_num, min: 0, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :beginning_of_preparation_period %>
-    <%= f.date_field :beginning_of_preparation_period %>
+    <%= f.date_field :beginning_of_preparation_period, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :beginning_of_registration_period %>
-    <%= f.date_field :beginning_of_registration_period %>
+    <%= f.date_field :beginning_of_registration_period, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :beginning_of_closed_period %>
-    <%= f.date_field :beginning_of_closed_period %>
+    <%= f.date_field :beginning_of_closed_period, required: true %>
   </div>
   <div class="form-field">
     <%= f.submit "Save settings", class: "btn-small" %>
