@@ -21,12 +21,12 @@ class SubmissionPresenter < SimpleDelegator
     submission.created_at.strftime("%m-%d-%Y")
   end
 
-  def next_to_rate
-    @submission_repository.next_to_rate(submission.created_at)
+  def next
+    @submission_repository.next(submission.created_at)
   end
 
-  def previous_to_rate
-    @submission_repository.previous_to_rate(submission.created_at)
+  def previous
+    @submission_repository.previous(submission.created_at)
   end
 
   private

@@ -1,50 +1,70 @@
 class SubmissionRepository
   def rejected
-    Submission.where(rejected: true)
+    Submission.where(rejected: true).order('created_at DESC')
   end
 
   def valid
     Submission.where(rejected: false)
   end
 
-  def to_rate
-    to_rate_scope.to_a
-  end
-
   def rated
     rated_scope.to_a
   end
 
+  def to_rate
+    to_rate_scope.to_a
+  end
+
+  def next(current_created_at)
+    get_next_submission(current_created_at) || get_first_submission
+  end
+
+  def previous(current_created_at)
+    get_previous_submission(current_created_at) || get_last_submission
+  end
+
   def accepted
-    rated_scope.limit(Setting.get.available_spots).to_a
+    with_rates_if_any.having('count("rates") >= ? AND avg(value) >= ?', Setting.get.required_rates_num,
+      Setting.get.accepted_threshold).to_a
   end
 
   def waitlist
-    rated_scope.offset(Setting.get.available_spots).to_a
+    with_rates_if_any.having('count("rates") >= ? AND avg(value) < ? AND avg(value) >= ?',
+      Setting.get.required_rates_num, Setting.get.accepted_threshold, Setting.get.waitlist_threshold).to_a
   end
 
-  def next_to_rate(current_created_at)
-    to_rate_scope.where('submissions.created_at > ?', current_created_at).order('created_at ASC')
-      .first || to_rate_scope.first
-  end
-
-  def previous_to_rate(current_created_at)
-    to_rate_scope.where('submissions.created_at < ?', current_created_at).order('created_at DESC')
-      .first || to_rate_scope.last
+  def unaccepted
+    with_rates_if_any.having('avg(value) < ?', Setting.get.waitlist_threshold).to_a + rejected
   end
 
   private
 
-  def to_rate_scope
-    with_rates_if_any.having('count("rates") < ?', required_rates_number)
+  def get_next_submission(current_created_at)
+    valid.where('submissions.created_at > ?', current_created_at).order('created_at ASC').first
+  end
+
+  def get_previous_submission(current_created_at)
+    valid.where('submissions.created_at < ?', current_created_at).order('created_at DESC').first
+  end
+
+  def get_first_submission
+    valid.order('created_at ASC').first
+  end
+
+  def get_last_submission
+    valid.order('created_at DESC').first
   end
 
   def rated_scope
-    with_rates_if_any.having('count("rates") >= ?', required_rates_number).order('AVG(value) DESC')
+    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).order('AVG(value) DESC')
+  end
+
+  def to_rate_scope
+    with_rates_if_any.having('count("rates") < ?', required_rates_number).order('created_at DESC')
   end
 
   def with_rates_if_any
-    Submission.where(rejected: false).joins("LEFT JOIN rates ON submissions.id = rates.submission_id").
+    valid.joins("LEFT JOIN rates ON submissions.id = rates.submission_id").
       group('submissions.id')
   end
 

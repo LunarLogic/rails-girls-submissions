@@ -38,29 +38,29 @@ RSpec.describe SubmissionPresenter do
   end
 
   describe "delegates methods to submission_repository" do
-    describe "#next_to_rate" do
+    describe "#next" do
       let(:rates) { double }
       let(:result) { double }
-      subject { submission_presenter.next_to_rate }
+      subject { submission_presenter.next }
 
       before do
         date = double
         allow(submission).to receive(:created_at).and_return(date)
-        allow(submission_repository).to receive(:next_to_rate).with(date).and_return(result)
+        allow(submission_repository).to receive(:next).with(date).and_return(result)
       end
 
       it { is_expected.to eq(result) }
     end
 
-    describe "#previous_to_rate" do
+    describe "#previous" do
       let(:rates) { double }
       let(:result) { double }
-      subject { submission_presenter.previous_to_rate }
+      subject { submission_presenter.previous }
 
       before do
         date = double
         allow(submission).to receive(:created_at).and_return(date)
-        allow(submission_repository).to receive(:previous_to_rate).with(date).and_return(result)
+        allow(submission_repository).to receive(:previous).with(date).and_return(result)
       end
 
       it { is_expected.to eq(result) }
