@@ -4,7 +4,7 @@
 <aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
   <h2 class="aside-widget-header">Download:</h2>
   <ul class="download-list">
-    <li><%= link_to "Accepted", csv_download_accepted_path %></li>
-    <li><%= link_to "Waitlist", csv_download_waitlist_path %></li>
+    <li><%= link_to_if !submissions_accepted.empty?, "Accepted", csv_download_accepted_path %></li>
+    <li><%= link_to_if !submissions_waitlist.empty?, "Waitlist", csv_download_waitlist_path %></li>
   </ul>
 </aside>

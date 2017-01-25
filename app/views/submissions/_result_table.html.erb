@@ -1,21 +1,23 @@
-<table class="submissions-table">
-  <thead class="submissions-table-header">
-    <tr>
-      <th class="submission-header-name">Full name</th>
-      <th class="submission-header-narrow submission-mobile-hidden">Email</th>
-      <th class="submission-header-narrow submission-mobile-hidden">Average</th>
-      <th class="submission-header-narrow" colspan="3"></th>
-    </tr>
-  </thead>
+<% unless submissions.empty? %>
+  <table class="submissions-table">
+    <thead class="submissions-table-header">
+      <tr>
+        <th class="submission-header-name">Full name</th>
+        <th class="submission-header-narrow submission-mobile-hidden">Email</th>
+        <th class="submission-header-narrow submission-mobile-hidden">Average</th>
+        <th class="submission-header-narrow" colspan="3"></th>
+      </tr>
+    </thead>
 
-  <tbody class="submissions-table-body">
-    <% submissions.each do |submission| %>
-    <tr>
-      <td class="submission-body-name"><%= submission.full_name %></td>
-      <td class="submission-mobile-hidden"><%= submission.email %></td>
-      <td class="submission-mobile-hidden"><%= submission.average_rate if submission.rated? %></td>
-      <td><%= link_to 'Show', submission %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+    <tbody class="submissions-table-body">
+      <% submissions.each do |submission| %>
+      <tr>
+        <td class="submission-body-name"><%= submission.full_name %></td>
+        <td class="submission-mobile-hidden"><%= submission.email %></td>
+        <td class="submission-mobile-hidden"><%= submission.average_rate if submission.rated? %></td>
+        <td><%= link_to 'Show', submission %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
