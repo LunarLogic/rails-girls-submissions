@@ -1,18 +1,13 @@
+require 'rails_helper'
+
 describe "csv downloading process" do
-  before do
-    allow(Setting).to receive(:get).and_return(FactoryGirl.create(:setting))
-  end
-
-  let!(:setting_values) do
-    { accepted_threshold: FactoryGirl.build(:setting).accepted_threshold,
-      waitlist_threshold: FactoryGirl.build(:setting).waitlist_threshold,
-      required_rates_num: FactoryGirl.build(:setting).required_rates_num }
-  end
-
-  let!(:user) { FactoryGirl.create(:user) }
-  let!(:accepted_submission) { FactoryGirl.create(:accepted_submission, :with_settings, setting_values) }
+  let!(:user)    { FactoryGirl.create(:user) }
+  let!(:setting) { FactoryGirl.create(:setting, available_spots: 1) }
+  let!(:accepted_submissiom) { FactoryGirl.create(:submission, :with_rates,
+    rates_num: setting.required_rates_num) }
 
   it "visits results page, clicks 'Accepted', checks if csv file is downloaded" do
+    binding.pry
     login_as(user, scope: :user)
     visit submissions_results_path
     click_link('Accepted')
