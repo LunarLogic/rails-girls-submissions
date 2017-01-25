@@ -13,7 +13,7 @@ class SubmissionsController < ApplicationController
     submissions_rejected = SubmissionRepository.new.rejected
 
     render :list, locals: { submission_presenters: create_submission_presenters(submissions_rejected),
-      show_average: false, show_rates_count: false  }
+      show_average: false, show_rates_count: false }
   end
 
   def to_rate
@@ -36,6 +36,8 @@ class SubmissionsController < ApplicationController
   def show
     submission = Submission.find(params[:id])
     submission_presenter = SubmissionPresenter.new(submission, submission.rates, SubmissionRepository.new)
+    rate_checker = RateChecker.new(submission.id, current_user.id)
+
     rate_presenters = create_rate_presenters(submission.rates)
     comment_presenters = create_comment_presenters(submission.comments)
 
@@ -44,7 +46,9 @@ class SubmissionsController < ApplicationController
       submission: submission,
       comment_presenters: comment_presenters,
       rate_presenters: rate_presenters,
-      submission_presenter: submission_presenter
+      submission_presenter: submission_presenter,
+      user_has_already_rated: rate_checker.user_has_already_rated?,
+      current_user_rate_value: rate_checker.current_user_rate_value
     }
   end
 
