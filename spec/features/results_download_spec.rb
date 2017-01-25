@@ -7,7 +7,6 @@ describe "csv downloading process" do
     rates_num: setting.required_rates_num) }
 
   it "visits results page, clicks 'Accepted', checks if csv file is downloaded" do
-    binding.pry
     login_as(user, scope: :user)
     visit submissions_results_path
     click_link('Accepted')
