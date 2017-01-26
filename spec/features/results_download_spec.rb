@@ -31,13 +31,13 @@ describe "csv downloading process" do
     it "Accepted download link is inactive" do
       login_as(user, scope: :user)
       visit submissions_results_path
-      expect(page).to have_selector('li', text: 'Accepted')
+      expect(page).not_to have_selector('a', text: 'Accepted')
     end
 
     it "Waitlist download link is inactive" do
       login_as(user, scope: :user)
       visit submissions_results_path
-      expect(page).to have_selector('li', text: 'Waitlist')
+      expect(page).not_to have_selector('a', text: 'Waitlist')
     end
   end
 end
