@@ -4,7 +4,7 @@ class SubmissionRepository
   end
 
   def valid
-    Submission.where(rejected: false)
+    not_rejected.order('created_at DESC')
   end
 
   def rated
@@ -31,26 +31,26 @@ class SubmissionRepository
     rated_scope.offset(Setting.get.available_spots).to_a
   end
 
-  def unaccepted
-    with_rates_if_any.having('avg(value) < ?', Setting.get.waitlist_threshold).to_a + rejected
-  end
-
   private
 
+  def not_rejected
+    Submission.where(rejected: false)
+  end
+
   def get_next_submission(current_created_at)
-    valid.where('submissions.created_at > ?', current_created_at).order('created_at ASC').first
+    not_rejected.where('submissions.created_at > ?', current_created_at).order('created_at ASC').first
   end
 
   def get_previous_submission(current_created_at)
-    valid.where('submissions.created_at < ?', current_created_at).order('created_at DESC').first
+    not_rejected.where('submissions.created_at < ?', current_created_at).order('created_at DESC').first
   end
 
   def get_first_submission
-    valid.order('created_at ASC').first
+    not_rejected.order('created_at ASC').first
   end
 
   def get_last_submission
-    valid.order('created_at DESC').first
+    not_rejected.order('created_at DESC').first
   end
 
   def rated_scope
@@ -62,7 +62,7 @@ class SubmissionRepository
   end
 
   def with_rates_if_any
-    valid.joins("LEFT JOIN rates ON submissions.id = rates.submission_id").
+    not_rejected.joins("LEFT JOIN rates ON submissions.id = rates.submission_id").
       group('submissions.id')
   end
 
