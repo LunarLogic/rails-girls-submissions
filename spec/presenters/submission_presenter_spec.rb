@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe SubmissionPresenter do
+  let(:user) { double }
+  let(:rates) { double }
   let(:submission) { instance_double(Submission) }
   let(:submission_repository) { double }
-  let(:submission_presenter) { described_class.new(submission, rates, submission_repository) }
+  let(:submission_presenter) { described_class.new(submission, rates, submission_repository, user) }
 
   describe "is a delegator" do
-    let(:rates) { double }
     subject { submission_presenter }
 
     it "acts like a Submission" do
@@ -17,7 +18,6 @@ RSpec.describe SubmissionPresenter do
 
   describe "#average_rate" do
     describe "when submission is unrated" do
-      let(:rates) { double }
       subject { submission_presenter.average_rate }
 
       before { allow(submission).to receive(:rated?).and_return(false) }
@@ -28,9 +28,10 @@ RSpec.describe SubmissionPresenter do
     describe "when submission is rated" do
       before { FactoryGirl.create(:setting, required_rates_num: 2) }
 
-      # overriden with real object since average is calculated in the db
+      # overriden with real objects since average is calculated in the db
       let(:submission) { FactoryGirl.create(:submission, :with_rates, rates_num: 2, rates_val: 2) }
       let(:rates) { submission.rates }
+
       subject { submission_presenter.average_rate }
 
       it { is_expected.to eq(2) }
@@ -39,7 +40,6 @@ RSpec.describe SubmissionPresenter do
 
   describe "delegates methods to submission_repository" do
     describe "#next" do
-      let(:rates) { double }
       let(:result) { double }
       subject { submission_presenter.next }
 
@@ -53,7 +53,6 @@ RSpec.describe SubmissionPresenter do
     end
 
     describe "#previous" do
-      let(:rates) { double }
       let(:result) { double }
       subject { submission_presenter.previous }
 
@@ -68,7 +67,6 @@ RSpec.describe SubmissionPresenter do
   end
 
   describe "#rates_count" do
-    let(:rates) { double }
     subject { submission_presenter.rates_count }
 
     before { allow(rates).to receive(:count).and_return(1) }
@@ -77,7 +75,6 @@ RSpec.describe SubmissionPresenter do
   end
 
   describe "#created_at" do
-    let(:rates) { double }
     subject { submission_presenter.created_at }
 
     before do
@@ -87,5 +84,31 @@ RSpec.describe SubmissionPresenter do
     end
 
     it { is_expected.to eq("01-01-2000") }
+  end
+
+  describe "#current_user_rate_value" do
+    #overriden with a real objects
+    let(:user) { FactoryGirl.create(:user) }
+    let(:submission) { FactoryGirl.create(:submission) }
+
+    context "when the user has rated the submission" do
+      before do
+        FactoryGirl.create(:rate, submission: submission, user: user, value: 1)
+      end
+
+      subject { submission_presenter.current_user_rate_value }
+
+      it "returns its value" do
+        expect(subject).to eq(1)
+      end
+    end
+
+    context "when the user hasn't rated the submission yet" do
+      subject { submission_presenter.current_user_rate_value }
+
+      it "returns 0" do
+        expect(subject).to eq(0)
+      end
+    end
   end
 end

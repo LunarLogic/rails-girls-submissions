@@ -2,28 +2,23 @@ class RateCreator
   def self.build(value, submission_id, user_id)
     submission = Submission.find(submission_id)
     user = User.find(user_id)
-    new(value, submission, user, RateChecker.new)
+    new(value, submission, user)
   end
 
-  def initialize(value, submission, user, rate_checker)
+  def initialize(value, submission, user)
     @value = value
     @submission = submission
     @user = user
-    @rate_checker = rate_checker
   end
 
   def call
-    rate = Rate.new({ value: @value, submission: @submission, user: @user })
+    rate = Rate.find_or_initialize_by(user_id: user.id, submission_id: submission.id)
+    rate.value = value
+    success = rate.save
 
-    if @rate_checker.user_has_already_rated?(@submission.id, @user.id)
-        errors = ['You are not allowed to rate the same submission twice']
-        success = false
-        result = Result.new(rate, success, errors)
-    else
-      success = rate.save
-      result = Result.new(rate, success)
-    end
-
-    result
+    Result.new(rate, success)
   end
+
+  private
+  attr_reader :value, :submission, :user
 end
