@@ -14,14 +14,10 @@ class RateCreator
   end
 
   def call
-    if rate_checker.user_has_already_rated?
-      rate = Rate.find_by(user_id: user.id, submission_id: submission.id)
-      rate.value = value
-    else
-      rate = Rate.new({ value: value, submission: submission, user: user })
-    end
-
+    rate = Rate.find_or_initialize_by(user_id: user.id, submission_id: submission.id)
+    rate.value = value
     success = rate.save
+
     Result.new(rate, success)
   end
 

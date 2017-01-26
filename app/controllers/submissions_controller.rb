@@ -47,7 +47,6 @@ class SubmissionsController < ApplicationController
       comment_presenters: comment_presenters,
       rate_presenters: rate_presenters,
       submission_presenter: submission_presenter,
-      user_has_already_rated: rate_checker.user_has_already_rated?,
       current_user_rate_value: rate_checker.current_user_rate_value
     }
   end
