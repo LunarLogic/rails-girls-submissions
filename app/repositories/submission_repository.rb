@@ -1,10 +1,10 @@
 class SubmissionRepository
   def rejected
-    Submission.where(rejected: true).order('created_at DESC')
+    Submission.where(rejected: true).order('created_at ASC')
   end
 
   def valid
-    not_rejected.order('created_at DESC')
+    not_rejected.order('created_at ASC')
   end
 
   def rated
