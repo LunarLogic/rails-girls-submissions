@@ -35,19 +35,21 @@ class SubmissionsController < ApplicationController
 
   def show
     submission = Submission.find(params[:id])
-    submission_presenter = SubmissionPresenter.new(submission, submission.rates, SubmissionRepository.new)
-    rate_checker = RateChecker.new(submission, current_user.id)
+    submission_presenter = SubmissionPresenter.new(
+      submission,
+      submission.rates,
+      SubmissionRepository.new,
+      current_user
+    )
 
     rate_presenters = create_rate_presenters(submission.rates)
     comment_presenters = create_comment_presenters(submission.comments)
 
     render :show, locals: {
       comment: Comment.new,
-      submission: submission,
       comment_presenters: comment_presenters,
       rate_presenters: rate_presenters,
-      submission_presenter: submission_presenter,
-      current_user_rate_value: rate_checker.current_user_rate_value
+      submission: submission_presenter
     }
   end
 
@@ -104,6 +106,13 @@ class SubmissionsController < ApplicationController
     end
 
     def create_submission_presenters(submissions)
-      submissions.map { |submission| SubmissionPresenter.new(submission, submission.rates, SubmissionRepository.new) }
+      submissions.map do |submission|
+        SubmissionPresenter.new(
+          submission,
+          submission.rates,
+          SubmissionRepository.new,
+          current_user
+        )
+      end
     end
 end

@@ -2,15 +2,13 @@ class RateCreator
   def self.build(value, submission_id, user_id)
     submission = Submission.find(submission_id)
     user = User.find(user_id)
-    rate_checker = RateChecker.new(submission, user.id)
-    new(value, submission, user, rate_checker)
+    new(value, submission, user)
   end
 
-  def initialize(value, submission, user, rate_checker)
+  def initialize(value, submission, user)
     @value = value
     @submission = submission
     @user = user
-    @rate_checker = rate_checker
   end
 
   def call
@@ -22,5 +20,5 @@ class RateCreator
   end
 
   private
-  attr_reader :value, :submission, :user, :rate_checker
+  attr_reader :value, :submission, :user
 end
