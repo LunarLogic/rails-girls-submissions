@@ -73,9 +73,9 @@ describe SubmissionRepository do
     let!(:to_rate_submission_1) { FactoryGirl.create(:to_rate_submission, created_at: 1.hour.ago) }
     let!(:to_rate_submission_2) { FactoryGirl.create(:to_rate_submission) }
 
-    describe "#next_to_rate" do
+    describe "#next" do
       context "when there is a next submission to rate" do
-        subject { submission_repository.next_to_rate(to_rate_submission_1.created_at) }
+        subject { submission_repository.next(to_rate_submission_1.created_at) }
 
           it "returns the next submission to rate" do
             expect(subject).to eq to_rate_submission_2
@@ -83,7 +83,7 @@ describe SubmissionRepository do
         end
 
       context "when there are no more submissions after" do
-        subject { submission_repository.next_to_rate(to_rate_submission_2.created_at) }
+        subject { submission_repository.next(to_rate_submission_2.created_at) }
 
         it "wraps around the submissions" do
           expect(subject).to eq to_rate_submission_1
@@ -91,9 +91,9 @@ describe SubmissionRepository do
       end
     end
 
-    describe "#previous_to_rate" do
+    describe "#previous" do
       context "when there is a previous submission to rate" do
-        subject { submission_repository.previous_to_rate(to_rate_submission_2.created_at) }
+        subject { submission_repository.previous(to_rate_submission_2.created_at) }
 
           it "returns the previous submission to rate" do
             expect(subject).to eq to_rate_submission_1
@@ -101,7 +101,7 @@ describe SubmissionRepository do
         end
 
       context "when there are no more submissions before" do
-        subject { submission_repository.previous_to_rate(to_rate_submission_1.created_at) }
+        subject { submission_repository.previous(to_rate_submission_1.created_at) }
 
         it "wraps around the submissions" do
           expect(subject).to eq to_rate_submission_2
