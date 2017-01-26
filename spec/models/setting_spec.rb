@@ -40,4 +40,15 @@ RSpec.describe Submission, type: :model do
     }
     expect(FactoryGirl.build(:setting, params)).not_to be_valid
   end
+
+  context "validates the presence" do
+    it { expect(FactoryGirl.build(:setting, required_rates_num: nil)).not_to be_valid }
+    it { expect(FactoryGirl.build(:setting, beginning_of_preparation_period: nil)).not_to be_valid }
+    it { expect(FactoryGirl.build(:setting, beginning_of_registration_period: nil)).not_to be_valid }
+    it { expect(FactoryGirl.build(:setting, beginning_of_closed_period: nil)).not_to be_valid }
+    it { expect(FactoryGirl.build(:setting, event_start_date: nil)).not_to be_valid }
+    it { expect(FactoryGirl.build(:setting, event_end_date: nil)).not_to be_valid }
+    it { expect(FactoryGirl.build(:setting, event_url: nil)).not_to be_valid }
+    it { expect(FactoryGirl.build(:setting, available_spots: nil)).not_to be_valid }
+  end
 end

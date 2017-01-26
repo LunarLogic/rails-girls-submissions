@@ -2,6 +2,15 @@ class Setting < ActiveRecord::Base
   validate :preparation_is_before_registration,
            :registration_is_before_closed,
            :start_is_before_end
+  validates :required_rates_num,
+            :beginning_of_preparation_period,
+            :beginning_of_registration_period,
+            :beginning_of_closed_period,
+            :event_start_date,
+            :event_end_date,
+            :event_url,
+            :available_spots,
+            presence: true
   validates :available_spots, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :required_rates_num, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
@@ -46,18 +55,21 @@ class Setting < ActiveRecord::Base
   private
 
   def preparation_is_before_registration
+    return unless beginning_of_registration_period && beginning_of_preparation_period
     if beginning_of_registration_period < beginning_of_preparation_period
       errors.add(:beginning_of_preparation_period, "has to be before beginning_of_registration_period")
     end
   end
 
   def registration_is_before_closed
+    return unless beginning_of_closed_period && beginning_of_registration_period
     if beginning_of_closed_period < beginning_of_registration_period
       errors.add(:beginning_of_registration_period, "has to be before beginning_of_closed_period")
     end
   end
 
   def start_is_before_end
+    return unless event_end_date && event_start_date
     if event_end_date < event_start_date
       errors.add(:event_start_date, "has to be before event_end_date")
     end
