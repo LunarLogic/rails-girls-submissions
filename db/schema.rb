@@ -62,19 +62,16 @@ ActiveRecord::Schema.define(version: 20170124102506) do
     t.boolean  "first_time"
     t.text     "goals"
     t.text     "problems"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "html"
     t.string   "css"
     t.string   "js"
     t.string   "ror"
     t.string   "db"
     t.string   "programming_others"
-    t.boolean  "rejected",                      default: false
-    t.string   "codecademy_status",             default: "pending"
-    t.boolean  "confirmed"
-    t.string   "confirmation_token"
-    t.datetime "confirmation_token_created_at"
+    t.boolean  "rejected",            default: false
+    t.string   "codecademy_status",   default: "pending"
   end
 
   add_index "submissions", ["email"], name: "index_submissions_on_email", unique: true, using: :btree
