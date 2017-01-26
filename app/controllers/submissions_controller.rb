@@ -36,7 +36,7 @@ class SubmissionsController < ApplicationController
   def show
     submission = Submission.find(params[:id])
     submission_presenter = SubmissionPresenter.new(submission, submission.rates, SubmissionRepository.new)
-    rate_checker = RateChecker.new(submission.id, current_user.id)
+    rate_checker = RateChecker.new(submission, current_user.id)
 
     rate_presenters = create_rate_presenters(submission.rates)
     comment_presenters = create_comment_presenters(submission.comments)

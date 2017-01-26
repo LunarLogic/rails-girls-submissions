@@ -6,15 +6,14 @@ RSpec.describe RateCreator do
   let(:value) { 1 }
   subject { described_class.build(value, submission.id, user.id) }
 
-  context 'when no rates' do
+  context 'when the user hasnt rated the submission yet' do
     it 'creates a new rate' do
-      result = subject.call
-      expect(Rate.where(value: value, submission_id: submission.id, user_id: user.id).first).not_to be_nil
-      expect(result.success).to be true
+      expect { subject.call }.to change(Rate, :count).from(0).to(1)
+      expect(Rate.find_by(value: value, submission_id: submission.id, user_id: user.id)).not_to be_nil
     end
   end
 
-  context 'with existing rate' do
+  context 'when the user already rated the submission' do
     let!(:rate) { FactoryGirl.create(:rate, submission: submission, user: user, value: 3) }
 
     it 'updates the rate' do

@@ -2,7 +2,7 @@ class RateCreator
   def self.build(value, submission_id, user_id)
     submission = Submission.find(submission_id)
     user = User.find(user_id)
-    rate_checker = RateChecker.new(submission.id, user.id)
+    rate_checker = RateChecker.new(submission, user.id)
     new(value, submission, user, rate_checker)
   end
 
@@ -16,12 +16,12 @@ class RateCreator
   def call
     if rate_checker.user_has_already_rated?
       rate = Rate.find_by(user_id: user.id, submission_id: submission.id)
-      success = rate.update_attribute(:value, value)
+      rate.value = value
     else
       rate = Rate.new({ value: value, submission: submission, user: user })
-      success = rate.save
     end
 
+    success = rate.save
     Result.new(rate, success)
   end
 
