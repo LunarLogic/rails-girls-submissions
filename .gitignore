@@ -20,3 +20,6 @@
 /config/allowed_users.yml
 
 /vendor/.byebug_history
+
+# Ignore all failing integration tests' screenshots
+screenshot_*.html
