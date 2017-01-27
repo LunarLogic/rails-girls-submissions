@@ -1,39 +1,34 @@
 class WaitingSubmissionsAcceptor
+  def self.build
+    new(SubmissionRepository.new)
+  end
+
+  def initialize(submission_repository)
+    @submission_repository = submission_repository
+  end
+
   def call
-    #TODO: Confirm if submissions first in waiting line come first
-    waiting_submissions.each do |waiting_submission|
-      expired_submission = not_rejected_expired_submission
-      break unless expired_submission
-
-      reject_expired_submission(expired_submission)
-
-      send_email_with_confirmation_link(waiting_submission)
+    submissions_to_be_expired.each_with_index do |s, i|
+      s.expired!
+      send_email_with_confirmation_link(waitlist_submissions[i]) if waitlist_submissions[i]
     end
   end
 
   private
 
-  def waiting_submissions
-    SubmissionRepository.new.waitlist.select { |w| w.confirmation_token.nil? }
+  def waitlist_submissions
+    @waitlist_submissions ||= @submission_repository.waitlist.select { |w| w.confirmation_status.nil? }.flatten
   end
 
-  def not_rejected_expired_submission
-    Submission.all.select do |submission|
-      expired_submission?(submission)
-    end.first #TODO: Sort by confirmation_token_created_at?
+  def submissions_to_be_expired
+    Submission.select do |submission|
+      submission.has_expired?
+    end
   end
 
-  def reject_expired_submission(expired_submission)
-    expired_submission.reject
-    expired_submission.save
-  end
-
-  def send_email_with_confirmation_link(waiting_submission)
-    waiting_submission.generate_confirmation_token!
-    ResultsMailer.accepted_email(waiting_submission).deliver_now
-  end
-
-  def expired_submission?(submission)
-    submission.confirmation_token.present? && submission.confirmation_token_created_at < 1.week.ago && !submission.rejected && !submission.confirmed
+  def send_email_with_confirmation_link(waitlist_submission)
+    waitlist_submission.generate_confirmation_token!
+    waitlist_submission.awaiting!
+    ResultsMailer.accepted_email(waitlist_submission).deliver_now
   end
 end
