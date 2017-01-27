@@ -8,7 +8,7 @@ class SubmissionsController < ApplicationController
     if submission.confirmation_token_created_at < 1.week.ago
       render text: "Time for confirmation expired!"
     else
-      submission.confirm!
+      submission.confirmed!
       render text: "You confirmed your submission!"
     end
   end
