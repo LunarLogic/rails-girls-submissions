@@ -10,11 +10,10 @@ describe "managing questions" do
     FactoryGirl.create_list(:question, count)
 
     visit questions_path
-    expect(current_path).to eq questions_path
     expect(page).to have_selector(".rb-question", count: count)
   end
 
-  it "creates a new radio button question" do
+  it "creates a new question" do
     visit questions_path
 
     click_link "Add a radio button question"
@@ -25,5 +24,14 @@ describe "managing questions" do
     click_button('Create')
     expect(current_path).to eq questions_path
     expect(page).to have_text(text)
+  end
+
+  it "deletes a question" do
+    FactoryGirl.create(:question)
+
+    visit questions_path
+    click_link('Destroy')
+    expect(current_path).to eq questions_path
+    expect(page).not_to have_selector(".rb-question")
   end
 end

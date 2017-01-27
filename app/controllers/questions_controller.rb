@@ -4,14 +4,17 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    question = Question.new
-    render :new, locals: { question: question }
+    render :new, locals: { question: Question.new }
   end
 
   def create
-    text = question_params[:text]
-    question = Question.create(text: text)
+    Question.create(question_params)
+    redirect_to :questions
+  end
 
+  def destroy
+    question = Question.find(params[:id])
+    question.destroy
     redirect_to :questions
   end
 

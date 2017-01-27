@@ -3,7 +3,8 @@
 <ui>
   <% questions.each do |question| %>
     <li class="rb-question">
-      <span><%= question.text %>
+      <span><%= question.text %></span>
+      <span><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></span>
     </li>
   <% end %>
 <ul>
