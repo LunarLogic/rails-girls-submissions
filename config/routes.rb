@@ -18,10 +18,13 @@ Rails.application.routes.draw do
   put "/settings/update", to: "settings#update"
 
   get "/admin", to: "submissions#valid", path: :admin
-  devise_for :users, skip: [:passwords, :registrations], controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, skip: [:passwords, :registrations],
+    controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   resources :submissions, except: [:edit, :update, :index] do
     resource :rate, only: :create
     resources :comments, only: :create
   end
+
+  resources :questions, only: [:index, :new, :create]
 end
