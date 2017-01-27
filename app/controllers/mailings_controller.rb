@@ -1,8 +1,6 @@
 class MailingsController < ApplicationController
   def send_emails
     submissions_accepted = SubmissionRepository.new.accepted
-    # submissions_waitlist = SubmissionRepository.new.waitlist
-    # submissions_unaccepted = SubmissionRepository.new.unaccepted
 
     submissions_accepted.each do |submission|
       submission.generate_confirmation_token!
