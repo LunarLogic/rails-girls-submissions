@@ -18,4 +18,14 @@ RSpec.describe Submission, type: :model do
     expect(FactoryGirl.build(:submission, age: -30)).not_to be_valid
     expect(FactoryGirl.build(:submission, age: 130)).not_to be_valid
   end
+
+  describe "#has_expired?" do
+    let(:submission) { FactoryGirl.build(:submission,
+                                         confirmation_status: 'awaiting',
+                                         confirmation_token_created_at: 1.week.ago - 1) }
+
+    it "returns true when token expired but confirmation status hasn't yet changed" do
+      expect(submission.has_expired?).to be true
+    end
+  end
 end
