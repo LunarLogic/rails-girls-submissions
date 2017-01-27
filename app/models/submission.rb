@@ -1,4 +1,6 @@
 class Submission < ActiveRecord::Base
+  enum confirmation_status: [:awaiting, :confirmed, :expired]
+
   validates :full_name, :age, :email, :codecademy_username, :description, :html, :css, :js, :ror, :db,
             :programming_others, :english, :operating_system, :goals, presence: true
   validates :first_time, inclusion: { in: [true, false] }
