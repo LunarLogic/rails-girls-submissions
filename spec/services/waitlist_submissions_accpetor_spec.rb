@@ -90,6 +90,14 @@ RSpec.describe WaitingSubmissionsAcceptor do
           subject.call
         end
 
+        it 'generates token for correct waitlist submissions' do
+          subject.call
+          expect(waitlist_submissions_to_be_accepted[0].confirmation_token).to be_present
+          expect(waitlist_submissions_to_be_accepted[1].confirmation_token).to be_present
+          expect(waitlist_submission_over_the_limit.confirmation_token).to be_nil
+          expect(waitlist_submission_that_already_has_confirmation_link.confirmation_token).to be_nil
+        end
+
         it 'changes confirmation status for correct waitlist submissions' do
           subject.call
           expect(waitlist_submissions_to_be_accepted).to all(be_awaiting)
