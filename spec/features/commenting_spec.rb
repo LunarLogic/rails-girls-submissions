@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe "the commenting process" do
   let!(:submission) { FactoryGirl.create(:submission) }
   let!(:user) { FactoryGirl.create(:user) }

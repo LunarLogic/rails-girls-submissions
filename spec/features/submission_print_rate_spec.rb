@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe "printing submission's rates in submission show view" do
   let!(:submission) { FactoryGirl.create(:submission) }
   let!(:user) { FactoryGirl.create(:user) }
