@@ -9,7 +9,7 @@ describe 'scheduled:waitlist_emails' do
   let(:rake)      { Rake::Application.new }
   let(:task_name) { self.class.top_level_description }
   let(:task_path) { "lib/tasks/scheduled/waitlist_emails" }
-  let(:waitlist_submissions_acceptor) { instance_double WaitingSubmissionsAcceptor }
+  let(:waitlist_submissions_acceptor) { instance_double WaitlistSubmissionsAcceptor }
   subject         { rake[task_name] }
 
   def loaded_files_excluding_current_rake_file
@@ -24,7 +24,7 @@ describe 'scheduled:waitlist_emails' do
   end
 
   it 'calls correct service' do
-    expect(WaitingSubmissionsAcceptor).to receive(:build).and_return(waitlist_submissions_acceptor)
+    expect(WaitlistSubmissionsAcceptor).to receive(:build).and_return(waitlist_submissions_acceptor)
     expect(waitlist_submissions_acceptor).to receive(:call)
     subject.invoke
   end
