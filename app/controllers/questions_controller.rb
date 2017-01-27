@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   def index
-    render :index
+    render :index, locals: { questions: Question.all }
   end
 
   def new

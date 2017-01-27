@@ -1,2 +1,11 @@
 <h1>Questions Creator</h1>
+
+<ui>
+  <% questions.each do |question| %>
+    <li class="rb-question">
+      <span><%= question.text %>
+    </li>
+  <% end %>
+<ul>
+
 <%= link_to 'Add a radio button question', new_question_path %>

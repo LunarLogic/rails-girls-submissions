@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :question do
-    text "text"
+    sequence(:text) { |i| "text#{i}" }
   end
 end
