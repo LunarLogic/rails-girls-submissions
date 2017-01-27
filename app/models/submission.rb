@@ -41,11 +41,6 @@ class Submission < ActiveRecord::Base
     save
   end
 
-  def confirm!
-    self.confirmed = true
-    save
-  end
-
   def has_expired?
     awaiting? && confirmation_token_created_at < 1.week.ago
   end
