@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe "testing submissions views:" do
   let(:user) { FactoryGirl.create(:user) }
 
