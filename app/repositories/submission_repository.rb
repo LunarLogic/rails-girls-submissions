@@ -24,7 +24,7 @@ class SubmissionRepository
   end
 
   def to_invite
-    rated_scope.where.not(confirmation_status: 3).limit(Setting.get.available_spots).to_a
+    rated_scope.where.not(confirmation_status: 3).limit(Setting.get.available_spots).where(confirmation_status: 0).to_a
   end
 
   def next_to_rate(current_created_at)
