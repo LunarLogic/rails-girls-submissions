@@ -1,23 +1,27 @@
 class WaitlistSubmissionsAcceptor
   def self.build
-    new(SubmissionRepository.new)
+    new(SubmissionRepository.new, SubmissionsInviter.new)
   end
 
-  def initialize(submission_repository)
+  def initialize(submission_repository, submissions_inviter)
     @submission_repository = submission_repository
+    @submissions_inviter = submissions_inviter
   end
 
   def call
-    submissions_to_be_expired.each_with_index do |s, i|
+    submissions_to_be_expired.each do |s|
       s.expired!
-      send_email_with_confirmation_link(waitlist_submissions[i]) if waitlist_submissions[i]
+    end
+
+    waitlist_submissions.each do |s|
+      invite_submission(s)
     end
   end
 
   private
 
   def waitlist_submissions
-    @waitlist_submissions ||= @submission_repository.waitlist.select { |w| w.confirmation_status.nil? }.flatten
+    @submission_repository.to_invite
   end
 
   def submissions_to_be_expired
@@ -26,9 +30,7 @@ class WaitlistSubmissionsAcceptor
     end
   end
 
-  def send_email_with_confirmation_link(waitlist_submission)
-    waitlist_submission.generate_confirmation_token!
-    waitlist_submission.awaiting!
-    ResultsMailer.accepted_email(waitlist_submission).deliver_now
+  def invite_submission(waitlist_submission)
+    @submissions_inviter.invite(waitlist_submission)
   end
 end
