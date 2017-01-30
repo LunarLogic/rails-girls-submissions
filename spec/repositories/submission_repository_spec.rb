@@ -109,4 +109,38 @@ describe SubmissionRepository do
       end
     end
   end
+
+  describe '#to_invite' do
+    let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
+    let!(:to_invite_submissions) { [to_invite_submission_1, to_invite_submission_2, to_invite_submission_3] }
+    let!(:to_invite_submission_1) { FactoryGirl.create(:submission,
+                                                       :with_rates,
+                                                       confirmation_status: 'confirmed',
+                                                       rates_num: setting.required_rates_num,
+                                                       rates_val: 4) }
+    let!(:to_invite_submission_2) { FactoryGirl.create(:submission,
+                                                       :with_rates,
+                                                       confirmation_status: 'awaiting',
+                                                       rates_num: setting.required_rates_num,
+                                                       rates_val: 3) }
+    let!(:to_invite_submission_3) { FactoryGirl.create(:submission,
+                                                       :with_rates,
+                                                       confirmation_status: 'not_avaible',
+                                                       rates_num: setting.required_rates_num,
+                                                       rates_val: 2) }
+    let!(:to_invite_submission_over_the_limit) { FactoryGirl.create(:submission,
+                                                                    :with_rates,
+                                                                    confirmation_status: 'not_avaible',
+                                                                    rates_num: setting.required_rates_num,
+                                                                    rates_val: 1) }
+    let!(:not_to_invite_submission) { FactoryGirl.create(:submission,
+                                                         :with_rates,
+                                                         confirmation_status: 'expired',
+                                                         rates_num: setting.required_rates_num,
+                                                         rates_val: 3) }
+
+    subject { submission_repository.to_invite }
+
+    it { expect(subject).to eq(to_invite_submissions) }
+  end
 end

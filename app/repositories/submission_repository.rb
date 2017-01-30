@@ -23,6 +23,10 @@ class SubmissionRepository
     rated_scope.offset(Setting.get.available_spots).to_a
   end
 
+  def to_invite
+    rated_scope.where.not(confirmation_status: 3).limit(Setting.get.available_spots).to_a
+  end
+
   def next_to_rate(current_created_at)
     to_rate_scope.where('submissions.created_at > ?', current_created_at).order('created_at ASC')
       .first || to_rate_scope.first
