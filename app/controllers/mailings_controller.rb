@@ -1,6 +1,6 @@
 class MailingsController < ApplicationController
   def send_emails
-    submissions_accepted = SubmissionRepository.new.accepted
+    submissions_accepted = SubmissionRepository.new.to_invite
 
     submissions_accepted.each do |submission|
       submission.generate_confirmation_token!
