@@ -19,6 +19,16 @@ RSpec.describe Submission, type: :model do
     expect(FactoryGirl.build(:submission, age: 130)).not_to be_valid
   end
 
+  describe '#generate_confirmation_token!' do
+    let(:submission) { FactoryGirl.create(:submission) }
+
+    it 'generates confirmation token' do
+      submission.generate_confirmation_token!
+      expect(submission.confirmation_token).not_to be_nil
+      expect(submission.confirmation_token_created_at).not_to be_nil
+    end
+  end
+
   describe "#has_expired?" do
     let(:submission) { FactoryGirl.build(:submission,
                                          confirmation_status: 'awaiting',
