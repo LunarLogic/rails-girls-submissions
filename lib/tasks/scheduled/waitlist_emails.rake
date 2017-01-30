@@ -1,5 +1,5 @@
 namespace :scheduled do
   task waitlist_emails: :environment do
-    WaitingSubmissionsAcceptor.build.call
+    WaitlistSubmissionsAcceptor.build.call
   end
 end
