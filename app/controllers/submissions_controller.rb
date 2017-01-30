@@ -59,7 +59,13 @@ class SubmissionsController < ApplicationController
     elsif Setting.registration_period?
       submission = Submission.new
       footer_presenter = FooterPresenter.new(Setting.get)
-      render :new, locals: { submission: submission, footer_presenter: footer_presenter }
+      answers = form_answers(form_questions)
+
+      render :new, locals: {
+        submission: submission,
+        answers: answers,
+        footer_presenter: footer_presenter
+      }
     else
       render :closed
     end
@@ -72,13 +78,21 @@ class SubmissionsController < ApplicationController
     submission = Submission.new(submission_params)
 
     if submission.valid?
-      submission_rejector = SubmissionRejector.new.reject_if_any_rules_broken(submission)
+      SubmissionRejector.new.reject_if_any_rules_broken(submission)
       submission.save
+
+      create_answers(answers_params, submission.id)
 
       redirect_to submissions_thank_you_url
     else
       footer_presenter = FooterPresenter.new(Setting.get)
-      render :new, locals: { submission: submission, footer_presenter: footer_presenter }
+      answers = form_answers(form_questions)
+
+      render :new, locals: {
+        submission: submission,
+        answers: answers,
+        footer_presenter: footer_presenter
+      }
     end
   end
 
@@ -90,29 +104,50 @@ class SubmissionsController < ApplicationController
   end
 
   private
-    def submission_params
-      params.require(:submission).permit(:full_name, :email, :age,
-      :codecademy_username, :description, :html, :css, :js, :ror, :db,
-      :programming_others, :english, :operating_system, :first_time, :goals,
-      :problems)
-    end
 
-    def create_rate_presenters(rates)
-      rates.map { |rate| RatePresenter.new(rate, rate.user) }
-    end
+  def submission_params
+    params.require(:submission).permit(:full_name, :email, :age, :codecademy_username,
+      :description, :html, :css, :js, :ror, :db, :programming_others, :english,
+      :operating_system, :first_time, :goals, :problems)
+  end
 
-    def create_comment_presenters(comments)
-      comments.map { |comment| CommentPresenter.new(comment, comment.user) }
-    end
+  def answers_params
+    attributes = params.require(:submission)
+      .permit(answers_attributes: [:value, :question_id])[:answers_attributes]
 
-    def create_submission_presenters(submissions)
-      submissions.map do |submission|
-        SubmissionPresenter.new(
-          submission,
-          submission.rates,
-          SubmissionRepository.new,
-          current_user
-        )
-      end
+    attributes ? attributes.values : {}
+  end
+
+  def create_rate_presenters(rates)
+    rates.map { |rate| RatePresenter.new(rate, rate.user) }
+  end
+
+  def create_comment_presenters(comments)
+    comments.map { |comment| CommentPresenter.new(comment, comment.user) }
+  end
+
+  def create_submission_presenters(submissions)
+    submissions.map do |submission|
+      SubmissionPresenter.new(
+        submission,
+        submission.rates,
+        SubmissionRepository.new,
+        current_user
+      )
     end
+  end
+
+  def form_answers(questions)
+    questions.map { |q| Answer.new(question: q) }
+  end
+
+  def form_questions
+    Question.all
+  end
+
+  def create_answers(answers_params, submission_id)
+    answers_params.map do |a|
+      Answer.create(a.merge({ submission_id: submission_id }))
+    end
+  end
 end

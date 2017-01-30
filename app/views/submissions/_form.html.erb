@@ -56,6 +56,10 @@
     </fieldset>
   <% end %>
 
+  <% answers.each do |answer| %>
+    <%= render "answer_form", answer: answer, question: answer.question, f: f %>
+  <% end %>
+
   <fieldset class="form-field form-field-collection">
     <legend>What is your English level?</legend>
     <div>
