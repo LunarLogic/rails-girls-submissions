@@ -38,6 +38,7 @@ describe 'inviting accepted submissions' do
 
     visit submissions_confirm_path(confirmation_token: invited_submission.confirmation_token)
     expect(invited_submission.reload).to be_confirmed
+    expect(page).to have_text('confirmed')
   end
 
   it "doesn't confirm submission with expired confirmation token" do
@@ -52,5 +53,20 @@ describe 'inviting accepted submissions' do
 
     visit submissions_confirm_path(confirmation_token: invited_submission.confirmation_token)
     expect(invited_submission.reload).not_to be_confirmed
+    expect(page).to have_text('expired')
+  end
+
+  it 'show correct info when invitation is already confirmed but token expired' do
+    confirmed_submission = FactoryGirl.create(
+      :submission,
+      :with_rates,
+      confirmation_status: 'confirmed',
+      confirmation_token: 'yyy',
+      confirmation_token_created_at: 1.week.ago - 1,
+      rates_num: setting.required_rates_num,
+      rates_val: 1)
+
+    visit submissions_confirm_path(confirmation_token: confirmed_submission.confirmation_token)
+    expect(page).to have_text('confirmed')
   end
 end
