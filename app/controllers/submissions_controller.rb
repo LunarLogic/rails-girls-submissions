@@ -1,5 +1,5 @@
 class SubmissionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:new, :create, :thank_you]
+  skip_before_action :authenticate_user!, only: [:confirm, :new, :create, :thank_you]
   layout 'dashboard', only: [:all, :rated, :to_rate, :rejected, :results]
 
   def confirm #TODO: add views
