@@ -13,7 +13,7 @@
 <% end %>
 
 <div class="l-wrapper-narrow">
-  <%= link_to '← Back', submissions_path, class: "link-return" %>
+  <%= link_to '← Back', admin_path, class: "link-return" %>
   <article class="l-submission-single">
     <h1 class="submission-header">
       <%= submission.full_name %>
@@ -107,7 +107,9 @@
 
     <aside class="aside-widget aside-widget-absolute">
       <%= form_tag(submission_rate_path(submission), class: "submission-rating-form") do %>
-        <fieldset class="starability-fade fieldset-inline">
+        <fieldset class="starability-fade fieldset-inline"
+                  id="js-user-rating"
+                  data-rate="<%= submission.current_user_rate_value %>">
           <% 5.downto(1) do |rate| %>
             <%= radio_button_tag("value", rate) %>
             <%= label_tag("value_" + rate.to_s, rate) %>
@@ -139,8 +141,8 @@
         </section>
       <% end %>
       <section class="submission-navigation">
-        <%= link_to "← Previous submission", submission_presenter.previous_to_rate, class: "link-prev" %>
-        <%= link_to "Next submission →", submission_presenter.next_to_rate, class: "link-next" %>
+        <%= link_to "← Previous submission", submission.previous, class: "link-prev" %>
+        <%= link_to "Next submission →", submission.next, class: "link-next" %>
       </section>
       <section class="submission-comments">
         <h2 class="aside-widget-header"> Comments </h2>

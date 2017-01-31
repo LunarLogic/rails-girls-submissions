@@ -39,16 +39,16 @@ ActiveRecord::Schema.define(version: 20170127131319) do
   add_index "rates", ["user_id"], name: "index_rates_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.integer  "required_rates_num"
+    t.integer  "required_rates_num",               null: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.datetime "beginning_of_preparation_period"
-    t.datetime "beginning_of_registration_period"
-    t.datetime "beginning_of_closed_period"
+    t.datetime "beginning_of_preparation_period",  null: false
+    t.datetime "beginning_of_registration_period", null: false
+    t.datetime "beginning_of_closed_period",       null: false
     t.date     "event_start_date",                 null: false
     t.date     "event_end_date",                   null: false
     t.string   "event_url",                        null: false
-    t.integer  "available_spots"
+    t.integer  "available_spots",                  null: false
   end
 
   create_table "submissions", force: :cascade do |t|
@@ -62,16 +62,16 @@ ActiveRecord::Schema.define(version: 20170127131319) do
     t.boolean  "first_time"
     t.text     "goals"
     t.text     "problems"
-    t.datetime "created_at",                                        null: false
-    t.datetime "updated_at",                                        null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "html"
     t.string   "css"
     t.string   "js"
     t.string   "ror"
     t.string   "db"
     t.string   "programming_others"
-    t.boolean  "rejected",                      default: false
-    t.string   "codecademy_status",             default: "pending"
+    t.boolean  "rejected",            default: false
+    t.string   "codecademy_status",   default: "pending"
     t.string   "confirmation_token"
     t.datetime "confirmation_token_created_at"
     t.integer  "confirmation_status"

@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:confirm, :new, :create, :thank_you]
-  layout 'dashboard', only: [:all, :rated, :to_rate, :rejected, :results]
+  layout 'dashboard', only: [:valid, :all, :rated, :to_rate, :rejected, :results]
 
   def confirm
     token = params[:confirmation_token]
@@ -13,18 +13,18 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  def all
-    submissions = Submission.all
+  def valid
+    submissions_valid = SubmissionRepository.new.valid
 
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions),
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions_valid),
       show_average: true, show_rates_count: true }
   end
 
-  def rated
-    submissions_rated = SubmissionRepository.new.rated
+  def rejected
+    submissions_rejected = SubmissionRepository.new.rejected
 
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions_rated),
-      show_average: true, show_rates_count: true }
+    render :list, locals: { submission_presenters: create_submission_presenters(submissions_rejected),
+      show_average: false, show_rates_count: false }
   end
 
   def to_rate
@@ -32,13 +32,6 @@ class SubmissionsController < ApplicationController
 
     render :list, locals: { submission_presenters: create_submission_presenters(submissions_to_rate),
       show_average: false, show_rates_count: true }
-  end
-
-  def rejected
-    submissions_rejected = SubmissionRepository.new.rejected
-
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions_rejected),
-      show_average: false, show_rates_count: false  }
   end
 
   def results
@@ -53,16 +46,21 @@ class SubmissionsController < ApplicationController
 
   def show
     submission = Submission.find(params[:id])
-    submission_presenter = SubmissionPresenter.new(submission, submission.rates, SubmissionRepository.new)
+    submission_presenter = SubmissionPresenter.new(
+      submission,
+      submission.rates,
+      SubmissionRepository.new,
+      current_user
+    )
+
     rate_presenters = create_rate_presenters(submission.rates)
     comment_presenters = create_comment_presenters(submission.comments)
 
     render :show, locals: {
       comment: Comment.new,
-      submission: submission,
       comment_presenters: comment_presenters,
       rate_presenters: rate_presenters,
-      submission_presenter: submission_presenter
+      submission: submission_presenter
     }
   end
 
@@ -119,6 +117,13 @@ class SubmissionsController < ApplicationController
     end
 
     def create_submission_presenters(submissions)
-      submissions.map { |submission| SubmissionPresenter.new(submission, submission.rates, SubmissionRepository.new) }
+      submissions.map do |submission|
+        SubmissionPresenter.new(
+          submission,
+          submission.rates,
+          SubmissionRepository.new,
+          current_user
+        )
+      end
     end
 end
