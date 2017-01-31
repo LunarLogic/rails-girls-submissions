@@ -1,8 +1,8 @@
 class MailingsController < ApplicationController
-  def send_emails
-    submissions_accepted = SubmissionRepository.new.to_invite
+  def send_invitation_emails
+    submissions_to_invite = SubmissionRepository.new.to_invite
 
-    submissions_accepted.each do |submission|
+    submissions_to_invite.each do |submission|
       SubmissionsInviter.new.invite(submission)
     end
 

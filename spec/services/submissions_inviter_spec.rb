@@ -9,7 +9,7 @@ describe SubmissionsInviter do
     it 'invites submission' do
       expect(submission).to receive(:generate_confirmation_token!)
       expect(submission).to receive(:awaiting!)
-      expect(ResultsMailer).to receive(:accepted_email).with(submission).and_return(message_delivery)
+      expect(InvitationsMailer).to receive(:invitation_email).with(submission).and_return(message_delivery)
       expect(message_delivery).to receive(:deliver_now)
       subject
     end
