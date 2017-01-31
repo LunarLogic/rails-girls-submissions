@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe WaitlistSubmissionsAcceptor do
+RSpec.describe SubmissionsExpirationHandler do
   describe '.call' do
     let(:setting) { FactoryGirl.build(:setting, available_spots: 1) }
 

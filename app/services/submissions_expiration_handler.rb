@@ -1,4 +1,4 @@
-class WaitlistSubmissionsAcceptor
+class SubmissionsExpirationHandler
   def self.build
     new(SubmissionRepository.new, SubmissionsInviter.new)
   end

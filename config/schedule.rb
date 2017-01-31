@@ -20,5 +20,5 @@
 # Learn more: http://github.com/javan/whenever
 
 every :day, at: '6:00 am' do
-  rake 'scheduled:waiting_list_emails'
+  rake 'scheduled:handle_submissions_expiration'
 end
