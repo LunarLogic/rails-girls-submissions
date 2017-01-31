@@ -9,7 +9,7 @@ class SubmissionsController < ApplicationController
       render text: "Time for confirmation expired!"
     else
       submission.confirmed!
-      render text: "You confirmed your submission!"
+      render text: "You confirmed your invitation!"
     end
   end
 
