@@ -9,7 +9,7 @@ describe 'scheduled:handle_submissions_expiration' do
   let(:rake)      { Rake::Application.new }
   let(:task_name) { self.class.top_level_description }
   let(:task_path) { "lib/tasks/scheduled/handle_submissions_expiration" }
-  let(:waitlist_submissions_acceptor) { instance_double SubmissionsExpirationHandler }
+  let(:submissions_expiration_handler) { instance_double SubmissionsExpirationHandler }
   subject         { rake[task_name] }
 
   def loaded_files_excluding_current_rake_file
@@ -24,8 +24,8 @@ describe 'scheduled:handle_submissions_expiration' do
   end
 
   it 'calls correct service' do
-    expect(SubmissionsExpirationHandler).to receive(:build).and_return(waitlist_submissions_acceptor)
-    expect(waitlist_submissions_acceptor).to receive(:call)
+    expect(SubmissionsExpirationHandler).to receive(:build).and_return(submissions_expiration_handler)
+    expect(submissions_expiration_handler).to receive(:call)
     subject.invoke
   end
 end

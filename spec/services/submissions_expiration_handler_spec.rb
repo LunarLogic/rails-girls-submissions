@@ -35,7 +35,7 @@ RSpec.describe SubmissionsExpirationHandler do
       it 'expires correct submissions' do
         subject.call
         expect(expired_submissions).to all(be_expired)
-        expect(confirmed_submission).to be_confirmed
+        expect(confirmed_submission).not_to be_expired
       end
 
       context 'when there are waitlist submissions' do
