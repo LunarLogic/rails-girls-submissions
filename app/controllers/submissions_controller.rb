@@ -3,14 +3,16 @@ class SubmissionsController < ApplicationController
   layout 'dashboard', only: [:valid, :all, :rated, :to_rate, :rejected, :results]
 
   def confirm
-    token = params[:confirmation_token]
-    submission = Submission.find_by(confirmation_token: token)
+    token = params.require(:confirmation_token)
+    submission = Submission.find_by!(confirmation_token: token)
     if submission.has_expired?
       render text: "Time for confirmation expired!"
     else
       submission.confirmed!
       render text: "You confirmed your invitation!"
     end
+  rescue
+    render text: "Something went wrong. Please make sure the address you are trying to visit is correct, otherwise contact us by replying to the email you received the confirmation link from."
   end
 
   def valid

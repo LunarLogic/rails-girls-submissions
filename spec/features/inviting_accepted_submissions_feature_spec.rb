@@ -69,4 +69,16 @@ describe 'inviting accepted submissions' do
     visit submissions_confirm_path(confirmation_token: confirmed_submission.confirmation_token)
     expect(page).to have_text('confirmed')
   end
+
+  context 'handling exceptions' do
+    it 'missing confirmation token' do
+      visit submissions_confirm_path
+      expect(page).to have_text('Something went wrong')
+    end
+
+    it 'submission not found' do
+      visit submissions_confirm_path('uuu')
+      expect(page).to have_text('Something went wrong')
+    end
+  end
 end
