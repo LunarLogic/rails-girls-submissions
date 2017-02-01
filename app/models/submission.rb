@@ -38,7 +38,7 @@ class Submission < ActiveRecord::Base
   def generate_confirmation_token!
     self.confirmation_token = Devise.friendly_token
     self.confirmation_token_created_at = Time.current
-    save
+    save!
   end
 
   def has_expired?
