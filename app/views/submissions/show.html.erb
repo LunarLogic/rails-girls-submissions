@@ -90,6 +90,10 @@
       <%= submission.operating_system %>
     </p>
 
+    <% answers.each do |answer| %>
+      <%= render "answer_show", answer: answer %>
+    <% end %>
+
     <p class="submission-answer">
       <span class="submission-answer-label">First time:</span>
       <%= submission.first_time ? "Yes" : "I took part in Rails Girls" %>

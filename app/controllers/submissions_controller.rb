@@ -6,6 +6,7 @@ class SubmissionsController < ApplicationController
 
     render :show, locals: {
       submission: SubmissionPresenter.build(submission, current_user),
+      answers: AnswerPresenter.collection(submission.answers),
       comment: Comment.new,
       comment_presenters: CommentPresenter.collection(submission.comments),
       rate_presenters: RatePresenter.collection(submission.rates)
