@@ -1,37 +1,5 @@
 class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new, :create, :thank_you]
-  layout 'dashboard', only: [:valid, :rated, :to_rate, :rejected, :results]
-
-  def valid
-    submissions_valid = SubmissionRepository.new.valid
-
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions_valid),
-      show_average: true, show_rates_count: true }
-  end
-
-  def rejected
-    submissions_rejected = SubmissionRepository.new.rejected
-
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions_rejected),
-      show_average: false, show_rates_count: false }
-  end
-
-  def to_rate
-    submissions_to_rate = SubmissionRepository.new.to_rate
-
-    render :list, locals: { submission_presenters: create_submission_presenters(submissions_to_rate),
-      show_average: false, show_rates_count: true }
-  end
-
-  def results
-    submissions_accepted = SubmissionRepository.new.accepted
-    submissions_waitlist = SubmissionRepository.new.waitlist
-
-    render :results, locals: {
-      submissions_accepted: submissions_accepted,
-      submissions_waitlist: submissions_waitlist
-    }
-  end
 
   def show
     submission = Submission.find(params[:id])
@@ -124,17 +92,6 @@ class SubmissionsController < ApplicationController
 
   def create_comment_presenters(comments)
     comments.map { |comment| CommentPresenter.new(comment, comment.user) }
-  end
-
-  def create_submission_presenters(submissions)
-    submissions.map do |submission|
-      SubmissionPresenter.new(
-        submission,
-        submission.rates,
-        SubmissionRepository.new,
-        current_user
-      )
-    end
   end
 
   def form_answers(questions)
