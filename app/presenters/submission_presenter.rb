@@ -1,4 +1,8 @@
 class SubmissionPresenter < SimpleDelegator
+  def self.build(submission, user)
+    new(submission, submission.rates, SubmissionRepository.new, user)
+  end
+
   def initialize(submission, rates, submission_repository, user)
     super(submission)
     @rates = rates

@@ -8,4 +8,8 @@ class Answer < ActiveRecord::Base
     ok: 2,
     well: 3
   }
+
+  def self.create_collection(attributes_collection)
+    attributes_collection.map { |attributes| Answer.create(attributes) }
+  end
 end

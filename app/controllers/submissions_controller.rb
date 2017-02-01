@@ -3,21 +3,12 @@ class SubmissionsController < ApplicationController
 
   def show
     submission = Submission.find(params[:id])
-    submission_presenter = SubmissionPresenter.new(
-      submission,
-      submission.rates,
-      SubmissionRepository.new,
-      current_user
-    )
-
-    rate_presenters = create_rate_presenters(submission.rates)
-    comment_presenters = create_comment_presenters(submission.comments)
 
     render :show, locals: {
+      submission: SubmissionPresenter.build(submission, current_user),
       comment: Comment.new,
-      comment_presenters: comment_presenters,
-      rate_presenters: rate_presenters,
-      submission: submission_presenter
+      comment_presenters: CommentPresenter.collection(submission.comments),
+      rate_presenters: RatePresenter.collection(submission.rates)
     }
   end
 
@@ -25,14 +16,10 @@ class SubmissionsController < ApplicationController
     if Setting.preparation_period?
       render :preparation
     elsif Setting.registration_period?
-      submission = Submission.new
-      footer_presenter = FooterPresenter.new(Setting.get)
-      answers = form_answers(form_questions)
-
       render :new, locals: {
-        submission: submission,
-        answers: answers,
-        footer_presenter: footer_presenter
+        submission: Submission.new,
+        answers: build_form_answers(form_questions),
+        footer_presenter: FooterPresenter.new(Setting.get)
       }
     else
       render :closed
@@ -40,6 +27,7 @@ class SubmissionsController < ApplicationController
   end
 
   def thank_you
+    render :thank_you
   end
 
   def create
@@ -48,27 +36,17 @@ class SubmissionsController < ApplicationController
     if submission.valid?
       SubmissionRejector.new.reject_if_any_rules_broken(submission)
       submission.save
-
-      create_answers(answers_params, submission.id)
+      attributes_collection = answers_attributes(answers_params, submission.id)
+      Answer.create_collection(attributes_collection)
 
       redirect_to submissions_thank_you_url
     else
-      footer_presenter = FooterPresenter.new(Setting.get)
-      answers = form_answers(form_questions)
-
       render :new, locals: {
         submission: submission,
-        answers: answers,
-        footer_presenter: footer_presenter
+        answers: build_form_answers(form_questions),
+        footer_presenter: FooterPresenter.new(Setting.get)
       }
     end
-  end
-
-  def destroy
-    submission = Submission.find(params[:id])
-    submission.destroy
-
-    redirect_to submissions_url, notice: 'Submission was successfully destroyed.'
   end
 
   private
@@ -80,31 +58,23 @@ class SubmissionsController < ApplicationController
   end
 
   def answers_params
-    attributes = params.require(:submission)
+    params.require(:submission)
       .permit(answers_attributes: [:value, :question_id])[:answers_attributes]
-
-    attributes ? attributes.values : {}
   end
 
-  def create_rate_presenters(rates)
-    rates.map { |rate| RatePresenter.new(rate, rate.user) }
+  def answers_attributes(answers_params, submission_id)
+    if answers_params
+      answers_params.values.map { |params| params.merge({ submission_id: submission_id }) }
+    else
+      {}
+    end
   end
 
-  def create_comment_presenters(comments)
-    comments.map { |comment| CommentPresenter.new(comment, comment.user) }
-  end
-
-  def form_answers(questions)
+  def build_form_answers(questions)
     questions.map { |q| Answer.new(question: q) }
   end
 
   def form_questions
     Question.all
-  end
-
-  def create_answers(answers_params, submission_id)
-    answers_params.map do |a|
-      Answer.create(a.merge({ submission_id: submission_id }))
-    end
   end
 end

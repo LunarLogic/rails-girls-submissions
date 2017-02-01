@@ -5,7 +5,7 @@ class SubmissionFiltersController < ApplicationController
     submissions_valid = SubmissionRepository.new.valid
 
     render :list, locals: {
-      submission_presenters: create_submission_presenters(submissions_valid),
+      submission_presenters: build_submission_presenters(submissions_valid, current_user),
       show_average: true,
       show_rates_count: true
     }
@@ -15,7 +15,7 @@ class SubmissionFiltersController < ApplicationController
     submissions_rejected = SubmissionRepository.new.rejected
 
     render :list, locals: {
-      submission_presenters: create_submission_presenters(submissions_rejected),
+      submission_presenters: build_submission_presenters(submissions_rejected, current_user),
       show_average: false,
       show_rates_count: false
     }
@@ -25,7 +25,7 @@ class SubmissionFiltersController < ApplicationController
     submissions_to_rate = SubmissionRepository.new.to_rate
 
     render :list, locals: {
-      submission_presenters: create_submission_presenters(submissions_to_rate),
+      submission_presenters: build_submission_presenters(submissions_to_rate, current_user),
       show_average: false,
       show_rates_count: true
     }
@@ -43,14 +43,7 @@ class SubmissionFiltersController < ApplicationController
 
   private
 
-  def create_submission_presenters(submissions)
-    submissions.map do |submission|
-      SubmissionPresenter.new(
-        submission,
-        submission.rates,
-        SubmissionRepository.new,
-        current_user
-      )
-    end
+  def build_submission_presenters(submissions, user)
+    submissions.map { |s| SubmissionPresenter.build(s, user) }
   end
 end

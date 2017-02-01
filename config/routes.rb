@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get "/submissions/preparation", to: "submissions#preparation"
 
   get "/submissions", to: "submissions#new"
-  resources :submissions, except: [:edit, :update, :index] do
+  resources :submissions, only: [:show, :new, :create] do
     resource :rate, only: :create
     resources :comments, only: :create
   end
