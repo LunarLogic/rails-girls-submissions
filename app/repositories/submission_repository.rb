@@ -32,7 +32,11 @@ class SubmissionRepository
   end
 
   def to_invite
-    rated_scope.where.not(confirmation_status: 3).limit(Setting.get.available_spots).where(confirmation_status: 0).to_a
+    rated_scope
+      .where('confirmation_status <> ?', Submission.confirmation_statuses[:expired])
+      .limit(Setting.get.available_spots)
+      .where('confirmation_status = ?', Submission.confirmation_statuses[:not_available])
+      .to_a
   end
 
   private
