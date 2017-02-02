@@ -4,15 +4,18 @@ class SubmissionsExpirationHandler
   end
 
   def call
-    submissions_to_be_expired.each do |s|
-      s.expired!
-    end
-
+    expire_submissions
     invite_submissions
   end
 
   private
   attr_reader :submissions_inviter
+
+  def expire_submissions
+    submissions_to_be_expired.each do |s|
+      s.expired!
+    end
+  end
 
   def submissions_to_be_expired
     Submission.select do |submission|
