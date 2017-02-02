@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get "/csv/download_waitlist", to: "csv#download_waitlist"
   get "/csv/download_unaccepted", to: "csv#download_unaccepted"
 
-  get "/send_invitation_emails", to: "mailings#send_invitation_emails"
+  post "/send_invitation_emails", to: "mailings#send_invitation_emails"
 
   get "/submissions/thank_you", to: "submissions#thank_you"
   get "/submissions/closed", to: "submissions#closed"
