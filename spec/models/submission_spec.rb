@@ -49,7 +49,7 @@ RSpec.describe Submission, type: :model do
         confirmation_token_created_at: 1.week.ago - 1)
       not_invited_submission = FactoryGirl.build(
         :submission,
-        confirmation_status: 'not_avaible',
+        confirmation_status: 'not_available',
         confirmation_token_created_at: 1.week.ago - 1)
       submissions = [confirmed_submission, expired_submission, not_invited_submission]
 
