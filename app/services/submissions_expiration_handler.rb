@@ -1,6 +1,5 @@
 class SubmissionsExpirationHandler
-  def initialize(submission_repository: SubmissionRepository.new, submissions_inviter: SubmissionsInviter.new)
-    @submission_repository = submission_repository
+  def initialize(submissions_inviter: SubmissionsInviter.new)
     @submissions_inviter = submissions_inviter
   end
 
@@ -9,17 +8,11 @@ class SubmissionsExpirationHandler
       s.expired!
     end
 
-    waitlist_submissions.each do |s|
-      invite_submission(s)
-    end
+    invite_submissions
   end
 
   private
-  attr_reader :submission_repository, :submissions_inviter
-
-  def waitlist_submissions
-    submission_repository.to_invite
-  end
+  attr_reader :submissions_inviter
 
   def submissions_to_be_expired
     Submission.select do |submission|
@@ -27,7 +20,7 @@ class SubmissionsExpirationHandler
     end
   end
 
-  def invite_submission(waitlist_submission)
-    submissions_inviter.invite(waitlist_submission)
+  def invite_submissions
+    submissions_inviter.call
   end
 end
