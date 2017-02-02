@@ -9,9 +9,9 @@ describe 'inviting accepted submissions' do
     allow(Setting).to receive(:get).and_return(setting)
   end
 
-  it 'sends one email to every accepted submission' do
-    accepted_submissions = FactoryGirl.create_list(
-      :submission, 2,
+  it 'sends only one invitation email to each accepted submission' do
+    accepted_submission = FactoryGirl.create(
+      :submission,
       :with_rates,
       confirmation_status: 'not_available',
       rates_num: setting.required_rates_num,
@@ -21,9 +21,8 @@ describe 'inviting accepted submissions' do
     visit submissions_results_path
     click_link('Send')
     click_link('Send')
-    expect(accepted_submissions[0].reload.confirmation_status).to eq 'awaiting'
-    expect(accepted_submissions[1].reload.confirmation_status).to eq 'awaiting'
-    expect(ActionMailer::Base.deliveries.count).to eq(2)
+    expect(ActionMailer::Base.deliveries.count).to eq(1)
+    expect(accepted_submission.reload).to be_awaiting
   end
 
   it 'confirms submission' do
