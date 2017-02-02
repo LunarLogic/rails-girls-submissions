@@ -41,7 +41,7 @@ class Submission < ActiveRecord::Base
     save!
   end
 
-  def has_expired?
+  def past_confirmation_due_date?
     awaiting? && confirmation_token_created_at < 1.week.ago
   end
 end

@@ -16,7 +16,7 @@ class SubmissionsExpirationHandler
 
   def submissions_to_be_expired
     Submission.select do |submission|
-      submission.has_expired?
+      submission.past_confirmation_due_date?
     end
   end
 

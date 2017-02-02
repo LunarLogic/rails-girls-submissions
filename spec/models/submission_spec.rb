@@ -29,13 +29,13 @@ RSpec.describe Submission, type: :model do
     end
   end
 
-  describe "#has_expired?" do
+  describe "#past_confirmation_due_date?" do
     it "returns true when token expired and confirmation status hasn't yet changed" do
       submission = FactoryGirl.build(
         :submission,
         confirmation_status: 'awaiting',
         confirmation_token_created_at: 1.week.ago - 1)
-      expect(submission.has_expired?).to be true
+      expect(submission.past_confirmation_due_date?).to be true
     end
 
     it "returns false when token expired but status is not awaiting" do
@@ -53,9 +53,9 @@ RSpec.describe Submission, type: :model do
         confirmation_token_created_at: 1.week.ago - 1)
       submissions = [confirmed_submission, expired_submission, not_invited_submission]
 
-      expect(confirmed_submission).not_to be_has_expired
-      expect(expired_submission).not_to be_has_expired
-      expect(not_invited_submission).not_to be_has_expired
+      expect(confirmed_submission).not_to be_past_confirmation_due_date
+      expect(expired_submission).not_to be_past_confirmation_due_date
+      expect(not_invited_submission).not_to be_past_confirmation_due_date
     end
   end
 end
