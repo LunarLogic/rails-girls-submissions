@@ -6,7 +6,7 @@ RSpec.describe SubmissionsExpirationHandler do
     let(:submissions_inviter) { SubmissionsInviter.new }
     let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
 
-    subject { described_class.new(submission_repository, submissions_inviter) }
+    subject { described_class.new(submission_repository: submission_repository, submissions_inviter: submissions_inviter) }
 
     before { allow(Setting).to receive(:get).and_return(setting) }
 

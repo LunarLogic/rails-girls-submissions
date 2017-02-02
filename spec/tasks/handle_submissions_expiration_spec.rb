@@ -24,7 +24,7 @@ describe 'scheduled:handle_submissions_expiration' do
   end
 
   it 'calls correct service' do
-    expect(SubmissionsExpirationHandler).to receive(:build).and_return(submissions_expiration_handler)
+    expect(SubmissionsExpirationHandler).to receive(:new).and_return(submissions_expiration_handler)
     expect(submissions_expiration_handler).to receive(:call)
     subject.invoke
   end

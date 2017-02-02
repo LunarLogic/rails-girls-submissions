@@ -24,7 +24,7 @@ RSpec.describe SubmissionsExpirationHandler do
         confirmation_token_created_at: 1.month.ago,
         confirmation_status: 'awaiting')
 
-      described_class.build.call
+      described_class.new.call
 
       expect(ActionMailer::Base.deliveries.count).to eq(1)
       expect(expired_submission.reload).to be_expired

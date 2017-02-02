@@ -1,9 +1,5 @@
 class SubmissionsExpirationHandler
-  def self.build
-    new(SubmissionRepository.new, SubmissionsInviter.new)
-  end
-
-  def initialize(submission_repository, submissions_inviter)
+  def initialize(submission_repository: SubmissionRepository.new, submissions_inviter: SubmissionsInviter.new)
     @submission_repository = submission_repository
     @submissions_inviter = submissions_inviter
   end
