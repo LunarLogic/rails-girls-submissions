@@ -1,6 +1,7 @@
 class SubmissionsExpirationHandler
-  def initialize(submissions_inviter: SubmissionsInviter.new)
+  def initialize(submissions_inviter: SubmissionsInviter.new, submissions_expirer: SubmissionsExpirer.new)
     @submissions_inviter = submissions_inviter
+    @submissions_expirer = submissions_expirer
   end
 
   def call
@@ -9,18 +10,10 @@ class SubmissionsExpirationHandler
   end
 
   private
-  attr_reader :submissions_inviter
+  attr_reader :submissions_inviter, :submissions_expirer
 
   def expire_submissions
-    submissions_to_be_expired.each do |s|
-      s.expired!
-    end
-  end
-
-  def submissions_to_be_expired
-    Submission.select do |submission|
-      submission.past_confirmation_due_date?
-    end
+    submissions_expirer.call
   end
 
   def invite_submissions
