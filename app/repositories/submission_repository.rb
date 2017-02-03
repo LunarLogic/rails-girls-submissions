@@ -36,7 +36,6 @@ class SubmissionRepository
       .where('confirmation_status <> ?', Submission.confirmation_statuses[:expired])
       .limit(Setting.get.available_spots)
       .where('confirmation_status = ?', Submission.confirmation_statuses[:not_available])
-      .to_a
   end
 
   private
