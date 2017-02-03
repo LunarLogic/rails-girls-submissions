@@ -38,6 +38,12 @@ class SubmissionRepository
       .where('confirmation_status = ?', Submission.confirmation_statuses[:not_available])
   end
 
+  def to_expire
+    rated_scope.where( 'confirmation_token_created_at < ? AND confirmation_status = ?',
+      1.week.ago,
+      Submission.confirmation_statuses[:awaiting])
+  end
+
   private
 
   def not_rejected

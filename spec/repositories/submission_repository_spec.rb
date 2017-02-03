@@ -141,4 +141,31 @@ describe SubmissionRepository do
 
     it { expect(subject).to eq([to_invite_submission]) }
   end
+
+  describe '#to_expire' do
+    let!(:to_expire_submission) do
+      FactoryGirl.create(
+      :submission,
+      :with_rates,
+      confirmation_token_created_at: 1.week.ago - 1,
+      confirmation_status: 'awaiting')
+    end
+    let!(:confirmed_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        confirmation_token_created_at: 1.week.ago - 1,
+        confirmation_status: 'confirmed')
+     end
+    let!(:awaiting_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        confirmation_token_created_at: 1.day.ago,
+        confirmation_status: 'awaiting')
+     end
+    subject { submission_repository.to_expire }
+
+    it { expect(subject).to eq([to_expire_submission]) }
+  end
 end
