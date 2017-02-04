@@ -111,6 +111,7 @@ describe SubmissionRepository do
   end
 
   describe '#to_invite' do
+    let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
     let!(:to_invite_submission) { FactoryGirl.create(:submission,
          :with_rates,
          confirmation_status: 'not_available',
