@@ -4,11 +4,13 @@
   This link expires in one week.
 </p>
 <p>
-  <strong>Where?</strong>
+  <strong>Where?</strong><br />
+  <%= Rails.application.secrets.event_venue %>
 </p>
 <p>
-  <strong>When?</strong>
+  <strong>When?</strong><br />
+  <%= Rails.application.secrets.event_date %>
 </p>
 <p>
-  If you have any questions, contact us:
+  If you have any questions, contact us: <%= mail_to Rails.application.secrets.contact_email %>
 </p>
