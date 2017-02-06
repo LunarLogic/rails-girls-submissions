@@ -34,13 +34,6 @@ class SubmissionRepository
   def to_invite
     accepted_for_invitation_without_expired.select { |s| !s.confirmation_token? }
   end
-
-  def to_expire
-    rated_scope.where( 'confirmation_token_created_at < ? AND confirmation_status = ?',
-      1.week.ago,
-      Submission.confirmation_statuses[:awaiting])
-  end
-
   private
 
   def accepted_for_invitation_without_expired
