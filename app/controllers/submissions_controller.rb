@@ -5,7 +5,7 @@ class SubmissionsController < ApplicationController
   def confirm
     token = params.require(:confirmation_token)
     submission = Submission.find_by!(confirmation_token: token)
-    if submission.past_confirmation_due_date?
+    if submission.invitation_expired?
       render text: "Time for confirmation expired!"
     else
       submission.confirmed!

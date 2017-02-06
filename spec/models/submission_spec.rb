@@ -29,33 +29,39 @@ RSpec.describe Submission, type: :model do
     end
   end
 
-  describe "#past_confirmation_due_date?" do
-    it "returns true when token expired and confirmation status hasn't yet changed" do
-      submission = FactoryGirl.build(
+  describe '#invitation_expired?' do
+    let(:expired_submission) do
+      FactoryGirl.build(
         :submission,
-        confirmation_status: 'awaiting',
-        confirmation_token_created_at: 1.week.ago - 1)
-      expect(submission.past_confirmation_due_date?).to be true
+        confirmation_token: 'xxx',
+        confirmation_token_created_at: 1.week.ago - 1,
+        invitation_confirmed: false)
+    end
+    let(:confirmed_submission) do
+      FactoryGirl.build(
+      :submission,
+      confirmation_token: 'xxx',
+      confirmation_token_created_at: 1.week.ago - 1,
+      invitation_confirmed: true)
+    end
+    let(:not_invited_submission) do
+      FactoryGirl.build(
+        :submission,
+        confirmation_token: nil,
+        confirmation_token_created_at: nil,
+        invitation_confirmed: false)
     end
 
-    it "returns false when token expired but status is not awaiting" do
-      confirmed_submission = FactoryGirl.build(
-        :submission,
-        confirmation_status: 'confirmed',
-        confirmation_token_created_at: 1.week.ago - 1)
-      expired_submission = FactoryGirl.build(
-        :submission,
-        confirmation_status: 'expired',
-        confirmation_token_created_at: 1.week.ago - 1)
-      not_invited_submission = FactoryGirl.build(
-        :submission,
-        confirmation_status: 'not_invited',
-        confirmation_token_created_at: 1.week.ago - 1)
-      submissions = [confirmed_submission, expired_submission, not_invited_submission]
+    it 'returns true when token expired and invitation is not confirmed' do
+      expect(expired_submission.invitation_expired?).to be true
+    end
 
-      expect(confirmed_submission).not_to be_past_confirmation_due_date
-      expect(expired_submission).not_to be_past_confirmation_due_date
-      expect(not_invited_submission).not_to be_past_confirmation_due_date
+    it 'returns false for confirmed submission' do
+      expect(confirmed_submission.invitation_expired?).to be false
+    end
+
+    it 'raise an error for not ivited submission' do
+      expect{ not_invited_submission.invitation_expired? }.to raise_error('Submission not invited!')
     end
   end
 end

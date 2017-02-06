@@ -39,7 +39,11 @@ class Submission < ActiveRecord::Base
     save!
   end
 
-  def past_confirmation_due_date?
-    awaiting? && confirmation_token_created_at < 1.week.ago
+  def invitation_expired?
+    if confirmation_token
+      confirmation_token_created_at < 1.week.ago && !invitation_confirmed?
+    else
+      raise 'Submission not invited!'
+    end
   end
 end
