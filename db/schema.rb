@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(version: 20170206123620) do
     t.string   "codecademy_status",   default: "pending"
     t.string   "confirmation_token"
     t.datetime "confirmation_token_created_at"
-    t.integer  "confirmation_status",           default: 0
     t.boolean  "invitation_confirmed",          default: false
   end
 
