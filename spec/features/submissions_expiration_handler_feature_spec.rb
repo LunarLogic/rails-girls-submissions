@@ -15,7 +15,7 @@ RSpec.describe SubmissionsExpirationHandler do
         :with_rates,
         rates_num: setting.required_rates_num,
         rates_val: 1,
-        confirmation_status: 'not_available')
+        confirmation_status: 'not_invited')
       expired_submission = FactoryGirl.create(
         :submission,
         :with_rates,

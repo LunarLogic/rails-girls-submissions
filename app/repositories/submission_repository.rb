@@ -32,7 +32,7 @@ class SubmissionRepository
   end
 
   def to_invite
-    accepted_for_invitation.select(&:not_available?)
+    accepted_for_invitation.select(&:not_invited?)
   end
 
   def to_expire

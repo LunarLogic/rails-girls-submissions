@@ -114,12 +114,12 @@ describe SubmissionRepository do
     let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
     let!(:to_invite_submission) { FactoryGirl.create(:submission,
          :with_rates,
-         confirmation_status: 'not_available',
+         confirmation_status: 'not_invited',
          rates_num: setting.required_rates_num,
          rates_val: 2) }
     let!(:not_invited_submission_over_the_limit) { FactoryGirl.create(:submission,
          :with_rates,
-         confirmation_status: 'not_available',
+         confirmation_status: 'not_invited',
          rates_num: setting.required_rates_num,
          rates_val: 1) }
     let!(:confirmed_submission) { FactoryGirl.create(:submission,

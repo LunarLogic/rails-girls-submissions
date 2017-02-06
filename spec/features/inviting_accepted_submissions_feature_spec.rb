@@ -13,7 +13,7 @@ describe 'inviting accepted submissions' do
     accepted_submission = FactoryGirl.create(
       :submission,
       :with_rates,
-      confirmation_status: 'not_available',
+      confirmation_status: 'not_invited',
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
