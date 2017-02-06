@@ -8,7 +8,7 @@ class SubmissionsController < ApplicationController
     if submission.invitation_expired?
       render text: "Time for confirmation expired!"
     else
-      submission.confirmed!
+      submission.confirm_invitation!
       render text: "You confirmed your invitation!"
     end
   rescue

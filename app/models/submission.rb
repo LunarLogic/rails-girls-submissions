@@ -39,6 +39,11 @@ class Submission < ActiveRecord::Base
     save!
   end
 
+  def confirm_invitation!
+    self.invitation_confirmed = true
+    save!
+  end
+
   def invitation_expired?
     if confirmation_token
       confirmation_token_created_at < 1.week.ago && !invitation_confirmed?
