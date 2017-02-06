@@ -1,4 +1,8 @@
 class SubmissionPresenter < SimpleDelegator
+  def self.collection(submissions, user)
+    submissions.map { |s| new(s, s.rates, SubmissionRepository.new, user) }
+  end
+
   def self.build(submission, user)
     new(submission, submission.rates, SubmissionRepository.new, user)
   end

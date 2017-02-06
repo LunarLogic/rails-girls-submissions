@@ -15,7 +15,7 @@ class SubmissionFiltersController < ApplicationController
     submissions_rejected = SubmissionRepository.new.rejected
 
     render :list, locals: {
-      submission_presenters: build_submission_presenters(submissions_rejected, current_user),
+      submission_presenters: SubmissionPresenter.collection(submissions_rejected, current_user),
       show_average: false,
       show_rates_count: false
     }
@@ -25,7 +25,7 @@ class SubmissionFiltersController < ApplicationController
     submissions_to_rate = SubmissionRepository.new.to_rate
 
     render :list, locals: {
-      submission_presenters: build_submission_presenters(submissions_to_rate, current_user),
+      submission_presenters: SubmissionPresenter.collection(submissions_to_rate, current_user),
       show_average: false,
       show_rates_count: true
     }
