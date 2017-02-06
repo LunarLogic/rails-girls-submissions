@@ -112,32 +112,54 @@ describe SubmissionRepository do
 
   describe '#to_invite' do
     let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
-    let!(:to_invite_submission) { FactoryGirl.create(:submission,
-         :with_rates,
-         confirmation_status: 'not_invited',
-         rates_num: setting.required_rates_num,
-         rates_val: 2) }
-    let!(:not_invited_submission_over_the_limit) { FactoryGirl.create(:submission,
-         :with_rates,
-         confirmation_status: 'not_invited',
-         rates_num: setting.required_rates_num,
-         rates_val: 1) }
-    let!(:confirmed_submission) { FactoryGirl.create(:submission,
-         :with_rates,
-         confirmation_status: 'confirmed',
-         rates_num: setting.required_rates_num,
-         rates_val: 3) }
-    let!(:already_invited_submission) { FactoryGirl.create(:submission,
-         :with_rates,
-         confirmation_status: 'awaiting',
-         rates_num: setting.required_rates_num,
-         rates_val: 3) }
-    let!(:expired_submission) { FactoryGirl.create(:submission,
-         :with_rates,
-         confirmation_status: 'expired',
-         rates_num: setting.required_rates_num,
-         rates_val: 3) }
-
+    let!(:to_invite_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        confirmation_token: nil,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 2)
+    end
+    let!(:not_invited_over_the_limit_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        confirmation_token: nil,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 1)
+    end
+    let!(:already_invited_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        confirmation_token: 'xxx',
+        confirmation_token_created_at: 1.day.ago,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 3)
+    end
+    let!(:confirmed_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        confirmation_token: 'yyy',
+        confirmation_token_created_at: 1.week.ago - 1,
+        invitation_confirmed: true,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+    let!(:expired_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        confirmation_token: 'zzz',
+        confirmation_token_created_at: 1.week.ago - 1,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
     subject { submission_repository.to_invite }
 
     it { expect(subject).to eq([to_invite_submission]) }

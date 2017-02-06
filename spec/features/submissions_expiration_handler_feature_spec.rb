@@ -10,18 +10,21 @@ RSpec.describe SubmissionsExpirationHandler do
     end
 
     it "sends confirmation email to waitlist submission and rejects expired" do
-      waitlist_submission = FactoryGirl.create(
+      to_invite_submission = FactoryGirl.create(
         :submission,
         :with_rates,
         rates_num: setting.required_rates_num,
         rates_val: 1,
+        confirmation_token: nil,
         confirmation_status: 'not_invited')
       expired_submission = FactoryGirl.create(
         :submission,
         :with_rates,
         rates_num: setting.required_rates_num,
         rates_val: 2,
+        confirmation_token: 'xxx',
         confirmation_token_created_at: 1.month.ago,
+        invitation_confirmed: false,
         confirmation_status: 'awaiting')
 
       described_class.new.call

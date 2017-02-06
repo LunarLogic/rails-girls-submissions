@@ -32,7 +32,7 @@ class SubmissionRepository
   end
 
   def to_invite
-    accepted_for_invitation.select(&:not_invited?)
+    accepted_for_invitation_without_expired.select { |s| !s.confirmation_token? }
   end
 
   def to_expire
@@ -43,10 +43,12 @@ class SubmissionRepository
 
   private
 
-  def accepted_for_invitation
+  def accepted_for_invitation_without_expired
     rated_scope
-      .where('confirmation_status <> ?', Submission.confirmation_statuses[:expired])
-      .limit(Setting.get.available_spots).to_a
+      .where(
+        'confirmation_token IS ? OR confirmation_token_created_at > ? OR invitation_confirmed = ?',
+        nil, 1.week.ago, true)
+      .limit(Setting.get.available_spots)
   end
 
   def not_rejected
