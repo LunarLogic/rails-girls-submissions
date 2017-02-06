@@ -19,13 +19,13 @@ RSpec.describe Submission, type: :model do
     expect(FactoryGirl.build(:submission, age: 130)).not_to be_valid
   end
 
-  describe '#generate_confirmation_token!' do
+  describe '#generate_invitation_token!' do
     let(:submission) { FactoryGirl.create(:submission) }
 
-    it 'generates confirmation token' do
-      submission.generate_confirmation_token!
-      expect(submission.confirmation_token).not_to be_nil
-      expect(submission.confirmation_token_created_at).not_to be_nil
+    it 'generates invitation token' do
+      submission.generate_invitation_token!
+      expect(submission.invitation_token).not_to be_nil
+      expect(submission.invitation_token_created_at).not_to be_nil
     end
   end
 
@@ -33,22 +33,22 @@ RSpec.describe Submission, type: :model do
     let(:expired_submission) do
       FactoryGirl.build(
         :submission,
-        confirmation_token: 'xxx',
-        confirmation_token_created_at: 1.week.ago - 1,
+        invitation_token: 'xxx',
+        invitation_token_created_at: 1.week.ago - 1,
         invitation_confirmed: false)
     end
     let(:confirmed_submission) do
       FactoryGirl.build(
       :submission,
-      confirmation_token: 'xxx',
-      confirmation_token_created_at: 1.week.ago - 1,
+      invitation_token: 'xxx',
+      invitation_token_created_at: 1.week.ago - 1,
       invitation_confirmed: true)
     end
     let(:not_invited_submission) do
       FactoryGirl.build(
         :submission,
-        confirmation_token: nil,
-        confirmation_token_created_at: nil,
+        invitation_token: nil,
+        invitation_token_created_at: nil,
         invitation_confirmed: false)
     end
 

@@ -72,9 +72,9 @@ ActiveRecord::Schema.define(version: 20170206123620) do
     t.string   "programming_others"
     t.boolean  "rejected",            default: false
     t.string   "codecademy_status",   default: "pending"
-    t.string   "confirmation_token"
-    t.datetime "confirmation_token_created_at"
-    t.boolean  "invitation_confirmed",          default: false
+    t.string   "invitation_token"
+    t.datetime "invitation_token_created_at"
+    t.boolean  "invitation_confirmed",        default: false
   end
 
   add_index "submissions", ["email"], name: "index_submissions_on_email", unique: true, using: :btree

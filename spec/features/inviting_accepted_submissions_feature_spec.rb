@@ -13,7 +13,7 @@ describe 'inviting accepted submissions' do
     accepted_submission = FactoryGirl.create(
       :submission,
       :with_rates,
-      confirmation_token: nil,
+      invitation_token: nil,
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
@@ -22,35 +22,35 @@ describe 'inviting accepted submissions' do
     click_link('Send')
     click_link('Send')
     expect(ActionMailer::Base.deliveries.count).to eq(1)
-    expect(accepted_submission.reload.confirmation_token).not_to be_nil
+    expect(accepted_submission.reload.invitation_token).not_to be_nil
   end
 
   it 'confirms submission' do
     invited_submission = FactoryGirl.create(
       :submission,
       :with_rates,
-      confirmation_token: 'xxx',
-      confirmation_token_created_at: Time.now,
+      invitation_token: 'xxx',
+      invitation_token_created_at: Time.now,
       invitation_confirmed: false,
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
-    visit submissions_confirm_path(confirmation_token: invited_submission.confirmation_token)
+    visit submissions_confirm_path(invitation_token: invited_submission.invitation_token)
     expect(invited_submission.reload.invitation_confirmed).to be true
     expect(page).to have_text('confirmed')
   end
 
-  it "doesn't confirm submission with expired confirmation token" do
+  it "doesn't confirm submission with expired invitation token" do
     invited_submission = FactoryGirl.create(
       :submission,
       :with_rates,
-      confirmation_token: 'zzz',
-      confirmation_token_created_at: 1.week.ago - 1,
+      invitation_token: 'zzz',
+      invitation_token_created_at: 1.week.ago - 1,
       invitation_confirmed: false,
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
-    visit submissions_confirm_path(confirmation_token: invited_submission.confirmation_token)
+    visit submissions_confirm_path(invitation_token: invited_submission.invitation_token)
     expect(invited_submission.reload.invitation_confirmed).to be false
     expect(page).to have_text('expired')
   end
@@ -59,18 +59,18 @@ describe 'inviting accepted submissions' do
     confirmed_submission = FactoryGirl.create(
       :submission,
       :with_rates,
-      confirmation_token: 'yyy',
-      confirmation_token_created_at: 1.week.ago - 1,
+      invitation_token: 'yyy',
+      invitation_token_created_at: 1.week.ago - 1,
       invitation_confirmed: true,
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
-    visit submissions_confirm_path(confirmation_token: confirmed_submission.confirmation_token)
+    visit submissions_confirm_path(invitation_token: confirmed_submission.invitation_token)
     expect(page).to have_text('confirmed')
   end
 
   context 'handling exceptions' do
-    it 'missing confirmation token' do
+    it 'missing invitation token' do
       visit submissions_confirm_path
       expect(page).to have_text('Something went wrong')
     end

@@ -3,8 +3,8 @@ class SubmissionsController < ApplicationController
   layout 'dashboard', only: [:valid, :all, :rated, :to_rate, :rejected, :results]
 
   def confirm
-    token = params.require(:confirmation_token)
-    submission = Submission.find_by!(confirmation_token: token)
+    token = params.require(:invitation_token)
+    submission = Submission.find_by!(invitation_token: token)
     if submission.invitation_expired?
       render text: "Time for confirmation expired!"
     else

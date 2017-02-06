@@ -13,7 +13,7 @@ class SubmissionsInviter
   attr_reader :submission_repository
 
   def invite(submission)
-    submission.generate_confirmation_token!
+    submission.generate_invitation_token!
     InvitationsMailer.invitation_email(submission).deliver_now
   end
 end

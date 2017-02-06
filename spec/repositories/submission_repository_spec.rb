@@ -116,7 +116,7 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        confirmation_token: nil,
+        invitation_token: nil,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 2)
@@ -125,7 +125,7 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        confirmation_token: nil,
+        invitation_token: nil,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 1)
@@ -134,8 +134,8 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        confirmation_token: 'xxx',
-        confirmation_token_created_at: 1.day.ago,
+        invitation_token: 'xxx',
+        invitation_token_created_at: 1.day.ago,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 3)
@@ -144,8 +144,8 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        confirmation_token: 'yyy',
-        confirmation_token_created_at: 1.week.ago - 1,
+        invitation_token: 'yyy',
+        invitation_token_created_at: 1.week.ago - 1,
         invitation_confirmed: true,
         rates_num: setting.required_rates_num,
         rates_val: 4)
@@ -154,8 +154,8 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        confirmation_token: 'zzz',
-        confirmation_token_created_at: 1.week.ago - 1,
+        invitation_token: 'zzz',
+        invitation_token_created_at: 1.week.ago - 1,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 4)
