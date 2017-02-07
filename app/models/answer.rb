@@ -9,7 +9,7 @@ class Answer < ActiveRecord::Base
     well: 3
   }
 
-  def self.create_collection(attributes_collection)
-    attributes_collection.map { |attributes| Answer.create(attributes) }
+  def self.collection(attributes_collection)
+    attributes_collection.map { |attributes| Answer.new(attributes) }
   end
 end

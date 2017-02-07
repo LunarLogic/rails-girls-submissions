@@ -32,19 +32,15 @@ class SubmissionsController < ApplicationController
   end
 
   def create
-    submission = Submission.new(submission_params)
+    submission_creator = SubmissionCreator.build(submission_params, answers_params)
+    result = submission_creator.call
 
-    if submission.valid?
-      SubmissionRejector.new.reject_if_any_rules_broken(submission)
-      submission.save
-      attributes_collection = answers_attributes(answers_params, submission.id)
-      Answer.create_collection(attributes_collection)
-
+    if result.success
       redirect_to submissions_thank_you_url
     else
       render :new, locals: {
-        submission: submission,
-        answers: build_form_answers(form_questions),
+        submission: result.object[:submission],
+        answers: result.object[:answers],
         footer_presenter: FooterPresenter.new(Setting.get)
       }
     end
@@ -59,16 +55,9 @@ class SubmissionsController < ApplicationController
   end
 
   def answers_params
-    params.require(:submission)
+    result = params.require(:submission)
       .permit(answers_attributes: [:value, :question_id])[:answers_attributes]
-  end
-
-  def answers_attributes(answers_params, submission_id)
-    if answers_params
-      answers_params.values.map { |params| params.merge({ submission_id: submission_id }) }
-    else
-      {}
-    end
+    result ? result.values : {}
   end
 
   def build_form_answers(questions)
