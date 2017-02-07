@@ -31,11 +31,6 @@ class SubmissionRepository
     rated_scope.offset(Setting.get.available_spots).to_a
   end
 
-  def to_invite
-    accepted_for_invitation_without_expired.select { |s| !s.invitation_token? }
-  end
-  private
-
   def accepted_for_invitation_without_expired
     rated_scope
       .where(
@@ -43,6 +38,8 @@ class SubmissionRepository
         nil, true, 1.week.ago)
       .limit(Setting.get.available_spots)
   end
+
+  private
 
   def not_rejected
     Submission.where(rejected: false)

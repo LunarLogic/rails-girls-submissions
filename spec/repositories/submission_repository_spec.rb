@@ -110,8 +110,9 @@ describe SubmissionRepository do
     end
   end
 
-  describe '#to_invite' do
+  describe '#accepted_for_invitation_without_expired' do
     let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
+    let(:submissions) { [confirmed_submission, already_invited_submission, to_invite_submission] }
     let!(:to_invite_submission) do
       FactoryGirl.create(
         :submission,
@@ -160,8 +161,8 @@ describe SubmissionRepository do
         rates_num: setting.required_rates_num,
         rates_val: 4)
     end
-    subject { submission_repository.to_invite }
+    subject { submission_repository.accepted_for_invitation_without_expired }
 
-    it { expect(subject).to eq([to_invite_submission]) }
+    it { expect(subject).to eq(submissions) }
   end
 end
