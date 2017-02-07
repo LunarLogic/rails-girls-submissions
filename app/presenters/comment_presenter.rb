@@ -1,4 +1,8 @@
 class CommentPresenter
+  def self.collection(comments)
+    comments.map { |comment| new(comment, comment.user) }
+  end
+
   def initialize(comment, user)
     @comment = comment
     @user = user

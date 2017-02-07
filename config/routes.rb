@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
-  root 'submissions#new'
+  root "submissions#new"
+  get "/admin", to: "submission_filters#valid", path: :admin
 
-  get "/submissions/valid", to: "submissions#valid"
-  get "/submissions/rejected", to: "submissions#rejected"
-  get "/submissions/to_rate", to: "submissions#to_rate"
-  get "/submissions/results", to: "submissions#results"
+  devise_for :users, skip: [:passwords, :registrations],
+    controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+
+  get "/submission_filters/valid", to: "submission_filters#valid"
+  get "/submission_filters/rejected", to: "submission_filters#rejected"
+  get "/submission_filters/to_rate", to: "submission_filters#to_rate"
+  get "/submission_filters/results", to: "submission_filters#results"
 
   get "/csv/download_accepted", to: "csv#download_accepted"
   get "/csv/download_waitlist", to: "csv#download_waitlist"
@@ -14,14 +18,14 @@ Rails.application.routes.draw do
   get "/submissions/closed", to: "submissions#closed"
   get "/submissions/preparation", to: "submissions#preparation"
 
-  get "/settings/", to: "settings#index"
-  put "/settings/update", to: "settings#update"
-
-  get "/admin", to: "submissions#valid", path: :admin
-  devise_for :users, skip: [:passwords, :registrations], controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
-
-  resources :submissions, except: [:edit, :update, :index] do
+  get "/submissions", to: "submissions#new"
+  resources :submissions, only: [:show, :new, :create] do
     resource :rate, only: :create
     resources :comments, only: :create
   end
+
+  resources :questions, only: [:index, :new, :create, :destroy]
+
+  get "/settings/", to: "settings#index"
+  put "/settings/update", to: "settings#update"
 end
