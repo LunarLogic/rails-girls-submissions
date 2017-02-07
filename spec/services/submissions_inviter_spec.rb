@@ -10,8 +10,7 @@ describe SubmissionsInviter do
     subject { described_class.new(submission_repository: submission_repository).call }
 
     it 'invites submission' do
-      expect(submission_repository).to receive(:accepted_for_invitation_without_expired).and_return(submissions)
-      expect(submissions).to receive(:select).and_return([to_invite_submission])
+      expect(submission_repository).to receive(:accepted_for_invitation_without_expired).and_return(accepted_submissions)
       expect(to_invite_submission).to receive(:generate_invitation_token!)
       expect(InvitationsMailer).to receive(:invitation_email).with(to_invite_submission).and_return(message_delivery)
       expect(message_delivery).to receive(:deliver_now)
