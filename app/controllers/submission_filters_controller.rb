@@ -5,7 +5,7 @@ class SubmissionFiltersController < ApplicationController
     submissions_valid = SubmissionRepository.new.valid
 
     render :list, locals: {
-      submission_presenters: build_submission_presenters(submissions_valid, current_user),
+      submission_presenters: SubmissionPresenter.collection(submissions_valid, current_user),
       show_average: true,
       show_rates_count: true
     }
@@ -39,11 +39,5 @@ class SubmissionFiltersController < ApplicationController
       submissions_accepted: submissions_accepted,
       submissions_waitlist: submissions_waitlist
     }
-  end
-
-  private
-
-  def build_submission_presenters(submissions, user)
-    submissions.map { |s| SubmissionPresenter.build(s, user) }
   end
 end

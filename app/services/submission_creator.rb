@@ -31,10 +31,9 @@ class SubmissionCreator
 
   def save(submission, answers)
     submission.save
-    submission_id = submission.id
 
     answers.map do |a|
-      a.submission_id = submission_id
+      a.submission = submission
       a.save
     end
   end

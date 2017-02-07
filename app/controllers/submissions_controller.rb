@@ -19,8 +19,9 @@ class SubmissionsController < ApplicationController
     elsif Setting.registration_period?
       render :new, locals: {
         submission: Submission.new,
-        answers: build_form_answers(form_questions),
-        footer_presenter: FooterPresenter.new(Setting.get)
+        answers: build_form_answers,
+        footer_presenter: FooterPresenter.new(Setting.get),
+        show_errors: false
       }
     else
       render :closed
@@ -41,7 +42,8 @@ class SubmissionsController < ApplicationController
       render :new, locals: {
         submission: result.object[:submission],
         answers: result.object[:answers],
-        footer_presenter: FooterPresenter.new(Setting.get)
+        footer_presenter: FooterPresenter.new(Setting.get),
+        show_errors: true
       }
     end
   end
@@ -60,11 +62,7 @@ class SubmissionsController < ApplicationController
     result ? result.values : {}
   end
 
-  def build_form_answers(questions)
-    questions.map { |q| Answer.new(question: q) }
-  end
-
-  def form_questions
-    Question.all
+  def build_form_answers
+    Question.all.map { |q| Answer.new(question: q) }
   end
 end
