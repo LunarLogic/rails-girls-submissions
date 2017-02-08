@@ -12,7 +12,6 @@ Rails.application.routes.draw do
 
   get "/csv/download_accepted", to: "csv#download_accepted"
   get "/csv/download_waitlist", to: "csv#download_waitlist"
-  get "/csv/download_unaccepted", to: "csv#download_unaccepted"
 
   get "/submissions/thank_you", to: "submissions#thank_you"
   get "/submissions/closed", to: "submissions#closed"
