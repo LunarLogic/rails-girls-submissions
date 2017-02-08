@@ -39,10 +39,10 @@ RSpec.describe Submission, type: :model do
     end
     let(:confirmed_submission) do
       FactoryGirl.build(
-      :submission,
-      invitation_token: 'xxx',
-      invitation_token_created_at: 1.week.ago - 1,
-      invitation_confirmed: true)
+        :submission,
+        invitation_token: 'xxx',
+        invitation_token_created_at: 1.week.ago - 1,
+        invitation_confirmed: true)
     end
     let(:not_invited_submission) do
       FactoryGirl.build(
