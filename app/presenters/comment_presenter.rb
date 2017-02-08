@@ -17,6 +17,6 @@ class CommentPresenter
   end
 
   def timestamp
-    @comment.updated_at
+    @comment.updated_at.strftime("%d-%m-%Y")
   end
 end
