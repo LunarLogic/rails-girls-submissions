@@ -39,6 +39,10 @@ class SubmissionRepository
       .limit(Setting.get.available_spots)
   end
 
+  def with_confirmed_invitation
+    Submission.where(invitation_confirmed: true)
+  end
+
   private
 
   def not_rejected

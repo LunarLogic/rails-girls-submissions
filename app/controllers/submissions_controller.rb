@@ -47,9 +47,7 @@ class SubmissionsController < ApplicationController
   end
 
   def invitations
-    submissions_with_confirmed_invitations = SubmissionRepository.new.accepted_for_invitation_without_expired.select do |s|
-      s.invitation_confirmed?
-    end
+    submissions_with_confirmed_invitations = SubmissionRepository.new.with_confirmed_invitation
 
     render :invitations, locals: { submissions_with_confirmed_invitations: submissions_with_confirmed_invitations }
   end
