@@ -1,8 +1,8 @@
 class SubmissionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:confirm, :new, :create, :thank_you]
+  skip_before_action :authenticate_user!, only: [:confirm_invitation, :new, :create, :thank_you]
   layout 'dashboard', only: [:valid, :all, :rated, :to_rate, :rejected, :results, :invitations]
 
-  def confirm
+  def confirm_invitation
     token = params.require(:invitation_token)
     submission = Submission.find_by!(invitation_token: token)
     if submission.invitation_expired?

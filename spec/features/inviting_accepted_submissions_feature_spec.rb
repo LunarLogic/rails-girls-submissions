@@ -35,7 +35,7 @@ describe 'inviting accepted submissions' do
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
-    visit submissions_confirm_path(invitation_token: invited_submission.invitation_token)
+    visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
     expect(invited_submission.reload.invitation_confirmed).to be true
     expect(page).to have_text('confirmed')
   end
@@ -50,7 +50,7 @@ describe 'inviting accepted submissions' do
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
-    visit submissions_confirm_path(invitation_token: invited_submission.invitation_token)
+    visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
     expect(invited_submission.reload.invitation_confirmed).to be false
     expect(page).to have_text('expired')
   end
@@ -65,18 +65,18 @@ describe 'inviting accepted submissions' do
       rates_num: setting.required_rates_num,
       rates_val: 1)
 
-    visit submissions_confirm_path(invitation_token: confirmed_submission.invitation_token)
+    visit submissions_confirm_invitation_path(invitation_token: confirmed_submission.invitation_token)
     expect(page).to have_text('confirmed')
   end
 
   context 'handling exceptions' do
     it 'missing invitation token' do
-      visit submissions_confirm_path
+      visit submissions_confirm_invitation_path
       expect(page).to have_text('Something went wrong')
     end
 
     it 'submission not found' do
-      visit submissions_confirm_path('uuu')
+      visit submissions_confirm_invitation_path('uuu')
       expect(page).to have_text('Something went wrong')
     end
   end

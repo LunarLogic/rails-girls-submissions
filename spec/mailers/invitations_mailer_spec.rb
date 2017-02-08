@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe InvitationsMailer, type: :mailer do
   let(:submission) { double email: "example@email.com", invitation_token: 'xxx' }
-  let(:url) { "#{submissions_confirm_url(host: 'localhost', port: '3000')}" }
+  let(:url) { "#{submissions_confirm_invitation_url(host: 'localhost', port: '3000')}" }
 
   shared_examples 'email with confirmation link' do
     it 'sends to correct email addres' do
