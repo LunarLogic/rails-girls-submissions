@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "/submissions/rejected", to: "submissions#rejected"
   get "/submissions/to_rate", to: "submissions#to_rate"
   get "/submissions/results", to: "submissions#results"
+  get "/submissions/invitations", to: "submissions#invitations"
   get "/submissions/confirm", to: "submissions#confirm"
 
   get "/csv/download_accepted", to: "csv#download_accepted"

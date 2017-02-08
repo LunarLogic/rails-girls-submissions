@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:confirm, :new, :create, :thank_you]
-  layout 'dashboard', only: [:valid, :all, :rated, :to_rate, :rejected, :results]
+  layout 'dashboard', only: [:valid, :all, :rated, :to_rate, :rejected, :results, :invitations]
 
   def confirm
     token = params.require(:invitation_token)
@@ -44,6 +44,14 @@ class SubmissionsController < ApplicationController
       submissions_accepted: submissions_accepted,
       submissions_waitlist: submissions_waitlist
     }
+  end
+
+  def invitations
+    submissions_with_confirmed_invitations = SubmissionRepository.new.accepted_for_invitation_without_expired.select do |s|
+      s.invitation_confirmed?
+    end
+
+    render :invitations, locals: { submissions_with_confirmed_invitations: submissions_with_confirmed_invitations }
   end
 
   def show
