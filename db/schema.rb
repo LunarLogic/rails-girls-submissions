@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20170206123620) do
   end
 
   add_index "submissions", ["email"], name: "index_submissions_on_email", unique: true, using: :btree
+  add_index "submissions", ["invitation_token"], name: "index_submissions_on_invitation_token", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",              default: "", null: false
