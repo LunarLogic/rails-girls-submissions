@@ -46,7 +46,7 @@ describe "testing submissions views:" do
 
   it "moves to invitations view" do
     click_link "Invitations"
-    expect(current_path).to eq submissions_invitations_path
+    expect(current_path).to eq submission_filters_invitations_path
     expect(page).to have_selector('td', text: "Applicant Confirmed Invitation")
   end
 end

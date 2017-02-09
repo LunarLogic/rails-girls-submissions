@@ -18,7 +18,7 @@ describe 'inviting accepted submissions' do
       rates_val: 1)
 
     login_as(user, scope: :user)
-    visit submissions_results_path
+    visit submission_filters_results_path
     click_link('Send')
     click_link('Send')
     expect(ActionMailer::Base.deliveries.count).to eq(1)
