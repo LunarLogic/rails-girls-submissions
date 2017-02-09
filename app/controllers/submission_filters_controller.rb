@@ -42,8 +42,8 @@ class SubmissionFiltersController < ApplicationController
   end
 
   def invitations
-    submissions_with_confirmed_invitations = SubmissionRepository.new.with_confirmed_invitation
+    submissions_with_confirmed_invitation = SubmissionRepository.new.with_confirmed_invitation
 
-    render :invitations, locals: { submissions_with_confirmed_invitations: submissions_with_confirmed_invitations }
+    render :invitations, locals: { submissions_with_confirmed_invitation: submissions_with_confirmed_invitation }
   end
 end
