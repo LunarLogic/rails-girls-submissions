@@ -6,7 +6,7 @@ class SubmissionRejector
   end
 
   def reject_if_any_rules_broken(submission)
-    submission.reject if any_rules_broken?(submission)
+    submission.rejected = true if any_rules_broken?(submission)
   end
 
   private

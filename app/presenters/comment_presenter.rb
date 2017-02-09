@@ -1,4 +1,8 @@
 class CommentPresenter
+  def self.collection(comments)
+    comments.map { |comment| new(comment, comment.user) }
+  end
+
   def initialize(comment, user)
     @comment = comment
     @user = user
@@ -13,6 +17,6 @@ class CommentPresenter
   end
 
   def timestamp
-    @comment.updated_at
+    @comment.updated_at.strftime("%d-%m-%Y")
   end
 end

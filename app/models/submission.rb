@@ -10,6 +10,8 @@ class Submission < ActiveRecord::Base
 
   has_many :rates, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :answers, dependent: :destroy
+  accepts_nested_attributes_for :answers
 
   SKILLS = ['html', 'css', 'js', 'ror', 'db', 'programming_others']
 
@@ -23,10 +25,6 @@ class Submission < ActiveRecord::Base
 
   def rated?
     status == "rated"
-  end
-
-  def reject
-    self.rejected = true
   end
 
   def average_rate
