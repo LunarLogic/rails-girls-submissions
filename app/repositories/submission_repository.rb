@@ -40,7 +40,7 @@ class SubmissionRepository
   end
 
   def with_confirmed_invitation
-    Submission.where(invitation_confirmed: true)
+    rated_scope.where(invitation_confirmed: true)
   end
 
   private
