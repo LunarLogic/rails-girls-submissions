@@ -1,8 +1,8 @@
-var ready = function() {
-  var rate = $('#js-user-rating').data('rate');
-  document.getElementById("value_" + rate).checked = true;
+var setRating = function() {
+  if (document.getElementById('js-user-rating')) {
+    var rate = $('#js-user-rating').data('rate');
+    document.getElementById("value_" + rate).checked = true;
+  }
 };
 
-if(window.location.pathname.match(/\/admin\/submissions\/\d*$/)) {
-  $(document).on('page:change', ready);
-}
+$(document).on('page:change', setRating);
