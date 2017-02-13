@@ -27,6 +27,7 @@ require "capistrano/rvm"
 require "capistrano3/unicorn"
 require "capistrano/bundler"
 require "capistrano/rails"
+require "whenever/capistrano"
 # require "honeybadger/capistrano"
 
 # Load custom tasks from `lib/capistrano/tasks` if you have any defined

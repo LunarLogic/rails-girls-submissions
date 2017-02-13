@@ -1,0 +1,16 @@
+<h3>You're invited to the Rails Girls workshop!</h3>
+<p>
+  <%= link_to "Confirm your invitation.", submissions_confirm_invitation_url(invitation_token: @token) %>
+  This link expires in one week.
+</p>
+<p>
+  <strong>Where?</strong><br />
+  <%= Rails.application.secrets.event_venue %>
+</p>
+<p>
+  <strong>When?</strong><br />
+  <%= Rails.application.secrets.event_date %>
+</p>
+<p>
+  If you have any questions, contact us: <%= mail_to Rails.application.secrets.contact_email %>
+</p>
