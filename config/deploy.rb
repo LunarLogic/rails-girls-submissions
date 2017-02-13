@@ -48,6 +48,9 @@ set :keep_releases, 5
 set :linked_files, %w{config/database.yml config/unicorn.rb config/secrets.yml config/allowed_users.yml}
 set :linked_dirs, %w{pids log public/assets}
 
+# Namespace the crontab entries by application and stage
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+
 after "deploy:publishing", "unicorn:stop", "unicorn:start"
 after "deploy:finishing",  "deploy:cleanup"
 

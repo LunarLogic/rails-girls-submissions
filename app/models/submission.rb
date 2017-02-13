@@ -30,4 +30,23 @@ class Submission < ActiveRecord::Base
   def average_rate
     rates.count == 0 ? 0 : (rates.sum(:value).to_f / rates.count)
   end
+
+  def generate_invitation_token!
+    self.invitation_token = Devise.friendly_token
+    self.invitation_token_created_at = Time.current
+    save!
+  end
+
+  def confirm_invitation!
+    self.invitation_confirmed = true
+    save!
+  end
+
+  def invitation_expired?
+    if invitation_token
+      invitation_token_created_at < 1.week.ago && !invitation_confirmed?
+    else
+      raise 'Submission not invited!'
+    end
+  end
 end

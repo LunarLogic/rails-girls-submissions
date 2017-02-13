@@ -31,6 +31,18 @@ class SubmissionRepository
     rated_scope.offset(Setting.get.available_spots).to_a
   end
 
+  def accepted_for_invitation_without_expired
+    rated_scope
+      .where(
+        'invitation_token IS ? OR invitation_confirmed = ? OR invitation_token_created_at > ?',
+        nil, true, 1.week.ago)
+      .limit(Setting.get.available_spots)
+  end
+
+  def with_confirmed_invitation
+    rated_scope.where(invitation_confirmed: true)
+  end
+
   private
 
   def not_rejected

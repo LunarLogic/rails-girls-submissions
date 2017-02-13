@@ -7,4 +7,6 @@
     <li><%= link_to_if !submissions_accepted.empty?, "Accepted", csv_download_accepted_path %></li>
     <li><%= link_to_if !submissions_waitlist.empty?, "Waitlist", csv_download_waitlist_path %></li>
   </ul>
+  <h2 class="aside-widget-header">Send invitation emails:</h2>
+  <li><%= link_to "Send", send_invitation_emails_path, method: :post %></li>
 </aside>
