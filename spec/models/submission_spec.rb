@@ -18,4 +18,14 @@ RSpec.describe Submission, type: :model do
     expect(FactoryGirl.build(:submission, age: -30)).not_to be_valid
     expect(FactoryGirl.build(:submission, age: 130)).not_to be_valid
   end
+
+  describe '#generate_invitation_token!' do
+    let(:submission) { FactoryGirl.create(:submission) }
+
+    it 'generates invitation token' do
+      submission.generate_invitation_token!
+      expect(submission.invitation_token).not_to be_nil
+      expect(submission.invitation_token_created_at).not_to be_nil
+    end
+  end
 end

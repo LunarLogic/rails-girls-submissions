@@ -30,4 +30,10 @@ class Submission < ActiveRecord::Base
   def average_rate
     rates.count == 0 ? 0 : (rates.sum(:value).to_f / rates.count)
   end
+
+  def generate_invitation_token!
+    self.invitation_token = Devise.friendly_token
+    self.invitation_token_created_at = Time.current
+    save!
+  end
 end
