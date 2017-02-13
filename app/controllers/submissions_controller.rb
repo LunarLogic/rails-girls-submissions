@@ -1,5 +1,18 @@
 class SubmissionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:new, :create, :thank_you]
+  skip_before_action :authenticate_user!, only: [:confirm_invitation, :new, :create, :thank_you]
+
+  def confirm_invitation
+    token = params.require(:invitation_token)
+    submission = Submission.find_by!(invitation_token: token)
+    if submission.invitation_expired?
+      render text: "Time for confirmation expired!"
+    else
+      submission.confirm_invitation!
+      render text: "You confirmed your invitation!"
+    end
+  rescue
+    render text: "Something went wrong. Please make sure the address you are trying to visit is correct, otherwise contact us by replying to the email you received the confirmation link from."
+  end
 
   def show
     submission = Submission.find(params[:id])

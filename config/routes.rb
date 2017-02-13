@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   post "/send_invitation_emails", to: "mailings#send_invitation_emails"
 
+  get "/submissions/confirm_invitation", to: "submissions#confirm_invitation"
   get "/submissions/thank_you", to: "submissions#thank_you"
   get "/submissions/closed", to: "submissions#closed"
   get "/submissions/preparation", to: "submissions#preparation"

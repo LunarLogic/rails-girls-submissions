@@ -36,4 +36,17 @@ class Submission < ActiveRecord::Base
     self.invitation_token_created_at = Time.current
     save!
   end
+
+  def confirm_invitation!
+    self.invitation_confirmed = true
+    save!
+  end
+
+  def invitation_expired?
+    if invitation_token
+      invitation_token_created_at < 1.week.ago && !invitation_confirmed?
+    else
+      raise 'Submission not invited!'
+    end
+  end
 end
