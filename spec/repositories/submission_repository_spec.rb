@@ -165,4 +165,28 @@ describe SubmissionRepository do
 
     it { expect(subject).to eq(submissions) }
   end
+
+  describe '#with_confirmed_invitation' do
+    let!(:confirmed_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'yyy',
+        invitation_confirmed: true,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+    let!(:not_confirmed_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'yyy',
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+    subject { submission_repository.with_confirmed_invitation }
+
+    it { expect(subject).to eq([confirmed_submission]) }
+  end
 end

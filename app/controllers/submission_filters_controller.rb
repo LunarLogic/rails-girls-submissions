@@ -40,4 +40,10 @@ class SubmissionFiltersController < ApplicationController
       submissions_waitlist: submissions_waitlist
     }
   end
+
+  def invitations
+    submissions_with_confirmed_invitation = SubmissionRepository.new.with_confirmed_invitation
+
+    render :invitations, locals: { submissions_with_confirmed_invitation: submissions_with_confirmed_invitation }
+  end
 end
