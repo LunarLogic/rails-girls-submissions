@@ -19,4 +19,10 @@ RSpec.describe InvitationsMailer, type: :mailer do
 
     it_behaves_like 'email with confirmation link'
   end
+
+  describe '#reminder_email' do
+    let(:mail) { described_class.reminder_email(submission).deliver_now }
+
+    it_behaves_like 'email with confirmation link'
+  end
 end
