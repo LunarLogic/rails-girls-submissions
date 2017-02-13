@@ -109,4 +109,60 @@ describe SubmissionRepository do
       end
     end
   end
+
+  describe '#accepted_for_invitation_without_expired' do
+    let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
+    let(:submissions) { [confirmed_submission, already_invited_submission, to_invite_submission] }
+    let!(:to_invite_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: nil,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 2)
+    end
+    let!(:not_invited_over_the_limit_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: nil,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 1)
+    end
+    let!(:already_invited_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'xxx',
+        invitation_token_created_at: 1.day.ago,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 3)
+    end
+    let!(:confirmed_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'yyy',
+        invitation_token_created_at: 1.week.ago - 1,
+        invitation_confirmed: true,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+    let!(:expired_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'zzz',
+        invitation_token_created_at: 1.week.ago - 1,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+    subject { submission_repository.accepted_for_invitation_without_expired }
+
+    it { expect(subject).to eq(submissions) }
+  end
 end
