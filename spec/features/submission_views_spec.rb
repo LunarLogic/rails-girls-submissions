@@ -9,6 +9,11 @@ describe "testing submissions views:" do
     FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num,
       full_name: "Applicant Rated")
     FactoryGirl.create(:submission, rejected: true, full_name: "Applicant Rejected")
+    FactoryGirl.create(
+      :submission,
+      :with_rates,
+      invitation_confirmed: true,
+      full_name: "Applicant Confirmed Invitation")
 
     login_as(user, scope: :user)
     visit admin_path
@@ -37,5 +42,11 @@ describe "testing submissions views:" do
     click_link "Results"
     expect(current_path).to eq submission_filters_results_path
     expect(page).to have_selector('td', text: "Applicant Rated")
+  end
+
+  it "moves to invitations view" do
+    click_link "Invitations"
+    expect(current_path).to eq submission_filters_invitations_path
+    expect(page).to have_selector('td', text: "Applicant Confirmed Invitation")
   end
 end
