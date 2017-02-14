@@ -86,18 +86,62 @@
 }
 
 .submission-navigation {
-  @include clearfix();
+  @include transform(translateY(-50%));
+  position: fixed;
   display: block;
-  padding-bottom: $bs1;
-  border-bottom: 2px solid $rg-red;
+  width: 100%;
+  left: 0;
+  top: 70%;
+
+  @media screen and (min-width: $big-screen) {
+    top: 50%;
+  }
+}
+
+.link-prev,
+.link-next {
+  background-color: white;
+  font-size: $bs1;
+  width: $bs2;
+  height: $bs2;
+  line-height: 1.25;
+  border: 2px solid $rg-red;
+  border-radius: 50%;
+  will-change: background-color, color;
+
+  &:hover,
+  &:active,
+  &:focus {
+    transition: all .2s;
+    text-decoration: none;
+    background-color: $rg-red;
+    color: white;
+  }
+
+  @media screen and (min-width: $big-screen) {
+    font-size: $bs3;
+    width: $bs4;
+    height: $bs4;
+    border: 3px solid $rg-red;
+  }
 }
 
 .link-prev {
   float: left;
+  margin-left: $bs-2;
+
+  @media screen and (min-width: $big-screen) {
+    margin-left: $bs3;
+  }
 }
 
 .link-next {
   float: right;
+  margin-right: $bs-2;
+
+  @media screen and (min-width: $big-screen) {
+    margin-right: $bs3;
+  }
 }
 
 .submission-comments {
