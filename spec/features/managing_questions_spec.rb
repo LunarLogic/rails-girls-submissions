@@ -9,7 +9,9 @@ describe "managing questions" do
     count = 3
     FactoryGirl.create_list(:question, count)
 
-    visit questions_path
+    visit admin_path
+    click_button "Form Creator"
+    expect(current_path).to eq questions_path
     expect(page).to have_selector(".rb-question", count: count)
   end
 
