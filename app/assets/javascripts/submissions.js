@@ -5,4 +5,20 @@ var setRating = function() {
   }
 };
 
+var submitRating = function() {
+  var labels = $("#js-user-rating label");
+
+  if (labels.length > 0) {
+    labels.map(function() {
+      this.onclick = function(e) {
+        setTimeout(function() {
+          var form = document.getElementById("js-submission-rating-form");
+          form.submit();
+        }, 200);
+      };
+    });
+  }
+};
+
 $(document).on('page:change', setRating);
+$(document).on('page:change', submitRating);

@@ -110,7 +110,7 @@
     </p>
 
     <aside class="aside-widget aside-widget-absolute">
-      <%= form_tag(submission_rate_path(submission), class: "submission-rating-form") do %>
+      <%= form_tag(submission_rate_path(submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
         <fieldset class="starability-fade fieldset-inline"
                   id="js-user-rating"
                   data-rate="<%= submission.current_user_rate_value %>">
@@ -144,6 +144,7 @@
           </span>
         </section>
       <% end %>
+
       <section class="submission-navigation">
         <%= link_to "← Previous submission", submission.previous, class: "link-prev" %>
         <%= link_to "Next submission →", submission.next, class: "link-next" %>
