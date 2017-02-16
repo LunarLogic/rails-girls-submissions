@@ -11,7 +11,9 @@ class SubmissionsController < ApplicationController
       render text: "You confirmed your invitation!"
     end
   rescue
-    render text: "Something went wrong. Please make sure the address you are trying to visit is correct, otherwise contact us by replying to the email you received the confirmation link from."
+    render text: "Something went wrong. Please make sure the address you are trying to visit
+                  is correct, otherwise contact us by replying to the email you received
+                  the confirmation link from."
   end
 
   def show
