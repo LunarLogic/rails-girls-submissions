@@ -46,7 +46,7 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   #
-  # Selenium, which is a defult driver for specs using js, doesn't support transactional_fixtures
+  # Selenium, which is a default driver for specs using js, doesn't support transactional_fixtures
   # Remember to add "js: true" to your spec's "describe" method
   if Capybara.current_driver == :selenium
     config.use_transactional_fixtures = false
