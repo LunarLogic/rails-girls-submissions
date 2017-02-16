@@ -2,7 +2,6 @@ class SubmissionRejector
   RULES = [
     Rules::EnglishRule.new,
     Rules::FirstTimeRule.new,
-    Rules::RorRule.new,
     Rules::AdultRule.new
   ]
 
