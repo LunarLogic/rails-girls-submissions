@@ -10,12 +10,6 @@ FactoryGirl.define do
     first_time true
     goals "Tons of money!\nTons of money!\nTons of money!\n"
     problems "I'm shortsighted - can't see money's a shitty goal. :c"
-    html :fluent
-    css :fluent
-    js :used
-    ror :heard
-    db :never
-    programming_others :heard
     rejected false
 
     trait :with_rates do
