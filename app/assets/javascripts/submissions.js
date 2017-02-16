@@ -1,8 +1,17 @@
 var setRating = function() {
-  if (document.getElementById('js-user-rating')) {
+  if ($('#js-user-rating').length) {
     var rate = $('#js-user-rating').data('rate');
-    document.getElementById("value_" + rate).checked = true;
+    if (rate > 0) {
+      $("#value_" + rate).prop("checked", true);
+    }
   }
 };
 
+var submitRating = function() {
+  $("#js-user-rating input").change(function() {
+    $("#js-submission-rating-form").submit();
+  });
+};
+
 $(document).on('page:change', setRating);
+$(document).on('page:change', submitRating);
