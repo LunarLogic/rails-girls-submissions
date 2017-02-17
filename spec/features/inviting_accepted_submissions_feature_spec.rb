@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'inviting accepted submissions' do
   let(:setting) { FactoryGirl.build(:setting, available_spots: 2) }
   let!(:user) { FactoryGirl.create(:user) }
+  let(:confirmation_days) { Setting.get.confirmation_time.days }
 
   before do
     ActionMailer::Base.deliveries.clear
@@ -45,7 +46,7 @@ describe 'inviting accepted submissions' do
       :submission,
       :with_rates,
       invitation_token: 'zzz',
-      invitation_token_created_at: 1.week.ago - 1,
+      invitation_token_created_at: confirmation_days.ago - 1,
       invitation_confirmed: false,
       rates_num: setting.required_rates_num,
       rates_val: 1)
@@ -60,7 +61,7 @@ describe 'inviting accepted submissions' do
       :submission,
       :with_rates,
       invitation_token: 'yyy',
-      invitation_token_created_at: 1.week.ago - 1,
+      invitation_token_created_at: confirmation_days.ago - 1,
       invitation_confirmed: true,
       rates_num: setting.required_rates_num,
       rates_val: 1)

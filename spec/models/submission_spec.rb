@@ -30,18 +30,21 @@ RSpec.describe Submission, type: :model do
   end
 
   describe '#invitation_expired?' do
+    before { allow(Setting).to receive(:get).and_return(FactoryGirl.build(:setting)) }
+    let(:confirmation_days) { Setting.get.confirmation_time.days }
+
     let(:expired_submission) do
       FactoryGirl.build(
         :submission,
         invitation_token: 'xxx',
-        invitation_token_created_at: 1.week.ago - 1,
+        invitation_token_created_at: confirmation_days.ago - 1,
         invitation_confirmed: false)
     end
     let(:confirmed_submission) do
       FactoryGirl.build(
         :submission,
         invitation_token: 'xxx',
-        invitation_token_created_at: 1.week.ago - 1,
+        invitation_token_created_at: confirmation_days.ago - 1,
         invitation_confirmed: true)
     end
     let(:not_invited_submission) do

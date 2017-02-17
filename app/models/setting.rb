@@ -20,7 +20,7 @@ class Setting < ActiveRecord::Base
     self.first || self.create({
       available_spots: 0,
       required_rates_num: 3,
-      confirmation_time: 14,
+      confirmation_time: 7,
       beginning_of_preparation_period: "Tue, 21 Jun 2016 00:00:00 CEST +02:00",
       beginning_of_registration_period: "Wed, 22 Jun 2016 00:00:00 CEST +02:00",
       beginning_of_closed_period: "Thu, 23 Jun 2016 00:00:00 CEST +02:00",
