@@ -22,6 +22,10 @@
     <%= f.number_field :required_rates_num, min: 0, required: true %>
   </div>
   <div class="form-field">
+    <%= f.label :confirmation_time %>
+    <%= f.number_field :confirmation_time, min: 0, required: true %>
+  </div>
+  <div class="form-field">
     <%= f.label :beginning_of_preparation_period %>
     <%= f.date_field :beginning_of_preparation_period, required: true %>
   </div>

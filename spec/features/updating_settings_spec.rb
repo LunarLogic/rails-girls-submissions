@@ -7,6 +7,7 @@ describe "testing updating settings:" do
     visit settings_path
     fill_in 'Available spots', with: 5
     fill_in 'Required rates num', with: 5
+    fill_in 'Confirmation time', with: 14
     fill_in 'Beginning of preparation period', with: "2016/06/21"
     fill_in 'Beginning of registration period', with: "2016/06/22"
     fill_in 'Beginning of closed period', with: "2016/06/23"
