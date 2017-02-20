@@ -1,21 +1,22 @@
 require "rails_helper"
+require "models/shared/validations"
 
 RSpec.describe Submission, type: :model do
   it "has a valid factory" do
     expect(FactoryGirl.build(:setting)).to be_valid
   end
 
-  it "validates available_spots" do
-    expect(FactoryGirl.build(:setting, available_spots: -1)).not_to be_valid
-    expect(FactoryGirl.build(:setting, available_spots: "a")).not_to be_valid
-    expect(FactoryGirl.build(:setting, available_spots: 4.32)).not_to be_valid
-  end
-
-  it "validates required_rates_num" do
-    expect(FactoryGirl.build(:setting, required_rates_num: -1)).not_to be_valid
-    expect(FactoryGirl.build(:setting, required_rates_num: "a")).not_to be_valid
-    expect(FactoryGirl.build(:setting, required_rates_num: 4.32)).not_to be_valid
-  end
+  include_examples :positive_present_integer, :setting, :available_spots
+  include_examples :positive_present_integer, :setting, :required_rates_num
+  include_examples :positive_present_integer, :setting, :days_to_confirm_invitation
+  include_examples :present, :setting, :beginning_of_preparation_period
+  include_examples :present, :setting, :beginning_of_registration_period
+  include_examples :present, :setting, :beginning_of_closed_period
+  include_examples :present, :setting, :event_start_date
+  include_examples :present, :setting, :event_end_date
+  include_examples :present, :setting, :event_url
+  include_examples :present, :setting, :available_spots
+  include_examples :present, :setting, :required_rates_num
 
   it "validates that preparation comes before registration" do
     params = {
@@ -39,16 +40,5 @@ RSpec.describe Submission, type: :model do
       event_end_date: "Wed, 22 Jun 2016 00:00:00 CEST +02:00"
     }
     expect(FactoryGirl.build(:setting, params)).not_to be_valid
-  end
-
-  context "validates the presence" do
-    it { expect(FactoryGirl.build(:setting, required_rates_num: nil)).not_to be_valid }
-    it { expect(FactoryGirl.build(:setting, beginning_of_preparation_period: nil)).not_to be_valid }
-    it { expect(FactoryGirl.build(:setting, beginning_of_registration_period: nil)).not_to be_valid }
-    it { expect(FactoryGirl.build(:setting, beginning_of_closed_period: nil)).not_to be_valid }
-    it { expect(FactoryGirl.build(:setting, event_start_date: nil)).not_to be_valid }
-    it { expect(FactoryGirl.build(:setting, event_end_date: nil)).not_to be_valid }
-    it { expect(FactoryGirl.build(:setting, event_url: nil)).not_to be_valid }
-    it { expect(FactoryGirl.build(:setting, available_spots: nil)).not_to be_valid }
   end
 end

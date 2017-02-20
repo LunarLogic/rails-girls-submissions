@@ -35,7 +35,7 @@ class SubmissionRepository
     rated_scope
       .where(
         'invitation_token IS ? OR invitation_confirmed = ? OR invitation_token_created_at > ?',
-        nil, true, 1.week.ago)
+        nil, true, Setting.get.days_to_confirm_invitation.days.ago)
       .limit(Setting.get.available_spots)
   end
 
