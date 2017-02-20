@@ -42,7 +42,7 @@ class Submission < ActiveRecord::Base
 
   def invitation_expired?
     if invitation_token
-      after_deadline = invitation_token_created_at < Setting.get.confirmation_time.days.ago
+      after_deadline = invitation_token_created_at < Setting.get.days_to_confirm_invitation.days.ago
       after_deadline && !invitation_confirmed?
     else
       raise 'Submission not invited!'

@@ -11,16 +11,16 @@ class Setting < ActiveRecord::Base
             :event_url,
             :available_spots,
             :required_rates_num,
-            :confirmation_time,
+            :days_to_confirm_invitation,
             presence: true
-  validates :available_spots, :required_rates_num, :confirmation_time,
+  validates :available_spots, :required_rates_num, :days_to_confirm_invitation,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   def self.get
     self.first || self.create({
       available_spots: 0,
       required_rates_num: 3,
-      confirmation_time: 7,
+      days_to_confirm_invitation: 7,
       beginning_of_preparation_period: "Tue, 21 Jun 2016 00:00:00 CEST +02:00",
       beginning_of_registration_period: "Wed, 22 Jun 2016 00:00:00 CEST +02:00",
       beginning_of_closed_period: "Thu, 23 Jun 2016 00:00:00 CEST +02:00",
@@ -34,7 +34,7 @@ class Setting < ActiveRecord::Base
     settings = self.get
     settings.available_spots = setting_params[:available_spots]
     settings.required_rates_num = setting_params[:required_rates_num]
-    settings.confirmation_time = setting_params[:confirmation_time]
+    settings.days_to_confirm_invitation = setting_params[:days_to_confirm_invitation]
     settings.beginning_of_preparation_period = setting_params[:beginning_of_preparation_period]
     settings.beginning_of_registration_period = setting_params[:beginning_of_registration_period]
     settings.beginning_of_closed_period = setting_params[:beginning_of_closed_period]

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'inviting accepted submissions' do
   let(:setting) { FactoryGirl.build(:setting, available_spots: 2) }
   let!(:user) { FactoryGirl.create(:user) }
-  let(:confirmation_days) { Setting.get.confirmation_time.days }
+  let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
 
   before do
     ActionMailer::Base.deliveries.clear

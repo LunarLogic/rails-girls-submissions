@@ -1,6 +1,5 @@
 require "rails_helper"
-require "models/shared/positive_present_integer"
-require "models/shared/present"
+require "models/shared/validations"
 
 RSpec.describe Submission, type: :model do
   it "has a valid factory" do
@@ -9,7 +8,7 @@ RSpec.describe Submission, type: :model do
 
   include_examples :positive_present_integer, :setting, :available_spots
   include_examples :positive_present_integer, :setting, :required_rates_num
-  include_examples :positive_present_integer, :setting, :confirmation_time
+  include_examples :positive_present_integer, :setting, :days_to_confirm_invitation
   include_examples :present, :setting, :beginning_of_preparation_period
   include_examples :present, :setting, :beginning_of_registration_period
   include_examples :present, :setting, :beginning_of_closed_period

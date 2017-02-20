@@ -31,7 +31,7 @@ RSpec.describe Submission, type: :model do
 
   describe '#invitation_expired?' do
     before { allow(Setting).to receive(:get).and_return(FactoryGirl.build(:setting)) }
-    let(:confirmation_days) { Setting.get.confirmation_time.days }
+    let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
 
     let(:expired_submission) do
       FactoryGirl.build(

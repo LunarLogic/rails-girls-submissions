@@ -112,7 +112,7 @@ describe SubmissionRepository do
 
   describe '#accepted_for_invitation_without_expired' do
     let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
-    let(:confirmation_days) { Setting.get.confirmation_time.days }
+    let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
     let(:submissions) { [confirmed_submission, already_invited_submission, to_invite_submission] }
     let!(:to_invite_submission) do
       FactoryGirl.create(

@@ -18,7 +18,7 @@ class SettingsController < ApplicationController
   private
 
   def setting_params
-    params.require(:setting).permit(:available_spots, :required_rates_num, :confirmation_time,
+    params.require(:setting).permit(:available_spots, :required_rates_num, :days_to_confirm_invitation,
       :beginning_of_preparation_period, :beginning_of_registration_period, :beginning_of_closed_period,
       :event_start_date, :event_end_date, :event_url)
   end

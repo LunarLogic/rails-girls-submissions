@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20170217081802) do
     t.date     "event_end_date",                   null: false
     t.string   "event_url",                        null: false
     t.integer  "available_spots",                  null: false
-    t.integer  "confirmation_time",                null: false
+    t.integer  "days_to_confirm_invitation",       null: false
   end
 
   create_table "submissions", force: :cascade do |t|
