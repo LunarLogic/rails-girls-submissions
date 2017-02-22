@@ -91,7 +91,7 @@
   display: block;
   width: 100%;
   left: 0;
-  top: 70%;
+  top: 60%;
 
   @media screen and (min-width: $big-screen) {
     top: 50%;
@@ -112,23 +112,27 @@
   &:hover,
   &:active,
   &:focus {
-    transition: all .2s;
+    transition: all .3s;
     text-decoration: none;
     background-color: $rg-red;
     color: white;
   }
 
   @media screen and (min-width: $big-screen) {
-    font-size: $bs3;
-    width: $bs4;
-    height: $bs4;
-    border: 3px solid $rg-red;
+    font-size: $bs2;
+    width: $bs3;
+    height: $bs3;
+    line-height: 1.1;
   }
 }
 
 .link-prev {
   float: left;
   margin-left: $bs-2;
+
+  @media screen and (min-width: $tablet) {
+    margin-left: $bs1;
+  }
 
   @media screen and (min-width: $big-screen) {
     margin-left: $bs3;
@@ -138,6 +142,10 @@
 .link-next {
   float: right;
   margin-right: $bs-2;
+
+  @media screen and (min-width: $tablet) {
+    margin-right: $bs1;
+  }
 
   @media screen and (min-width: $big-screen) {
     margin-right: $bs3;

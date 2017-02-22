@@ -110,7 +110,7 @@
     </p>
 
     <aside class="aside-widget aside-widget-rating">
-      <%= form_tag(submission_rate_path(submission), class: "submission-rating-form") do %>
+      <%= form_tag(submission_rate_path(submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
         <fieldset class="starability-fade fieldset-inline"
                   id="js-user-rating"
                   data-rate="<%= submission.current_user_rate_value %>">
@@ -160,7 +160,7 @@
         <% end %>
 
         <%= render 'comments/form', { submission: submission, comment: comment } %>
-      </comments>
+      </section>
     </aside>
   </article>
 </div>
