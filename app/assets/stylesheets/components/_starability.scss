@@ -1,12 +1,12 @@
 @keyframes fade {
   0% {
-    transform: translateY(30px);
+    @include transform(translateY(30px));
   }
   80% {
     opacity: 100%;
   }
   100% {
-    transform: none;
+    @include transform(none);
     opacity: 0;
   }
 }
