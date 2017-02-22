@@ -7,40 +7,53 @@ class SubmissionRepository
     not_rejected.order('created_at ASC')
   end
 
-  def rated
-    rated_scope.to_a
-  end
-
   def to_rate
-    to_rate_scope.to_a
+    with_rates_if_any
+      .having('count("rates") < ?', Setting.get.required_rates_num)
+      .order('created_at DESC')
   end
 
-  def next(current_created_at)
-    get_next_submission(current_created_at) || get_first_submission
-  end
-
-  def previous(current_created_at)
-    get_previous_submission(current_created_at) || get_last_submission
+  def rated
+    with_rates_if_any
+      .having('count("rates") >= ?',  Setting.get.required_rates_num)
+      .order('AVG(value) DESC')
   end
 
   def accepted
-    rated_scope.limit(Setting.get.available_spots).to_a
+    rated.limit(Setting.get.available_spots)
   end
 
   def waitlist
-    rated_scope.offset(Setting.get.available_spots).to_a
+    rated.offset(Setting.get.available_spots)
   end
 
   def accepted_for_invitation_without_expired
-    rated_scope
-      .where(
+    rated.where(
         'invitation_token IS ? OR invitation_confirmed = ? OR invitation_token_created_at > ?',
         nil, true, Setting.get.days_to_confirm_invitation.days.ago)
       .limit(Setting.get.available_spots)
   end
 
   def with_confirmed_invitation
-    rated_scope.where(invitation_confirmed: true)
+    rated.where(invitation_confirmed: true)
+  end
+
+  def first(submissions)
+    submissions.reorder('created_at ASC').first
+  end
+
+  def last(submissions)
+    submissions.reorder('created_at DESC').first
+  end
+
+  def next(submissions, current_submission)
+    submissions.where('submissions.created_at > ?', current_submission.created_at)
+      .reorder('created_at ASC').first
+  end
+
+  def previous(submissions, current_submission)
+    submissions.where('submissions.created_at < ?', current_submission.created_at)
+      .reorder('created_at DESC').first
   end
 
   private
@@ -49,36 +62,8 @@ class SubmissionRepository
     Submission.where(rejected: false)
   end
 
-  def get_next_submission(current_created_at)
-    not_rejected.where('submissions.created_at > ?', current_created_at).order('created_at ASC').first
-  end
-
-  def get_previous_submission(current_created_at)
-    not_rejected.where('submissions.created_at < ?', current_created_at).order('created_at DESC').first
-  end
-
-  def get_first_submission
-    not_rejected.order('created_at ASC').first
-  end
-
-  def get_last_submission
-    not_rejected.order('created_at DESC').first
-  end
-
-  def rated_scope
-    with_rates_if_any.having('count("rates") >= ?',  required_rates_number).order('AVG(value) DESC')
-  end
-
-  def to_rate_scope
-    with_rates_if_any.having('count("rates") < ?', required_rates_number).order('created_at DESC')
-  end
-
   def with_rates_if_any
     not_rejected.joins("LEFT JOIN rates ON submissions.id = rates.submission_id").
       group('submissions.id')
-  end
-
-  def required_rates_number
-    Setting.get.required_rates_num
   end
 end

@@ -6,11 +6,10 @@ class RatesController < ApplicationController
 
     rate_creator = RateCreator.build(value, submission_id, user_id)
     result = rate_creator.call
-    if !result.success
-      flash[:error] = result.errors
-      redirect_to submission_path(submission_id)
+    if result.success
+      redirect_to request.referer, notice: 'Rate was successfully created.'
     else
-      redirect_to submission_path(submission_id), notice: 'Rate was successfully created.'
+      redirect_to request.referer, notice: 'Error: rate could not be created'
     end
   end
 end

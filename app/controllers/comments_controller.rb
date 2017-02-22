@@ -6,9 +6,9 @@ class CommentsController < ApplicationController
     result = comment_creator.call
 
     if result.success
-      redirect_to submission_path(submission_id), notice: 'Comment was successfully created.'
+      redirect_to request.referer, notice: 'Comment was successfully created.'
     else
-      redirect_to submission_path(submission_id), notice: 'Error: comment could not be created.'
+      redirect_to request.referer, notice: 'Error: comment could not be created.'
     end
   end
 

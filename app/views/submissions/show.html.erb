@@ -110,7 +110,7 @@
     </p>
 
     <aside class="aside-widget aside-widget-rating">
-      <%= form_tag(submission_rate_path(submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
+      <%= form_tag(rate_path(filter, submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
         <fieldset class="starability-fade fieldset-inline"
                   id="js-user-rating"
                   data-rate="<%= submission.current_user_rate_value %>">
@@ -145,10 +145,10 @@
       <% end %>
 
       <section class="submission-navigation">
-        <%= link_to "←", submission.previous, class: "link-prev", title: "Previous submission" %>
-        <%= link_to "→", submission.next, class: "link-next", title: "Next submission" %>
+        <%= link_to "←", submission_path(id: previous_submission_id, filter: filter), class: "link-prev", title: "Previous submission" %>
+        <%= link_to "→", submission_path(id: next_submission_id, filter: filter), class: "link-next", title: "Next submission" %>
       </section>
-      
+
       <section class="submission-comments">
         <h2 class="aside-widget-header"> Comments </h2>
         <% comment_presenters.each do |presenter| %>
@@ -160,7 +160,7 @@
           </div>
         <% end %>
 
-        <%= render 'comments/form', { submission: submission, comment: comment } %>
+        <%= render 'comments/form', { filter: filter, submission: submission, comment: comment } %>
       </section>
     </aside>
   </article>

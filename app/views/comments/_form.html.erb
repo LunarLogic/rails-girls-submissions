@@ -1,4 +1,4 @@
-<%= form_for([submission, comment]) do |f| %>
+<%= form_for([submission, comment], url: comments_path(filter, submission)) do |f| %>
   <div class="form-field form-field-close">
     <%= f.text_area :body, placeholder: "Your Comment", class: "textarea-small", required: true, maxLength: 140 %>
   </div>

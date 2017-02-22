@@ -26,7 +26,7 @@
         <td class="submission-mobile-hidden"><%= submission.rates_count %></td>
       <% end %>
       <td class="submission-mobile-hidden"><%= submission.created_at %></td>
-      <td><%= link_to 'Show', submission %></td>
+      <td><%= link_to 'Show', submission_path(id: submission.id, filter: filter) %></td>
     </tr>
     <% end %>
   </tbody>

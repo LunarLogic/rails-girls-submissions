@@ -18,13 +18,23 @@ class SubmissionsController < ApplicationController
 
   def show
     submission = Submission.find(params[:id])
+    submission_filter = params[:filter].to_sym
+
+    begin
+      submission_carousel = SubmissionCarousel.build(submission_filter)
+    rescue ArgumentError
+      return render file: "public/404.html", status: 404
+    end
 
     render :show, locals: {
       submission: SubmissionPresenter.build(submission, current_user),
       answers: AnswerPresenter.collection(submission.answers),
       comment: Comment.new,
       comment_presenters: CommentPresenter.collection(submission.comments),
-      rate_presenters: RatePresenter.collection(submission.rates)
+      rate_presenters: RatePresenter.collection(submission.rates),
+      previous_submission_id: submission_carousel.previous(submission).id,
+      next_submission_id: submission_carousel.next(submission).id,
+      filter: submission_filter
     }
   end
 

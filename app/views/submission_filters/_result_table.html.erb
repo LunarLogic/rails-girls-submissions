@@ -16,7 +16,7 @@
         <td class="submission-body-name"><%= submission.full_name %></td>
         <td class="submission-mobile-hidden"><%= submission.email %></td>
         <td class="submission-mobile-hidden"><%= submission.average_rate if submission.rated? %></td>
-        <td><%= link_to 'Show', submission %></td>
+        <td><%= link_to 'Show', submission_path(id: submission.id, filter: filter) %></td>
       </tr>
       <% end %>
     </tbody>

@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe SubmissionsController, type: :controller do
-
   describe "GET #new" do
     subject { get :new }
     let!(:settings) do
@@ -60,6 +59,18 @@ RSpec.describe SubmissionsController, type: :controller do
       it "does not save the new submission" do
         expect{subject}.not_to change(Submission, :count)
       end
+    end
+  end
+
+  describe "GET #show" do
+    let(:submission) { FactoryGirl.create(:submission) }
+    let(:invalid_submission_filter) { "filter" }
+
+    before { sign_in(FactoryGirl.create(:user)) }
+
+    it "renders 404 if an invalid submission filter is typed in the path" do
+      get :show, filter: invalid_submission_filter, id: submission.id
+      expect(response).to have_http_status(404)
     end
   end
 end
