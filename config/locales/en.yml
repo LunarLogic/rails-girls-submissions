@@ -20,4 +20,13 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      answer:
+        value: "The highligthed question"
+    errors:
+      models:
+        answer:
+          attributes:
+            value:
+              blank: "has to be answered."

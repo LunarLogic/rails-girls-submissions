@@ -112,6 +112,7 @@ describe SubmissionRepository do
 
   describe '#accepted_for_invitation_without_expired' do
     let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
+    let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
     let(:submissions) { [confirmed_submission, already_invited_submission, to_invite_submission] }
     let!(:to_invite_submission) do
       FactoryGirl.create(
@@ -146,7 +147,7 @@ describe SubmissionRepository do
         :submission,
         :with_rates,
         invitation_token: 'yyy',
-        invitation_token_created_at: 1.week.ago - 1,
+        invitation_token_created_at: confirmation_days.ago - 1,
         invitation_confirmed: true,
         rates_num: setting.required_rates_num,
         rates_val: 4)
@@ -156,7 +157,7 @@ describe SubmissionRepository do
         :submission,
         :with_rates,
         invitation_token: 'zzz',
-        invitation_token_created_at: 1.week.ago - 1,
+        invitation_token_created_at: confirmation_days.ago - 1,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 4)

@@ -5,6 +5,8 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
+require 'capybara/rails'
+require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -28,6 +30,14 @@ require 'capybara-screenshot/rspec'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+Capybara.register_driver :selenium do |app|
+ Capybara::Selenium::Driver.new(
+   app,
+   browser: :firefox,
+   desired_capabilities: Selenium::WebDriver::Remote::Capabilities.firefox(marionette: false)
+ )
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -35,10 +45,15 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  #
+  # Selenium, which is a default driver for specs using js, doesn't support transactional_fixtures
+  # Remember to add "js: true" to your spec's "describe" method
+  if Capybara.current_driver == :selenium
+    config.use_transactional_fixtures = false
+  end
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)
   end
 
