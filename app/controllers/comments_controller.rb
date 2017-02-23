@@ -8,12 +8,7 @@ class CommentsController < ApplicationController
     if result.success
       redirect_to submission_path(submission_id), notice: 'Comment was successfully created.'
     else
-      render "submissions/show", locals: {
-        submission: Submission.find(submission_id),
-        comment: result.object,
-        comment_presenters: CommentPresenter.collection(submission.comments),
-        rate_presenters: RatePresenter.collection(submission.rates)
-      }
+      redirect_to submission_path(submission_id), notice: 'Error: comment could not be created.'
     end
   end
 
