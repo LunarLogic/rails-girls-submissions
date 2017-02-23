@@ -1,6 +1,6 @@
 <%= form_for([submission, comment]) do |f| %>
   <div class="form-field form-field-close">
-    <%= f.text_area :body, placeholder: "Your Comment", class: "textarea-small" %>
+    <%= f.text_area :body, placeholder: "Your Comment", class: "textarea-small", required: true, maxLength: 140 %>
   </div>
   <div>
     <%= f.submit "Comment", class: "btn-small btn-right-align" %>
