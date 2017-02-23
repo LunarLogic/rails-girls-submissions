@@ -1,12 +1,19 @@
-<h1>Questions Creator</h1>
+<div class="l-wrapper-narrow l-wrapper-margin-big">
+  <h1>Questions Creator</h1>
 
-<ui>
-  <% questions.each do |question| %>
-    <li class="rb-question">
-      <span><%= question.text %></span>
-      <span><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></span>
-    </li>
-  <% end %>
-<ul>
+  <div class="l-wrapper-margin-small">
+    <%= render 'form', { question: question } %>
+  </div>
 
-<%= link_to 'Add a radio button question', new_question_path %>
+  <div>
+    <h2>Existing questions</h2>
+    <ul class="question-list">
+      <% questions.each do |question| %>
+        <li class="question-list-item">
+          <%= question.text %>
+          <%= link_to 'Remove', question, method: :delete, data: { confirm: 'Are you sure?' }, class: "question-list-item-remove" %>
+        </li>
+      <% end %>
+    <ul>
+  </div>
+</div>

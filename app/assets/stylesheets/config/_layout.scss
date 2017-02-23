@@ -13,3 +13,11 @@
   @extend %wrapper;
   max-width: 600px;
 }
+
+.l-wrapper-margin-small {
+  margin: 2*$bs1 auto;
+}
+
+.l-wrapper-margin-big {
+  margin: 3*$bs1 auto;
+}

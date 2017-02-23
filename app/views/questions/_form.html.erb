@@ -1,8 +1,11 @@
 <%= form_for(question) do |f| %>
   <div class="form-field form-field-close">
-    <%= f.text_area :text, placeholder: "Question's text", class: "textarea-small" %>
+    <%= f.label :text, "Add new question" %>
+    <%= f.text_field :text, placeholder: "How would you rate your English?", class: "input-inline" %>
+    <%= f.submit "Create", class: "btn-small btn-right-align submit-inline" %>
   </div>
-  <div>
-    <%= f.submit "Create", class: "btn-small btn-right-align" %>
+  <div class="form-field-info">
+    Following answers will be available:
+    <span class="form-field-info-highlight">bad, ok, good, very good</span>
   </div>
 <% end %>
