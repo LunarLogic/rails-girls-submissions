@@ -23,6 +23,8 @@
   margin: 0;
   text-align: right;
   border-bottom: 1px solid #ccc;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 
   &:nth-of-type(even) {
     background: #f0f0f0;
