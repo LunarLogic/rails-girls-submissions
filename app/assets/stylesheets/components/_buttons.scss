@@ -38,6 +38,7 @@
 .link-return {
   display: block;
   text-decoration: none;
+  margin-left: $bs2;
 
   &:hover,
   &:focus,
@@ -52,7 +53,6 @@
 
   @include media($tablet) {
     position: fixed;
-    left: $bs-1;
     padding: 0 $bs-1;
     line-height: $bs3;
     text-decoration: none;

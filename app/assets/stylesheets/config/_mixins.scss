@@ -10,8 +10,8 @@
   appearance: $appearance;
 }
 
-@mixin media($min-width) {
-  @media (min-width: $min-width) {
+@mixin media($min-width, $max-width: 10000px) {
+  @media (min-width: $min-width) and (max-width: $max-width) {
     @content;
   }
 }
