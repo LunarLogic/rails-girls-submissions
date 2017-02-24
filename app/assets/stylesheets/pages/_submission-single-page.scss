@@ -94,6 +94,7 @@
   width: 100%;
   left: 0;
   top: 60%;
+  z-index: 2;
 
   @media screen and (min-width: $big-screen) {
     top: 50%;
@@ -102,6 +103,7 @@
 
 .link-prev,
 .link-next {
+  display: block;
   background-color: white;
   font-size: $bs1;
   width: $bs2;
@@ -109,6 +111,7 @@
   line-height: 1.25;
   border: 2px solid $rg-red;
   border-radius: 50%;
+  text-align: center;
   will-change: background-color, color;
 
   &:hover,
@@ -132,11 +135,11 @@
   float: left;
   margin-left: $bs-2;
 
-  @media screen and (min-width: $tablet) {
-    margin-left: $bs1;
+  @include media($medium-screen, $big-screen) {
+    margin-left: $bs2;
   }
 
-  @media screen and (min-width: $big-screen) {
+  @include media($big-screen) {
     margin-left: $bs3;
   }
 }
@@ -145,11 +148,11 @@
   float: right;
   margin-right: $bs-2;
 
-  @media screen and (min-width: $tablet) {
-    margin-right: $bs1;
+  @include media($medium-screen, $big-screen) {
+    margin-right: $bs2;
   }
 
-  @media screen and (min-width: $big-screen) {
+  @include media($big-screen) {
     margin-right: $bs3;
   }
 }
