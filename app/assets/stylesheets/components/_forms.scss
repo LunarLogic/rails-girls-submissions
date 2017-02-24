@@ -153,3 +153,10 @@ $input-height: $bs2;
     }
   }
 }
+
+/* styles for character counter */
+
+.character-counter {
+  float: right;
+  color: $grey-default;
+}
