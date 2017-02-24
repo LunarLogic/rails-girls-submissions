@@ -21,3 +21,13 @@
 .l-wrapper-margin-big {
   margin: 3*$bs1 auto;
 }
+
+.l-wrapper-narrow-left {
+
+  @include media($medium-screen, $big-screen) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: -($rating-widget-width/2);
+  }
+}
