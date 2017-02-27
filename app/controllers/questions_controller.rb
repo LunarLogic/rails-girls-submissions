@@ -1,10 +1,6 @@
 class QuestionsController < ApplicationController
   def index
-    render :index, locals: { questions: Question.all }
-  end
-
-  def new
-    render :new, locals: { question: Question.new }
+    render :index, locals: { questions: Question.all, question: Question.new }
   end
 
   def create

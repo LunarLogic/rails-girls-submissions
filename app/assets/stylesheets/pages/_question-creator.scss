@@ -1,0 +1,17 @@
+.question-list {
+  padding-left: 0;
+}
+
+.question-list-item {
+  padding: $bs-2 0;
+  border-bottom: 1px dotted $rg-red;
+  list-style-type: none;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.question-list-item-remove {
+  float: right;
+}

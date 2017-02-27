@@ -12,17 +12,14 @@ describe "managing questions" do
     visit admin_path
     click_button "Form Creator"
     expect(current_path).to eq questions_path
-    expect(page).to have_selector(".rb-question", count: count)
+    expect(page).to have_selector(".question-list-item", count: count)
   end
 
   it "creates a new question" do
     visit questions_path
 
-    click_link "Add a radio button question"
-    expect(current_path).to eq new_question_path
-
     text = "question's text"
-    fill_in "Question's text", with: text
+    fill_in "Add a new question", with: text
     click_button('Create')
     expect(current_path).to eq questions_path
     expect(page).to have_text(text)
@@ -32,8 +29,8 @@ describe "managing questions" do
     FactoryGirl.create(:question)
 
     visit questions_path
-    click_link('Destroy')
+    click_link('Remove')
     expect(current_path).to eq questions_path
-    expect(page).not_to have_selector(".rb-question")
+    expect(page).not_to have_selector(".question-list-item")
   end
 end
