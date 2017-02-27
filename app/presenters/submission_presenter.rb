@@ -43,6 +43,10 @@ class SubmissionPresenter < SimpleDelegator
     rate ? rate.value : 0
   end
 
+  def codecademy_url
+    "https://www.codecademy.com/#{codecademy_username}"
+  end
+
   private
 
   attr_reader :rates, :submission_repository, :user
