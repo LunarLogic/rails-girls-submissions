@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20170217081802) do
+ActiveRecord::Schema.define(version: 20170227135623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,12 +82,6 @@ ActiveRecord::Schema.define(version: 20170217081802) do
     t.text     "problems"
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.string   "html"
-    t.string   "css"
-    t.string   "js"
-    t.string   "ror"
-    t.string   "db"
-    t.string   "programming_others"
     t.boolean  "rejected",                    default: false
     t.string   "codecademy_status",           default: "pending"
     t.string   "invitation_token"
