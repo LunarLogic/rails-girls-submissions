@@ -20,16 +20,12 @@
 .aside-widget-rating {
 
   @include media($medium-screen) {
-    position: fixed;
-    top: $bs2+$bs3;
-    right: $bs1;
-    width: 300px;
-    margin: 0 auto $bs2;
-  }
-
-  @include media($big-screen) {
     position: absolute;
-    right: -400px;
+    top: $bs2+$bs3;
+    right: -($rating-widget-width);
+    width: $rating-widget-width;
+    margin: 0 auto $bs2;
+    padding-left: $bs3;
   }
 }
 

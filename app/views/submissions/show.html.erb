@@ -12,8 +12,14 @@
   </div>
 <% end %>
 
-<div class="l-wrapper-narrow">
-  <%= link_to '← Back', admin_path, class: "link-return" %>
+<%= link_to '← Back', admin_path, class: "link-return" %>
+
+<section class="submission-navigation">
+  <%= link_to "←", submission_path(id: previous_submission_id, filter: filter), class: "link-prev", title: "Previous submission" %>
+  <%= link_to "→", submission_path(id: next_submission_id, filter: filter), class: "link-next", title: "Next submission" %>
+</section>
+
+<div class="l-wrapper-narrow l-wrapper-narrow-left">
   <article class="l-submission-single">
     <h1 class="submission-header">
       <%= submission.full_name %>
@@ -143,11 +149,6 @@
           </span>
         </section>
       <% end %>
-
-      <section class="submission-navigation">
-        <%= link_to "←", submission_path(id: previous_submission_id, filter: filter), class: "link-prev", title: "Previous submission" %>
-        <%= link_to "→", submission_path(id: next_submission_id, filter: filter), class: "link-next", title: "Next submission" %>
-      </section>
 
       <section class="submission-comments">
         <h2 class="aside-widget-header"> Comments </h2>

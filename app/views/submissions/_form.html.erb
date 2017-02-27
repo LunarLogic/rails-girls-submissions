@@ -24,6 +24,7 @@
   <div class="form-field">
     <%= f.label :description %>
     <%= f.text_area :description %>
+    <span class="character-counter"></span>
   </div>
 
   <% answers.each do |answer| %>
@@ -69,10 +70,12 @@
   <div class="form-field">
     <%= f.label :goals %>
     <%= f.text_area :goals, class: "textarea-small" %>
+    <span class="character-counter"></span>
   </div>
   <div class="form-field">
     <%= f.label :problems %>
     <%= f.text_area :problems, class: "textarea-small" %>
+    <span class="character-counter"></span>
   </div>
   <div class="form-field">
     <%= f.submit "Apply for workshop", class: "btn-small" %>

@@ -13,3 +13,12 @@
   @extend %wrapper;
   max-width: 600px;
 }
+
+.l-wrapper-narrow-left {
+
+  @include media($medium-screen, $big-screen) {
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: -($rating-widget-width/2);
+  }
+}
