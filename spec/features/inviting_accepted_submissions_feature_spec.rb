@@ -81,4 +81,12 @@ describe 'inviting accepted submissions' do
       expect(page).to have_text('Something went wrong')
     end
   end
+
+  context "when the accepted list is empty" do
+    it "makes `Send` link inactive" do
+      login_as(user, scope: :user)
+      visit submission_filters_results_path
+      expect(page).not_to have_selector('a', text: 'Send')
+    end
+  end
 end
