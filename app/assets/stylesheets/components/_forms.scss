@@ -14,6 +14,7 @@ $input-height: $bs2;
 }
 
 .form-field {
+  @include clearfix();
   margin-bottom: $input-height;
 
   &:last-of-type {
@@ -49,6 +50,14 @@ $input-height: $bs2;
     &.event-url-field {
       padding-left: $event-url-prefix-w;
     }
+
+    &.input-inline {
+
+      @include media($desktop) {
+        width: 80%;
+        display: inline-block;
+      }
+    }
   }
 
   input[type="radio"],
@@ -59,6 +68,11 @@ $input-height: $bs2;
   input[type="submit"] {
     display: block;
     margin: $bs1 auto;
+
+    &.submit-inline {
+      margin: 0;
+      font-size: $bs1/2;
+    }
   }
 
   textarea {
@@ -103,6 +117,35 @@ $input-height: $bs2;
 
 .fieldset-inline {
   display: inline-block !important;
+  color: $grey-default;
+}
+
+.form-field-info {
+  position: relative;
+  padding-left: $bs3;
+
+  &:before {
+    @include transform(translateY(-50%));
+    display: block;
+    position: absolute;
+    width: $bs1;
+    height: $bs1;
+    top: 50%;
+    left: $bs-1;
+    content: 'i';
+    color: $rg-red;
+    font-family: serif;
+    font-style: italic;
+    text-align: center;
+    border: 2px solid;
+    border-radius: 50%;
+  }
+}
+
+.form-field-info-highlight {
+  display: block;
+  font-style: italic;
+  color: $grey-dark;
 }
 
 /* styles for event url field */

@@ -48,42 +48,12 @@
 
     <p class="submission-answer" class="submission-answer">
       <span class="submission-answer-label">Codecademy url:</span>
-      <%= link_to "https://www.codecademy.com/#{submission.codecademy_username}" %>
+      <%= link_to submission.codecademy_url, submission.codecademy_url %>
     </p>
 
     <p class="submission-answer submission-answer-block">
       <span class="submission-answer-label">Description:</span>
       <%= submission.description %>
-    </p>
-
-    <p class="submission-answer">
-      <span class="submission-answer-label">HTML:</span>
-      <%= submission.html %>
-    </p>
-
-    <p class="submission-answer">
-      <span class="submission-answer-label">CSS:</span>
-      <%= submission.css %>
-    </p>
-
-    <p class="submission-answer">
-      <span class="submission-answer-label">JavaScript:</span>
-      <%= submission.js %>
-    </p>
-
-    <p class="submission-answer">
-      <span class="submission-answer-label">Ruby on Rails:</span>
-      <%= submission.ror %>
-    </p>
-
-    <p class="submission-answer">
-      <span class="submission-answer-label">Databases:</span>
-      <%= submission.db %>
-    </p>
-
-    <p class="submission-answer">
-      <span class="submission-answer-label">Any other programming languages:</span>
-      <%= submission.programming_others %>
     </p>
 
     <p class="submission-answer">

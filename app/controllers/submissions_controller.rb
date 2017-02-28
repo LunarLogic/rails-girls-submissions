@@ -5,10 +5,10 @@ class SubmissionsController < ApplicationController
     token = params.require(:invitation_token)
     submission = Submission.find_by!(invitation_token: token)
     if submission.invitation_expired?
-      render text: "Time for confirmation expired!"
+      render 'invitation_expired'
     else
       submission.confirm_invitation!
-      render text: "You confirmed your invitation!"
+      render 'invitation_confirmed'
     end
   rescue
     render text: "Something went wrong. Please make sure the address you are trying to visit
@@ -77,8 +77,7 @@ class SubmissionsController < ApplicationController
 
   def submission_params
     params.require(:submission).permit(:full_name, :email, :age, :codecademy_username,
-      :description, :html, :css, :js, :ror, :db, :programming_others, :english,
-      :operating_system, :first_time, :goals, :problems)
+      :description, :english, :operating_system, :first_time, :goals, :problems)
   end
 
   def answers_params

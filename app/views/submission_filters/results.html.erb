@@ -1,12 +1,16 @@
-<%= render 'result_table', { submissions: submissions_accepted, table_title: "accepted", filter: "accepted" } %>
-<%= render 'result_table', { submissions: submissions_waitlist, table_title: "waitlist", filter: "waitlist" } %>
+<% if submissions_accepted.empty? && submissions_waitlist.empty? %>
+  <%= render 'empty_table', message: "No rated submissions to show" %>
+<% else %>
+  <%= render 'result_table', { submissions: submissions_accepted, table_title: "accepted", filter: "accepted" } %>
+  <%= render 'result_table', { submissions: submissions_waitlist, table_title: "waitlist", filter: "accepted" } %>
 
-<aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
-  <h2 class="aside-widget-header">Download:</h2>
-  <ul class="download-list">
-    <li><%= link_to_if !submissions_accepted.empty?, "Accepted", csv_download_accepted_path %></li>
-    <li><%= link_to_if !submissions_waitlist.empty?, "Waitlist", csv_download_waitlist_path %></li>
-  </ul>
-  <h2 class="aside-widget-header">Send invitation emails:</h2>
-  <p><%= link_to "Send", send_invitation_emails_path, method: :post %></p>
-</aside>
+  <aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
+    <h2 class="aside-widget-header">Download:</h2>
+    <ul class="download-list">
+      <li><%= link_to_if !submissions_accepted.empty?, "Accepted", csv_download_accepted_path %></li>
+      <li><%= link_to_if !submissions_waitlist.empty?, "Waitlist", csv_download_waitlist_path %></li>
+    </ul>
+    <h2 class="aside-widget-header">Send invitation emails:</h2>
+    <p><%= link_to_if !submissions_accepted.empty?, "Send", send_invitation_emails_path, method: :post, data: { confirm: "Are you sure?" } %></p>
+  </aside>
+<% end %>

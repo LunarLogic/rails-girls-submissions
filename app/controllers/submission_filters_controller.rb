@@ -39,14 +39,17 @@ class SubmissionFiltersController < ApplicationController
     submissions_waitlist = SubmissionRepository.new.waitlist
 
     render :results, locals: {
-      submissions_accepted: submissions_accepted,
-      submissions_waitlist: submissions_waitlist
+      submissions_accepted: SubmissionPresenter.collection(submissions_accepted, current_user),
+      submissions_waitlist: SubmissionPresenter.collection(submissions_waitlist, current_user)
     }
   end
 
   def invitations
-    submissions_with_confirmed_invitation = SubmissionRepository.new.with_confirmed_invitation
+    with_confirmed_invitation = SubmissionRepository.new.with_confirmed_invitation
+    submissions = SubmissionPresenter.collection(with_confirmed_invitation, current_user)
 
-    render :invitations, locals: { submissions_with_confirmed_invitation: submissions_with_confirmed_invitation }
+    render :invitations, locals: {
+      submissions_with_confirmed_invitation: submissions
+    }
   end
 end
