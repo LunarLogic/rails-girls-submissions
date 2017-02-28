@@ -10,7 +10,7 @@ describe "managing questions" do
     FactoryGirl.create_list(:question, count)
 
     visit admin_path
-    click_button "Form Creator"
+    click_button "Questions Creator"
     expect(current_path).to eq questions_path
     expect(page).to have_selector(".question-list-item", count: count)
   end
