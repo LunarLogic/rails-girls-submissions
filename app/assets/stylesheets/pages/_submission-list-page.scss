@@ -96,6 +96,14 @@
   }
 }
 
+.submissions-empty {
+  width: 100%;
+  padding: $bs3 0 $bs1;
+  border: 2px solid $grey-default;
+  text-align: center;
+  color: $grey-default;
+}
+
 .submissions-table-split {
   padding-top: $bs3;
 }
