@@ -2,7 +2,7 @@ class SubmissionCarousel
   FILTERS = [:valid, :rejected, :to_rate, :accepted, :waitlist, :with_confirmed_invitation]
 
   def self.build(filter)
-    raise ArgumentError unless FILTERS.include?(filter)
+    raise ArgumentError.new("ArgumentError: Possible filters: #{FILTERS}") unless FILTERS.include?(filter)
     submission_repository = SubmissionRepository.new
 
     new(submission_repository, submission_repository.send(filter))

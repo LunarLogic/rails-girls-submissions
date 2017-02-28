@@ -22,7 +22,8 @@ class SubmissionsController < ApplicationController
 
     begin
       submission_carousel = SubmissionCarousel.build(submission_filter)
-    rescue ArgumentError
+    rescue ArgumentError => e
+      logger.error(e)
       return render file: "public/404.html", status: 404
     end
 

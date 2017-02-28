@@ -28,7 +28,9 @@ describe SubmissionCarousel do
       let(:carousel) { described_class.new(submission_repository, [current_submission, next_submission]) }
       subject { carousel.next(current_submission) }
 
-      it { is_expected.to eq(next_submission) }
+      it "moves to it" do
+        expect(subject).to eq(next_submission)
+      end
     end
 
     context "when the current submission is the last one" do
@@ -43,7 +45,9 @@ describe SubmissionCarousel do
       let(:carousel) { described_class.new(submission_repository, [current_submission, first_submission]) }
       subject { carousel.next(current_submission) }
 
-      it { is_expected.to eq(first_submission) }
+      it "moves around to the first submission in the list" do
+        expect(subject).to eq(first_submission)
+      end
     end
   end
 
@@ -61,10 +65,12 @@ describe SubmissionCarousel do
       let(:carousel) { described_class.new(submission_repository, [current_submission, previous_submission]) }
       subject { carousel.previous(current_submission) }
 
-      it { is_expected.to eq(previous_submission) }
+      it "moves to it" do
+        expect(subject).to eq(previous_submission)
+      end
     end
 
-    context "when the current submission is the last one" do
+    context "when the current submission is the first one" do
       let(:current_submission) { double }
       let(:last_submission) { double }
 
@@ -76,7 +82,9 @@ describe SubmissionCarousel do
       let(:carousel) { described_class.new(submission_repository, [current_submission, last_submission]) }
       subject { carousel.previous(current_submission) }
 
-      it { is_expected.to eq(last_submission) }
+      it "moves around to the last submission in the list" do
+        expect(subject).to eq(last_submission)
+      end
     end
   end
 end
