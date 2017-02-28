@@ -17,7 +17,7 @@ class Submission < ActiveRecord::Base
     if rejected
       "rejected"
     else
-      rates.length >= Setting.get.required_rates_num ? "rated" : "pending"
+      rates.length >= Setting.get.required_rates_num ? "rated" : "to rate"
     end
   end
 

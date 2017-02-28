@@ -48,7 +48,7 @@
 
     <p class="submission-answer" class="submission-answer">
       <span class="submission-answer-label">Codecademy url:</span>
-      <%= link_to submission.codecademy_url, submission.codecademy_url %>
+      <%= link_to submission.codecademy_url, submission.codecademy_url, target: "_blank" %>
     </p>
 
     <p class="submission-answer submission-answer-block">
@@ -85,54 +85,56 @@
       <%= submission.problems %>
     </p>
 
-    <aside class="aside-widget aside-widget-rating">
-      <%= form_tag(rate_path(filter, submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
-        <fieldset class="starability-fade fieldset-inline"
-                  id="js-user-rating"
-                  data-rate="<%= submission.current_user_rate_value %>">
-          <% 5.downto(1) do |rate| %>
-            <%= radio_button_tag("value", rate) %>
-            <%= label_tag("value_" + rate.to_s, rate) %>
-          <% end %>
-        </fieldset>
-      <% end %>
-
-      <% if submission.rated? %>
-        <section class="submission-rates">
-          <h2 class="aside-widget-header">Rates:</h2>
-          <% rate_presenters.each do |presenter| %>
-            <div class="submission-rate">
-              <span class="submission-rate-author">
-                <%= presenter.user_nickname %>
-              </span>
-              rated
-              <span class="submission-rate-value">
-                <%= presenter.value %>
-              </span>
-            </div>
-          <% end %>
-          <span class="submission-rate-avg">
-            Average rate is
-            <strong class="submission-rate-avg-number">
-              <%= submission.average_rate %>
-            </strong>
-          </span>
-        </section>
-      <% end %>
-
-      <section class="submission-comments">
-        <h2 class="aside-widget-header"> Comments </h2>
-        <% comment_presenters.each do |presenter| %>
-          <div class="submission-comment">
-            <span class="submission-comment-author"><%= presenter.user_nickname %></span>
-            <span class="submission-comment-date"><%= presenter.timestamp %></span>
-            <div class="submission-comment-content"><%= presenter.body %></div>
-            <br>
-          </div>
+    <% if !submission.rejected? %>
+      <aside class="aside-widget aside-widget-rating">
+        <%= form_tag(rate_path(filter, submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
+          <fieldset class="starability-fade fieldset-inline"
+                    id="js-user-rating"
+                    data-rate="<%= submission.current_user_rate_value %>">
+            <% 5.downto(1) do |rate| %>
+              <%= radio_button_tag("value", rate) %>
+              <%= label_tag("value_" + rate.to_s, rate) %>
+            <% end %>
+          </fieldset>
         <% end %>
 
-        <%= render 'comments/form', { filter: filter, submission: submission, comment: comment } %>
-      </section>
-    </aside>
+        <% if submission.rated? %>
+          <section class="submission-rates">
+            <h2 class="aside-widget-header">Rates:</h2>
+            <% rate_presenters.each do |presenter| %>
+              <div class="submission-rate">
+                <span class="submission-rate-author">
+                  <%= presenter.user_nickname %>
+                </span>
+                rated
+                <span class="submission-rate-value">
+                  <%= presenter.value %>
+                </span>
+              </div>
+            <% end %>
+            <span class="submission-rate-avg">
+              Average rate is
+              <strong class="submission-rate-avg-number">
+                <%= submission.average_rate %>
+              </strong>
+            </span>
+          </section>
+        <% end %>
+
+        <section class="submission-comments">
+          <h2 class="aside-widget-header"> Comments </h2>
+          <% comment_presenters.each do |presenter| %>
+            <div class="submission-comment">
+              <span class="submission-comment-author"><%= presenter.user_nickname %></span>
+              <span class="submission-comment-date"><%= presenter.timestamp %></span>
+              <div class="submission-comment-content"><%= presenter.body %></div>
+              <br>
+            </div>
+          <% end %>
+
+          <%= render 'comments/form', { filter: filter, submission: submission, comment: comment } %>
+        </section>
+      </aside>
+    <% end %>
   </article>
 </div>

@@ -94,6 +94,7 @@
   width: 100%;
   left: 0;
   top: 60%;
+  pointer-events: none;
   z-index: 2;
 
   @media screen and (min-width: $big-screen) {
@@ -113,6 +114,7 @@
   border-radius: 50%;
   text-align: center;
   will-change: background-color, color;
+  pointer-events: auto;
 
   &:hover,
   &:active,
