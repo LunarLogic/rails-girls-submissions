@@ -1,5 +1,7 @@
 class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:confirm_invitation, :new, :create, :thank_you]
+  
+  layout 'admin', only: :show
 
   def confirm_invitation
     token = params.require(:invitation_token)
