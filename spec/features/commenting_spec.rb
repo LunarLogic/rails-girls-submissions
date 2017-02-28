@@ -8,7 +8,7 @@ describe "the commenting process" do
 
   before do
     login_as(user, scope: :user)
-    visit submission_path(submission)
+    visit submission_path(:valid, submission)
   end
 
   it "inserts valid comment, displays the comment" do

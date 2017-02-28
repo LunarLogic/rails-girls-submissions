@@ -17,7 +17,7 @@ describe "printing submission's rates in submission show view" do
 
     it "shows rates in submission view" do
       login_as(user, scope: :user)
-      visit submission_path(submission.id)
+      visit submission_path(:valid, submission.id)
 
       expect(page).to have_css('div.submission-rate', count: rates_number)
       expect(page).to have_text("#{sample_nickname} rated #{sample_value}")
@@ -27,7 +27,7 @@ describe "printing submission's rates in submission show view" do
   context "when the submission does not have required number of rates" do
     it "does not show rates in submission view" do
       login_as(user, scope: :user)
-      visit submission_path(submission.id)
+      visit submission_path(:valid, submission.id)
       expect(page).to have_css('div.submission-rate', count: 0)
     end
   end

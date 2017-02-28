@@ -12,11 +12,13 @@
   </div>
 <% end %>
 
-<%= link_to '← Back', admin_path, class: "link-return" %>
+<%= link_to '← Back', "/admin/submissions/#{filter}", class: "link-return" %>
+
 <section class="submission-navigation">
-  <%= link_to "←", submission.previous, class: "link-prev", title: "Previous submission" %>
-  <%= link_to "→", submission.next, class: "link-next", title: "Next submission" %>
+  <%= link_to "←", submission_path(id: previous_submission_id, filter: filter), class: "link-prev", title: "Previous submission" %>
+  <%= link_to "→", submission_path(id: next_submission_id, filter: filter), class: "link-next", title: "Next submission" %>
 </section>
+
 <div class="l-wrapper-narrow l-wrapper-narrow-left">
   <article class="l-submission-single">
     <h1 class="submission-header">
@@ -85,7 +87,7 @@
 
     <% if !submission.rejected? %>
       <aside class="aside-widget aside-widget-rating">
-        <%= form_tag(submission_rate_path(submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
+        <%= form_tag(rate_path(filter, submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
           <fieldset class="starability-fade fieldset-inline"
                     id="js-user-rating"
                     data-rate="<%= submission.current_user_rate_value %>">
@@ -130,7 +132,7 @@
             </div>
           <% end %>
 
-          <%= render 'comments/form', { submission: submission, comment: comment } %>
+          <%= render 'comments/form', { filter: filter, submission: submission, comment: comment } %>
         </section>
       </aside>
     <% end %>

@@ -1,4 +1,3 @@
-<%=
-  render 'result_table',
-  { submissions: submissions_with_confirmed_invitation, table_title: "confirmed" }
-%>
+<%= render 'result_table', { submissions: submissions_with_confirmed_invitation,
+                             table_title: "confirmed",
+                             filter: :with_confirmed_invitation } %>

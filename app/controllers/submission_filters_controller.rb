@@ -7,7 +7,8 @@ class SubmissionFiltersController < ApplicationController
     render :list, locals: {
       submission_presenters: SubmissionPresenter.collection(submissions_valid, current_user),
       show_average: true,
-      show_rates_count: true
+      show_rates_count: true,
+      filter: :valid
     }
   end
 
@@ -17,7 +18,8 @@ class SubmissionFiltersController < ApplicationController
     render :list, locals: {
       submission_presenters: SubmissionPresenter.collection(submissions_rejected, current_user),
       show_average: false,
-      show_rates_count: false
+      show_rates_count: false,
+      filter: :rejected
     }
   end
 
@@ -27,7 +29,8 @@ class SubmissionFiltersController < ApplicationController
     render :list, locals: {
       submission_presenters: SubmissionPresenter.collection(submissions_to_rate, current_user),
       show_average: false,
-      show_rates_count: true
+      show_rates_count: true,
+      filter: :to_rate
     }
   end
 

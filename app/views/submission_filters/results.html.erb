@@ -1,8 +1,8 @@
 <% if submissions_accepted.empty? && submissions_waitlist.empty? %>
   <%= render 'empty_table', message: "No rated submissions to show" %>
 <% else %>
-  <%= render 'result_table', { submissions: submissions_accepted, table_title: "accepted" } %>
-  <%= render 'result_table', { submissions: submissions_waitlist, table_title: "waitlist" } %>
+  <%= render 'result_table', { submissions: submissions_accepted, table_title: "accepted", filter: "accepted" } %>
+  <%= render 'result_table', { submissions: submissions_waitlist, table_title: "waitlist", filter: "accepted" } %>
 
   <aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
     <h2 class="aside-widget-header">Download:</h2>

@@ -19,7 +19,7 @@ describe 'inviting accepted submissions' do
       rates_val: 1)
 
     login_as(user, scope: :user)
-    visit submission_filters_results_path
+    visit submissions_results_path
     click_link('Send')
     click_link('Send')
     expect(ActionMailer::Base.deliveries.count).to eq(1)
@@ -85,7 +85,7 @@ describe 'inviting accepted submissions' do
   context "when the accepted list is empty" do
     it "makes `Send` link inactive" do
       login_as(user, scope: :user)
-      visit submission_filters_results_path
+      visit submissions_results_path
       expect(page).not_to have_selector('a', text: 'Send')
     end
   end

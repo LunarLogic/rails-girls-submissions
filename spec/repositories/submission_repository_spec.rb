@@ -72,10 +72,11 @@ describe SubmissionRepository do
   context "navigation between submissions" do
     let!(:to_rate_submission_1) { FactoryGirl.create(:to_rate_submission, created_at: 1.hour.ago) }
     let!(:to_rate_submission_2) { FactoryGirl.create(:to_rate_submission) }
+    let(:submissions) { Submission.all }
 
     describe "#next" do
       context "when there is a next submission to rate" do
-        subject { submission_repository.next(to_rate_submission_1.created_at) }
+        subject { submission_repository.next(submissions, to_rate_submission_1) }
 
           it "returns the next submission to rate" do
             expect(subject).to eq to_rate_submission_2
@@ -83,17 +84,17 @@ describe SubmissionRepository do
         end
 
       context "when there are no more submissions after" do
-        subject { submission_repository.next(to_rate_submission_2.created_at) }
+        subject { submission_repository.next(submissions, to_rate_submission_2) }
 
-        it "wraps around the submissions" do
-          expect(subject).to eq to_rate_submission_1
+        it "doesn't return anything" do
+          expect(subject).to eq nil
         end
       end
     end
 
     describe "#previous" do
       context "when there is a previous submission to rate" do
-        subject { submission_repository.previous(to_rate_submission_2.created_at) }
+        subject { submission_repository.previous(submissions, to_rate_submission_2) }
 
           it "returns the previous submission to rate" do
             expect(subject).to eq to_rate_submission_1
@@ -101,10 +102,10 @@ describe SubmissionRepository do
         end
 
       context "when there are no more submissions before" do
-        subject { submission_repository.previous(to_rate_submission_1.created_at) }
+        subject { submission_repository.previous(submissions, to_rate_submission_1) }
 
-        it "wraps around the submissions" do
-          expect(subject).to eq to_rate_submission_2
+        it "doesn't return anything" do
+          expect(subject).to eq nil
         end
       end
     end
