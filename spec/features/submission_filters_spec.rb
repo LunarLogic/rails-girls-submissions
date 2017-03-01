@@ -45,9 +45,9 @@ describe "testing submissions filters:" do
       expect(page).to have_selector('td', text: "Applicant Rated")
     end
 
-    it "moves to invitations filter" do
-      click_link "Invitations"
-      expect(current_path).to eq submissions_invitations_path
+    it "moves to participants filter" do
+      click_link "Participants"
+      expect(current_path).to eq submissions_participants_path
       expect(page).to have_selector('td', text: "Applicant Confirmed Invitation")
     end
   end
