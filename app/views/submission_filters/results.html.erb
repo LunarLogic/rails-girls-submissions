@@ -3,6 +3,8 @@
 <% if submissions_accepted.empty? && submissions_waitlist.empty? %>
   <%= render 'empty_table', message: "No rated submissions to show" %>
 <% else %>
+  <%= link_to "Send emails", send_invitation_emails_path, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-small btn-emails" %>
+
   <%= render 'result_table', { submissions: submissions_accepted, table_title: "accepted", filter: "accepted" } %>
   <%= render 'result_table', { submissions: submissions_waitlist, table_title: "waitlist", filter: "accepted" } %>
 
@@ -12,6 +14,5 @@
       <li><%= link_to_if !submissions_accepted.empty?, "Accepted", csv_download_accepted_path %></li>
       <li><%= link_to_if !submissions_waitlist.empty?, "Waitlist", csv_download_waitlist_path %></li>
     </ul>
-    <%= link_to_if !submissions_accepted.empty?, "Send emails", send_invitation_emails_path, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-small btn-emails" %>
   </aside>
 <% end %>
