@@ -17,13 +17,6 @@
 
  * CI: https://circleci.com/gh/LunarLogic/rails-girls-submissions
 
-#### Public Demo
-
- * git branch: `master`
- * site url: https://railsgirls.lunarlogic.io/admin
-
- __Deployment happens automatically after each successful CI build.__
-
 ## Testing
 
  RSpec: ```bundle exec rspec spec```
