@@ -1,4 +1,5 @@
 <%= form_for(question) do |f| %>
+  <h1 class="form-header"> Questions Creator </h1>
   <div class="form-field form-field-close">
     <%= f.label :text, "Add a new question" %>
     <%= f.text_field :text, placeholder: "How would you rate your English?", class: "input-inline", required: true, maxLength: 60 %>
