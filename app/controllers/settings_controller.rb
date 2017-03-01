@@ -1,5 +1,5 @@
 class SettingsController < ApplicationController
-  layout 'no-dashboard'
+  layout 'admin'
 
   def index
     settings = Setting.get

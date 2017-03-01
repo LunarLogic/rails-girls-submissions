@@ -1,5 +1,5 @@
 class SubmissionFiltersController < ApplicationController
-  layout 'dashboard'
+  layout 'admin'
 
   def valid
     submissions_valid = SubmissionRepository.new.valid

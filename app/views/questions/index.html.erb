@@ -1,14 +1,8 @@
-<%= render 'layouts/header' %>
-
 <%= link_to '← Back', admin_path, class: "link-return" %>
-<div class="l-wrapper-narrow l-wrapper-margin-big">
-  <h1>Questions Creator</h1>
+<div class="l-wrapper-narrow">
+  <%= render 'form', { question: question } %>
 
   <div class="l-wrapper-margin-small">
-    <%= render 'form', { question: question } %>
-  </div>
-
-  <div>
     <h2>Existing questions</h2>
     <ul class="question-list">
       <% questions.each do |question| %>

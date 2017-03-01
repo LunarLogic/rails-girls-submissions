@@ -1,3 +1,5 @@
+<%= render 'filters' %>
+
 <% if submissions_accepted.empty? && submissions_waitlist.empty? %>
   <%= render 'empty_table', message: "No rated submissions to show" %>
 <% else %>
