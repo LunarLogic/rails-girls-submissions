@@ -37,7 +37,6 @@ $input-height: $bs2;
   input[type="date"] {
     width: 100%;
     display: block;
-    line-height: $input-height;
     padding: 0 $bs-1;
     border: 1px solid $grey-light;
     font-size: inherit;
@@ -60,6 +59,14 @@ $input-height: $bs2;
     }
   }
 
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="number"],
+  input[type="date"] {
+    line-height: $input-height;
+  }
+
   input[type="radio"],
   input[type="checkbox"] {
     margin-right: $bs-1;
@@ -77,6 +84,7 @@ $input-height: $bs2;
 
   textarea {
     height: 8 * $input-height;
+    padding: $bs-3 $bs-1;
     resize: none;
   }
 
