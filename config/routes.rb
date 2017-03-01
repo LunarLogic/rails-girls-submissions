@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     get "/submissions/rejected", to: "submission_filters#rejected"
     get "/submissions/to_rate", to: "submission_filters#to_rate"
     get "/submissions/results", to: "submission_filters#results"
-    get "/submissions/invitations", to: "submission_filters#invitations"
+    get "/submissions/participants", to: "submission_filters#participants"
 
     get "/csv/download_accepted", to: "csv#download_accepted"
     get "/csv/download_waitlist", to: "csv#download_waitlist"
