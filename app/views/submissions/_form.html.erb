@@ -7,11 +7,11 @@
 
   <div class="form-field">
     <%= f.label :full_name %>
-    <%= f.text_field :full_name %>
+    <%= f.text_field :full_name, maxlength: 50 %>
   </div>
   <div class="form-field">
     <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, maxlength: 50 %>
   </div>
   <div class="form-field">
     <%= f.label :age %>
@@ -19,11 +19,11 @@
   </div>
   <div class="form-field">
     <%= f.label :codecademy_username %>
-    <%= f.text_field :codecademy_username %>
+    <%= f.text_field :codecademy_username, maxlength: 50 %>
   </div>
   <div class="form-field">
     <%= f.label :description %>
-    <%= f.text_area :description %>
+    <%= f.text_area :description, maxlength: 255 %>
     <span class="character-counter"></span>
   </div>
 
@@ -69,12 +69,12 @@
   </div>
   <div class="form-field">
     <%= f.label :goals %>
-    <%= f.text_area :goals, class: "textarea-small" %>
+    <%= f.text_area :goals, class: "textarea-small", maxlength: 255 %>
     <span class="character-counter"></span>
   </div>
   <div class="form-field">
     <%= f.label :problems %>
-    <%= f.text_area :problems, class: "textarea-small" %>
+    <%= f.text_area :problems, class: "textarea-small", maxlength: 255 %>
     <span class="character-counter"></span>
   </div>
   <div class="form-field">
