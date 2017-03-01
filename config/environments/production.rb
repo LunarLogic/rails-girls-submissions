@@ -5,9 +5,9 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:              'smtp.mandrillapp.com',
     port:                 587,
-    domain:               Rails.application.secrets.mailchimp.["domain"],
-    user_name:            Rails.application.secrets.mailchimp.["username"],
-    password:             Rails.application.secrets.mailchimp.["password"],
+    domain:               Rails.application.secrets.mailchimp["domain"],
+    user_name:            Rails.application.secrets.mailchimp["username"],
+    password:             Rails.application.secrets.mailchimp["password"],
     authentication:       'plain',
     enable_starttls_auto: true
   }
