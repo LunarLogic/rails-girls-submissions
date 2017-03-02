@@ -1,6 +1,6 @@
 require "rails_helper"
 
-# "js: true" switches Capybara's driver to :selenium which is a default driver for specs using js
+# "js: true" switches Capybara's driver to javascript_driver, which is :selenium by default
 describe "the rating process", js: true do
   let!(:submission) { FactoryGirl.create(:submission) }
   let!(:user) { FactoryGirl.create(:user) }

@@ -38,15 +38,6 @@ gem 'unicorn'
 gem 'pg'
 
 group :development, :test do
-  gem 'pry-rails'
-  gem 'rspec-rails', '~> 3.0'
-  gem 'database_cleaner'
-  gem "factory_girl_rails", "~> 4.0", require: false
-
-  gem 'selenium-webdriver'
-
-  gem 'capybara'
-  gem 'capybara-screenshot'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'awesome_print'
@@ -63,4 +54,15 @@ group :development do
   gem "capistrano-bundler"
   gem "capistrano-rails"
   gem "capistrano3-unicorn"
+end
+
+group :test do
+  gem 'pry-rails'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'database_cleaner', require: false
+  gem "factory_girl_rails", "~> 4.0", require: false
+  gem 'selenium-webdriver', "~> 2.53", require: false
+  gem 'chromedriver-helper'
+  gem 'capybara', require: false
+  gem 'capybara-screenshot'
 end

@@ -21,7 +21,10 @@
 
  RSpec: ```bundle exec rspec spec```
 
- Capybara: by default, capybara uses the `rack_test` driver, which is not suitable for testing some features dependent on JavaScript. In such cases, annotate your specs with `js: true`, which will change the driver to `selenium` for the particular test:
+ Capybara: by default, capybara uses the `rack_test` driver, which is not suitable for testing some features dependent on JavaScript. In such cases:
+  * Install chromedriver: `brew install chromedriver`
+  * Make sure your gems are up-to-date: `bundle install`
+  * Annotate your specs with `js: true`, which will change the driver to `selenium` for the particular test:
 
  ```
 describe "the rating process", js: true do
@@ -33,6 +36,6 @@ describe "the rating process", js: true do
 end
 ```
 
-Another advantage of using `selenium` is that while running the specs, it opens `Firefox` windows and shows live the actions it performs, which could be useful for debugging the specs.
+Another advantage of using `selenium` is that while running the specs, it opens s browser window and shows live the actions it performs, which could be useful for debugging the specs.
 
 The configuration for the drivers can be found in the `spec/rails_helper`.
