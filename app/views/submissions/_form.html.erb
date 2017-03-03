@@ -7,23 +7,23 @@
 
   <div class="form-field">
     <%= f.label :full_name %>
-    <%= f.text_field :full_name, maxlength: 50 %>
+    <%= f.text_field :full_name, maxLength: 50, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :email %>
-    <%= f.text_field :email, maxlength: 50 %>
+    <%= f.email_field :email, maxLength: 50, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :age %>
-    <%= f.number_field :age %>
+    <%= f.number_field :age, required: true, min: 0, max: 110 %>
   </div>
   <div class="form-field">
     <%= f.label :codecademy_username %>
-    <%= f.text_field :codecademy_username, maxlength: 50 %>
+    <%= f.text_field :codecademy_username, maxLength: 50, required: true %>
   </div>
   <div class="form-field">
     <%= f.label :description %>
-    <%= f.text_area :description, maxlength: 255 %>
+    <%= f.text_area :description, maxLength: 255, required: true %>
     <span class="character-counter"></span>
   </div>
 
@@ -34,15 +34,15 @@
   <fieldset class="form-field form-field-collection">
     <legend>What is your English level?</legend>
     <div>
-      <%= f.radio_button :english, :none %>
+      <%= f.radio_button :english, :none, required: true %>
       <%= f.label :english, "I don't speak English", value: "none" %>
     </div>
     <div>
-      <%= f.radio_button :english, :basic %>
+      <%= f.radio_button :english, :basic, required: true %>
       <%= f.label :english, "Basic", value: "basic" %>
     </div>
     <div>
-      <%= f.radio_button :english, :fluent %>
+      <%= f.radio_button :english, :fluent, required: true %>
       <%= f.label :english, "Fluent", value: "fluent" %>
     </div>
   </fieldset>
@@ -50,15 +50,15 @@
   <fieldset class="form-field form-field-collection">
     <legend>What is your operating system?</legend>
     <div>
-      <%= f.radio_button :operating_system, :mac %>
+      <%= f.radio_button :operating_system, :mac, required: true %>
       <%= f.label :operating_system, "Mac OS", value: "mac" %>
     </div>
     <div>
-      <%= f.radio_button :operating_system, :linux %>
+      <%= f.radio_button :operating_system, :linux, required: true %>
       <%= f.label :operating_system, "Linux", value: "linux" %>
     </div>
     <div>
-      <%= f.radio_button :operating_system, :windows %>
+      <%= f.radio_button :operating_system, :windows, required: true %>
       <%= f.label :operating_system, "Windows", value: "windows" %>
     </div>
   </fieldset>
@@ -69,7 +69,7 @@
   </div>
   <div class="form-field">
     <%= f.label :goals %>
-    <%= f.text_area :goals, class: "textarea-small", maxlength: 255 %>
+    <%= f.text_area :goals, class: "textarea-small", maxlength: 255, required: true %>
     <span class="character-counter"></span>
   </div>
   <div class="form-field">
