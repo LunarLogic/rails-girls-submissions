@@ -15,7 +15,7 @@ class SubmissionCreator
   def call
     submission_rejector.reject_if_any_rules_broken(submission)
 
-    if submission.valid? && answers.all?(&:valid?)
+    if submission_and_answers_are_valid
       save(submission, answers)
       result_value = true
     else
@@ -36,5 +36,12 @@ class SubmissionCreator
       a.submission = submission
       a.save
     end
+  end
+
+  def submission_and_answers_are_valid
+    # so that it runs :valid? on all of the objects and sets errors if necessary
+    submission_is_valid = submission.valid?
+    answers_are_valid = answers.map(&:valid?).all?
+    submission_is_valid && answers_are_valid
   end
 end
