@@ -61,7 +61,7 @@ group :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'database_cleaner', require: false
   gem "factory_girl_rails", "~> 4.0", require: false
-  gem 'selenium-webdriver', "~> 2.53", require: false
+  gem 'selenium-webdriver', require: false
   gem 'chromedriver-helper'
   gem 'capybara', require: false
   gem 'capybara-screenshot'

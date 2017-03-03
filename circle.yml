@@ -10,3 +10,7 @@ deployment:
     branch: master
     commands:
         - bundle exec cap demo deploy
+dependencies:
+  pre:
+    - echo "export rvm_ignore_gemsets_flag=1" >> ~/.rvmrc
+    - gem install bundler
