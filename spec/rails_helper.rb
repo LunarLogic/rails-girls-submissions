@@ -5,8 +5,11 @@ require File.expand_path('../../config/environment', __FILE__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
-require 'capybara/rails'
+require 'database_cleaner'
+
 require 'capybara/rspec'
+require 'capybara/rails'
+require 'selenium-webdriver'
 require 'capybara-screenshot/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -31,12 +34,10 @@ require 'capybara-screenshot/rspec'
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.register_driver :selenium do |app|
- Capybara::Selenium::Driver.new(
-   app,
-   browser: :firefox,
-   desired_capabilities: Selenium::WebDriver::Remote::Capabilities.firefox(marionette: false)
- )
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
+
+Capybara.javascript_driver = :selenium
 
 RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
@@ -55,17 +56,19 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
-    DatabaseCleaner.start
+    if Capybara.current_driver == :selenium
+      DatabaseCleaner.strategy = :truncation
+    else
+      DatabaseCleaner.strategy = :transaction
+    end
   end
 
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each) { DatabaseCleaner.clean }
 
   config.include Warden::Test::Helpers
   config.before :suite do
