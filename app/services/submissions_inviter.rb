@@ -1,20 +1,18 @@
 class SubmissionsInviter
-  def initialize(submission_repository: SubmissionRepository.new)
-    @submission_repository = submission_repository
+  def self.build
+    new(SubmissionRepository.new.to_invite)
+  end
+
+  def initialize(submissions)
+    @submissions = submissions
   end
 
   def call
-    submissions_to_invite.each do |submission|
-      invite(submission)
-    end
+    submissions.each { |submission| invite(submission) }
   end
 
   private
-  attr_reader :submission_repository
-
-  def submissions_to_invite
-    submission_repository.accepted_for_invitation_without_expired.select { |s| !s.invitation_token? }
-  end
+  attr_reader :submissions
 
   def invite(submission)
     submission.generate_invitation_token!
