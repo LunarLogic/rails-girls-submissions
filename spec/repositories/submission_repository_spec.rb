@@ -111,20 +111,70 @@ describe SubmissionRepository do
     end
   end
 
-  describe '#accepted_for_invitation_without_expired' do
-    let(:setting) { FactoryGirl.build(:setting, available_spots: 3) }
+  context "mailer methods" do
+    before { allow(Setting).to receive(:get).and_return(setting)}
+    let(:setting) { instance_double(Setting, available_spots: 4, days_to_confirm_invitation: 7, required_rates_num: 1) }
+
     let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
-    let(:submissions) { [confirmed_submission, already_invited_submission, to_invite_submission] }
-    let!(:to_invite_submission) do
+
+    let(:unrated_submission) do
+      FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num - 1)
+    end
+
+    let(:invited_expiring_on_the_next_day_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'xxx',
+        invitation_token_created_at: (confirmation_days - 1.days - 1.hour).ago,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 3)
+    end
+
+    let(:expired_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'zzz',
+        invitation_token_created_at: (confirmation_days + 1.days).ago,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+
+    let(:confirmed_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'yyy',
+        invitation_token_created_at: (confirmation_days - 1.days - 1.hour).ago,
+        invitation_confirmed: true,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+
+    let(:not_invited_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
         invitation_token: nil,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
-        rates_val: 2)
+        rates_val: 5)
     end
-    let!(:not_invited_over_the_limit_submission) do
+
+    let(:not_invited_submission_2) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: nil,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 4)
+    end
+
+    let(:not_invited_over_the_limit_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -133,39 +183,22 @@ describe SubmissionRepository do
         rates_num: setting.required_rates_num,
         rates_val: 1)
     end
-    let!(:already_invited_submission) do
-      FactoryGirl.create(
-        :submission,
-        :with_rates,
-        invitation_token: 'xxx',
-        invitation_token_created_at: 1.day.ago,
-        invitation_confirmed: false,
-        rates_num: setting.required_rates_num,
-        rates_val: 3)
-    end
-    let!(:confirmed_submission) do
-      FactoryGirl.create(
-        :submission,
-        :with_rates,
-        invitation_token: 'yyy',
-        invitation_token_created_at: confirmation_days.ago - 1,
-        invitation_confirmed: true,
-        rates_num: setting.required_rates_num,
-        rates_val: 4)
-    end
-    let!(:expired_submission) do
-      FactoryGirl.create(
-        :submission,
-        :with_rates,
-        invitation_token: 'zzz',
-        invitation_token_created_at: confirmation_days.ago - 1,
-        invitation_confirmed: false,
-        rates_num: setting.required_rates_num,
-        rates_val: 4)
-    end
-    subject { submission_repository.accepted_for_invitation_without_expired }
 
-    it { expect(subject).to eq(submissions) }
+    describe "#to_invite" do
+      let(:submissions_to_invite) { [not_invited_submission, not_invited_submission_2] }
+
+      subject { submission_repository.to_invite }
+
+      it { expect(subject).to eq(submissions_to_invite) }
+    end
+
+    describe "#to_remind" do
+      let(:submissions_to_remind) { [invited_expiring_on_the_next_day_submission] }
+
+      subject { submission_repository.to_remind }
+
+      it { expect(subject).to eq(submissions_to_remind) }
+    end
   end
 
   describe '#with_confirmed_invitation' do
