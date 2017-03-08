@@ -1,18 +1,9 @@
 class InvitationsReminder
-  def self.build
-    new(SubmissionRepository.new.to_remind)
-  end
-
-  def initialize(submissions)
-    @submissions = submissions
-  end
-
-  def call
+  def call(submissions)
     submissions.each { |submission| remind_about_expiring_invitation(submission) }
   end
 
   private
-  attr_reader :submissions
 
   def remind_about_expiring_invitation(submission)
     InvitationsMailer.reminder_email(submission).deliver_now
