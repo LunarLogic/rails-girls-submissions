@@ -27,22 +27,13 @@ class SubmissionRepository
     rated.offset(Setting.get.available_spots)
   end
 
-  def accepted_for_invitation_without_expired
-    rated_except_for_expired_and_confirmed.limit(Setting.get.available_spots)
-  end
-
   def to_invite
-    rated_except_for_expired_and_confirmed
-    .limit(Setting.get.available_spots)
-    .where('invitation_token IS ?', nil)
+    rated_not_invited
+    .limit(Setting.get.available_spots - rated_invited_not_expired.length)
   end
 
   def to_remind
-    rated_except_for_expired_and_confirmed
-    .limit(Setting.get.available_spots)
-    .where('invitation_token_created_at > ? AND invitation_token_created_at < ?',
-      (Setting.get.days_to_confirm_invitation - 1).days.ago,
-      (Setting.get.days_to_confirm_invitation - 2).days.ago)
+    expiring_on_the_next_day
   end
 
   def with_confirmed_invitation
@@ -78,9 +69,21 @@ class SubmissionRepository
       group('submissions.id')
   end
 
-  def rated_except_for_expired_and_confirmed
-    rated.where(
-      'invitation_token IS ? OR invitation_confirmed = ? OR invitation_token_created_at > ?',
-      nil, true, Setting.get.days_to_confirm_invitation.days.ago)
+  def rated_not_invited
+    rated.where('invitation_token IS ?', nil)
+  end
+
+  def rated_invited_not_expired
+    rated.where('invitation_token IS NOT ? AND invitation_token_created_at > ?', nil, Setting.get.days_to_confirm_invitation.days.ago)
+  end
+
+  def rated_invited_not_expired_not_confirmed
+    rated_invited_not_expired.where('invitation_confirmed = ?', false)
+  end
+
+  def expiring_on_the_next_day
+    rated_invited_not_expired_not_confirmed.where('invitation_token_created_at > ? AND invitation_token_created_at < ?',
+      (Setting.get.days_to_confirm_invitation - 1).days.ago,
+      (Setting.get.days_to_confirm_invitation - 2).days.ago)
   end
 end
