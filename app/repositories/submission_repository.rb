@@ -36,7 +36,7 @@ class SubmissionRepository
     expiring_in_two_days
   end
 
-  def with_confirmed_invitation
+  def participants
     rated.where(invitation_confirmed: true)
   end
 
@@ -84,12 +84,8 @@ class SubmissionRepository
   def expiring_in_two_days
     days_to_confirm_invitation = Setting.get.days_to_confirm_invitation
 
-    if days_to_confirm_invitation >= 2
-      rated_invited_not_expired_not_confirmed.where(
-        'invitation_token_created_at > ? AND invitation_token_created_at < ?',
-        (days_to_confirm_invitation - 1).days.ago, (days_to_confirm_invitation - 2).days.ago)
-    else
-      []
-    end
+    rated_invited_not_expired_not_confirmed.where(
+      'invitation_token_created_at > ? AND invitation_token_created_at < ?',
+      (days_to_confirm_invitation - 1).days.ago, (days_to_confirm_invitation - 2).days.ago)
   end
 end

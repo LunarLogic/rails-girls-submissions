@@ -45,11 +45,11 @@ class SubmissionFiltersController < ApplicationController
   end
 
   def participants
-    with_confirmed_invitation = SubmissionRepository.new.with_confirmed_invitation
-    submissions = SubmissionPresenter.collection(with_confirmed_invitation, current_user)
+    participants = SubmissionRepository.new.participants
+    submissions = SubmissionPresenter.collection(participants, current_user)
 
     render :participants, locals: {
-      submissions_with_confirmed_invitation: submissions
+      submissions_participants: submissions
     }
   end
 end

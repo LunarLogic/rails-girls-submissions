@@ -209,7 +209,7 @@ describe SubmissionRepository do
     end
   end
 
-  describe '#with_confirmed_invitation' do
+  describe '#participants' do
     let!(:confirmed_submission) do
       FactoryGirl.create(
         :submission,
@@ -228,7 +228,7 @@ describe SubmissionRepository do
         rates_num: setting.required_rates_num,
         rates_val: 4)
     end
-    subject { submission_repository.with_confirmed_invitation }
+    subject { submission_repository.participants }
 
     it { expect(subject).to eq([confirmed_submission]) }
   end
