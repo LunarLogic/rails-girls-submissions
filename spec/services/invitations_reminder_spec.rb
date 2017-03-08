@@ -4,7 +4,7 @@ describe InvitationsReminder do
   describe '#call' do
     let(:to_remind_submission) { instance_double(Submission) }
     let(:message_delivery) { instance_double ActionMailer::MessageDelivery }
-    subject { described_class.new([to_remind_submission]).call }
+    subject { described_class.new.call([to_remind_submission]) }
 
     it 'sends a reminder email' do
       expect(InvitationsMailer).to receive(:reminder_email)

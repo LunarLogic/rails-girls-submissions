@@ -1,18 +1,13 @@
 class SubmissionsInviter
-  def self.build
-    new(SubmissionRepository.new.to_invite)
-  end
-
-  def initialize(submissions)
-    @submissions = submissions
-  end
-
-  def call
-    submissions.each { |submission| invite(submission) }
+  def call(submissions)
+    if submissions.empty?
+      false
+    else
+      submissions.each { |submission| invite(submission) }
+    end
   end
 
   private
-  attr_reader :submissions
 
   def invite(submission)
     submission.generate_invitation_token!
