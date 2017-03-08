@@ -33,7 +33,7 @@ class SubmissionRepository
   end
 
   def to_remind
-    expiring_on_the_next_day
+    expiring_in_two_days
   end
 
   def with_confirmed_invitation
@@ -81,9 +81,15 @@ class SubmissionRepository
     rated_invited_not_expired.where('invitation_confirmed = ?', false)
   end
 
-  def expiring_on_the_next_day
-    rated_invited_not_expired_not_confirmed.where('invitation_token_created_at > ? AND invitation_token_created_at < ?',
-      (Setting.get.days_to_confirm_invitation - 1).days.ago,
-      (Setting.get.days_to_confirm_invitation - 2).days.ago)
+  def expiring_in_two_days
+    days_to_confirm_invitation = Setting.get.days_to_confirm_invitation
+
+    if days_to_confirm_invitation >= 2
+      rated_invited_not_expired_not_confirmed.where(
+        'invitation_token_created_at > ? AND invitation_token_created_at < ?',
+        (days_to_confirm_invitation - 1).days.ago, (days_to_confirm_invitation - 2).days.ago)
+    else
+      []
+    end
   end
 end

@@ -121,7 +121,7 @@ describe SubmissionRepository do
       FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num - 1)
     end
 
-    let(:invited_expiring_on_the_next_day_submission) do
+    let(:invited_expiring_in_two_days_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -193,11 +193,19 @@ describe SubmissionRepository do
     end
 
     describe "#to_remind" do
-      let(:submissions_to_remind) { [invited_expiring_on_the_next_day_submission] }
+      let(:submissions_to_remind) { [invited_expiring_in_two_days_submission] }
 
-      subject { submission_repository.to_remind }
+      context "the deadline is at least 2 days from now" do
+        subject { submission_repository.to_remind }
 
-      it { expect(subject).to eq(submissions_to_remind) }
+        it { expect(subject).to eq(submissions_to_remind) }
+      end
+      context "the deadline is shorter than 2 days" do
+        let(:setting) { instance_double(Setting, available_spots: 4, days_to_confirm_invitation: 1, required_rates_num: 1) }
+        subject { submission_repository.to_remind }
+
+        it { expect(subject).to eq([]) }
+      end
     end
   end
 
