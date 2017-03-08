@@ -8,7 +8,12 @@ class SubmissionsInviter
   end
 
   def call
-    submissions.each { |submission| invite(submission) }
+    if submissions
+      submissions.each { |submission| invite(submission) }
+      true
+    else
+      false
+    end
   end
 
   private
