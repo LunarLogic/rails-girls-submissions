@@ -37,34 +37,20 @@ describe SubmissionRepository do
       end
     end
 
+    describe "#results" do
+      subject { submission_repository.results }
+      before { allow(submission_repository).to receive(:rated).and_return([]) }
+      
+      it "is an alias for rated" do
+        expect(subject).to eq []
+      end
+    end
+
     describe "#to_rate" do
       subject { submission_repository.to_rate }
 
       it "returns valid submissions that don't have a required rates number" do
         expect(subject).to eq [unrated_sub]
-      end
-    end
-  end
-
-  context "rated submissions are divided into accepted and waitlist" do
-    let!(:accepted_sub) { FactoryGirl.create(:submission, :with_rates,
-      rates_num: setting.required_rates_num, rates_val: 2) }
-    let!(:waitlist_sub) { FactoryGirl.create(:submission, :with_rates,
-      rates_num: setting.required_rates_num, rates_val: 1) }
-
-    describe "#accepted" do
-      subject { submission_repository.accepted }
-
-      it "returns first available_spots number of rated submissions ordered by the average rate" do
-        expect(subject).to eq [accepted_sub]
-      end
-    end
-
-    describe "#waitlist" do
-      subject { submission_repository.waitlist }
-
-      it "returns the rest of rated submissions ordered by the average rate" do
-        expect(subject).to eq [waitlist_sub]
       end
     end
   end

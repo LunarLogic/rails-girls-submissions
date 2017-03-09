@@ -1,10 +1,8 @@
 <%= render 'filters' %>
 
-<% if submissions_accepted.empty? && submissions_waitlist.empty? %>
+<% if submissions_results.empty? %>
   <%= render 'empty_table', message: "No rated submissions to show" %>
 <% else %>
   <%= link_to "Send emails", send_invitation_emails_path, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-small btn-emails" %>
-
-  <%= render 'result_table', { submissions: submissions_accepted, table_title: "accepted", filter: "accepted" } %>
-  <%= render 'result_table', { submissions: submissions_waitlist, table_title: "waitlist", filter: "accepted" } %>
+  <%= render 'result_table', { submissions: submissions_results, table_title: "Results", filter: "results" } %>
 <% end %>

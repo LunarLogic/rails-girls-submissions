@@ -35,12 +35,10 @@ class SubmissionFiltersController < ApplicationController
   end
 
   def results
-    submissions_accepted = SubmissionRepository.new.accepted
-    submissions_waitlist = SubmissionRepository.new.waitlist
+    results = SubmissionRepository.new.rated
 
     render :results, locals: {
-      submissions_accepted: SubmissionPresenter.collection(submissions_accepted, current_user),
-      submissions_waitlist: SubmissionPresenter.collection(submissions_waitlist, current_user)
+      submissions_results: SubmissionPresenter.collection(results, current_user),
     }
   end
 

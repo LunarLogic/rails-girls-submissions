@@ -1,5 +1,5 @@
 class SubmissionCarousel
-  FILTERS = [:valid, :rejected, :to_rate, :accepted, :waitlist, :participants]
+  FILTERS = [:valid, :rejected, :to_rate, :results, :participants]
 
   def self.build(filter)
     raise ArgumentError.new("ArgumentError: Possible filters: #{FILTERS}") unless FILTERS.include?(filter)
