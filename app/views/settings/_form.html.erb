@@ -1,11 +1,23 @@
 <%= form_for(settings, url: settings_update_path, method: :put) do |f| %>
   <h1 class="form-header"> Settings </h1>
   <div class="form-field">
-    <%= f.label :event_start_date %>
+    <%= f.label "The \"Coming soon!\" page is displayed since" %>
+    <%= f.date_field :beginning_of_preparation_period, required: true %>
+  </div>
+  <div class="form-field">
+    <%= f.label "The registration starts on" %>
+    <%= f.date_field :beginning_of_registration_period, required: true %>
+  </div>
+  <div class="form-field">
+    <%= f.label "The registration ends on" %>
+    <%= f.date_field :beginning_of_closed_period, required: true %>
+  </div>
+  <div class="form-field">
+    <%= f.label "The event starts on" %>
     <%= f.date_field :event_start_date, required: true %>
   </div>
   <div class="form-field">
-    <%= f.label :event_end_date %>
+    <%= f.label "The event ends on" %>
     <%= f.date_field :event_end_date, required: true %>
   </div>
   <div class="form-field">
@@ -14,28 +26,16 @@
     <%= f.text_field :event_url, class: "event-url-field", required: true %>
   </div>
   <div class="form-field">
-    <%= f.label :available_spots %>
+    <%= f.label "Number of participants" %>
     <%= f.number_field :available_spots, min: 0, required: true %>
   </div>
   <div class="form-field">
-    <%= f.label :required_rates_num %>
+    <%= f.label "How many people need to rate each submission" %>
     <%= f.number_field :required_rates_num, min: 0, required: true %>
   </div>
   <div class="form-field">
-    <%= f.label :days_to_confirm_invitation %>
+    <%= f.label "How many days applicants have to confirm an invitation" %>
     <%= f.number_field :days_to_confirm_invitation, min: 0, required: true %>
-  </div>
-  <div class="form-field">
-    <%= f.label :beginning_of_preparation_period %>
-    <%= f.date_field :beginning_of_preparation_period, required: true %>
-  </div>
-  <div class="form-field">
-    <%= f.label :beginning_of_registration_period %>
-    <%= f.date_field :beginning_of_registration_period, required: true %>
-  </div>
-  <div class="form-field">
-    <%= f.label :beginning_of_closed_period %>
-    <%= f.date_field :beginning_of_closed_period, required: true %>
   </div>
   <div class="form-field">
     <%= f.submit "Save settings", class: "btn-small" %>
