@@ -1,15 +1,7 @@
 class CsvController < ApplicationController
-
-  def download_accepted
-    submissions_accepted = SubmissionRepository.new.accepted
-    csv = CsvGenerator.new.call(submissions_accepted, 'accepted.csv')
-
-    send_data csv.file, csv.properties
-  end
-
-  def download_waitlist
-    submissions_waitlist = SubmissionRepository.new.waitlist
-    csv = CsvGenerator.new.call(submissions_waitlist, 'waitlist.csv')
+  def participants
+    participants = SubmissionRepository.new.participants
+    csv = CsvGenerator.new.call(participants, 'participants.csv')
 
     send_data csv.file, csv.properties
   end
