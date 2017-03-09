@@ -15,7 +15,7 @@ class SubmissionRepository
 
   def rated
     with_rates_if_any
-      .having('count("rates") >= ?',  Setting.get.required_rates_num)
+      .having('count("rates") >= ?', Setting.get.required_rates_num)
       .order('AVG(value) DESC')
   end
 
