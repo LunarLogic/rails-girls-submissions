@@ -211,3 +211,22 @@ $input-height: $bs2;
   float: right;
   color: $grey-default;
 }
+
+.tooltiptext {
+  visibility: hidden;
+  width: 300px;
+  background-color: $rg-navy;
+  color: $grey-super-light;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  right: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
