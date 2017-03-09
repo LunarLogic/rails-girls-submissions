@@ -1,0 +1,11 @@
+<%= render 'filters' %>
+
+<% if submission_presenters.empty? %>
+  <%= render 'empty_table', message: "No submissions to show" %>
+<% else %>
+  <%= render 'list',
+    submission_presenters: submission_presenters,
+    filter: filter,
+    columns: [:full_name, :age, :rates_count, :created_at]
+  %>
+<% end %>

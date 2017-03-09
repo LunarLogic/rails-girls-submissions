@@ -1,6 +1,6 @@
 class CsvGenerator
   def call(submissions, filename, type = "text/csv")
-    column_names = ["full_name", "email"]
+    column_names = ["full_name", "age", "email"]
 
     file = CSV.generate do |csv|
       csv << column_names

@@ -1,8 +1,16 @@
 <%= render 'filters' %>
 
-<% if submissions_results.empty? %>
+<% if submission_presenters.empty? %>
   <%= render 'empty_table', message: "No rated submissions to show" %>
 <% else %>
-  <%= link_to "Send emails", send_invitation_emails_path, method: :post, data: { confirm: "Are you sure?" }, class: "btn btn-small btn-emails" %>
-  <%= render 'result_table', { submissions: submissions_results, table_title: "Results", filter: "results" } %>
+  <%= link_to "Send emails", send_invitation_emails_path,
+    method: :post,
+    data: { confirm: "Are you sure?" },
+    class: "btn btn-small btn-emails"
+  %>
+  <%= render 'list',
+    submission_presenters: submission_presenters,
+    filter: filter,
+    columns: [:full_name, :email, :average_rate, :invitation_status]
+  %>
 <% end %>

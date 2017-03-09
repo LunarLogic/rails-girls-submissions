@@ -4,10 +4,8 @@ class SubmissionFiltersController < ApplicationController
   def valid
     submissions_valid = SubmissionRepository.new.valid
 
-    render :list, locals: {
+    render :valid, locals: {
       submission_presenters: SubmissionPresenter.collection(submissions_valid, current_user),
-      show_average: true,
-      show_rates_count: true,
       filter: :valid
     }
   end
@@ -15,10 +13,8 @@ class SubmissionFiltersController < ApplicationController
   def rejected
     submissions_rejected = SubmissionRepository.new.rejected
 
-    render :list, locals: {
+    render :rejected, locals: {
       submission_presenters: SubmissionPresenter.collection(submissions_rejected, current_user),
-      show_average: false,
-      show_rates_count: false,
       filter: :rejected
     }
   end
@@ -26,10 +22,8 @@ class SubmissionFiltersController < ApplicationController
   def to_rate
     submissions_to_rate = SubmissionRepository.new.to_rate
 
-    render :list, locals: {
+    render :to_rate, locals: {
       submission_presenters: SubmissionPresenter.collection(submissions_to_rate, current_user),
-      show_average: false,
-      show_rates_count: true,
       filter: :to_rate
     }
   end
@@ -38,16 +32,17 @@ class SubmissionFiltersController < ApplicationController
     results = SubmissionRepository.new.rated
 
     render :results, locals: {
-      submissions_results: SubmissionPresenter.collection(results, current_user),
+      submission_presenters: SubmissionPresenter.collection(results, current_user),
+      filter: :results
     }
   end
 
   def participants
     participants = SubmissionRepository.new.participants
-    submissions = SubmissionPresenter.collection(participants, current_user)
 
     render :participants, locals: {
-      submissions_participants: submissions
+      submission_presenters: SubmissionPresenter.collection(participants, current_user),
+      filter: :participants
     }
   end
 end
