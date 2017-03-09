@@ -6,4 +6,9 @@
   <%= render 'result_table', { submissions: submissions_participants,
                                table_title: "participants",
                                filter: :participants } %>
-<% end %>                               
+    <aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
+      <ul class="download-list">
+        <li><%= link_to "Download", csv_participants_path, class: "btn btn-small" %></li>
+      </ul>
+    </aside>
+<% end %>

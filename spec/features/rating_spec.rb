@@ -5,7 +5,7 @@ describe "the rating process", js: true do
   let!(:submission) { FactoryGirl.create(:submission) }
   let!(:user) { FactoryGirl.create(:user) }
 
-  it "visits submission page, finds and clicks rate button" do
+  xit "visits submission page, finds and clicks rate button" do
     login_as(user, scope: :user)
     visit submission_path(:valid, submission)
 

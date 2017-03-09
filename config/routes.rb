@@ -19,8 +19,7 @@ Rails.application.routes.draw do
     get "/submissions/results", to: "submission_filters#results"
     get "/submissions/participants", to: "submission_filters#participants"
 
-    get "/csv/download_accepted", to: "csv#download_accepted"
-    get "/csv/download_waitlist", to: "csv#download_waitlist"
+    get "/csv/participants", to: "csv#participants"
 
     post "/send_invitation_emails", to: "mailings#send_invitation_emails"
 
