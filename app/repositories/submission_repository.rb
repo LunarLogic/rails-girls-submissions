@@ -15,16 +15,12 @@ class SubmissionRepository
 
   def rated
     with_rates_if_any
-      .having('count("rates") >= ?',  Setting.get.required_rates_num)
+      .having('count("rates") >= ?', Setting.get.required_rates_num)
       .order('AVG(value) DESC')
   end
 
-  def accepted
-    rated.limit(Setting.get.available_spots)
-  end
-
-  def waitlist
-    rated.offset(Setting.get.available_spots)
+  def results
+    rated
   end
 
   def to_invite

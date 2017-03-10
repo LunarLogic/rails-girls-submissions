@@ -1,0 +1,57 @@
+<table class="submissions-table">
+  <thead class="submissions-table-header">
+    <tr>
+      <% if columns.include?(:full_name) %>
+        <th class="submission-header-name">Full name</th>
+      <% end %>
+      <% if columns.include?(:email) %>
+        <th class="submission-header-narrow submission-mobile-hidden">Email</th>
+      <% end %>
+      <% if columns.include?(:age) %>
+        <th class="submission-header-narrow submission-mobile-hidden">Age</th>
+      <% end %>
+      <% if columns.include?(:average_rate) %>
+        <th class="submission-header-narrow submission-mobile-hidden">Average</th>
+      <% end %>
+      <% if columns.include?(:rates_count) %>
+        <th class="submission-header-narrow submission-mobile-hidden">Rate count</th>
+      <% end %>
+      <% if columns.include?(:created_at) %>
+        <th class="submission-header-narrow submission-mobile-hidden">Date</th>
+      <% end %>
+      <% if columns.include?(:invitation_status) %>
+        <th class="submission-header-narrow submission-mobile-hidden">Invitation</th>
+      <% end %>
+      <th class="submission-header-narrow" colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="submissions-table-body">
+    <% submission_presenters.each do |submission| %>
+    <tr>
+      <% if columns.include?(:full_name) %>
+        <td class="submission-body-name"><%= submission.full_name %></td>
+      <% end %>
+      <% if columns.include?(:email) %>
+        <td class="submission-mobile-hidden"><%= submission.email %></td>
+      <% end %>
+      <% if columns.include?(:age) %>
+        <td class="submission-mobile-hidden"><%= submission.age %></td>
+      <% end %>
+      <% if columns.include?(:average_rate) %>
+        <td class="submission-mobile-hidden"><%= submission.average_rate %></td>
+      <% end %>
+      <% if columns.include?(:rates_count) %>
+        <td class="submission-mobile-hidden"><%= submission.rates_count %></td>
+      <% end %>
+      <% if columns.include?(:created_at) %>
+        <td class="submission-mobile-hidden"><%= submission.created_at %></td>
+      <% end %>
+      <% if columns.include?(:invitation_status) %>
+        <td class="submission-mobile-hidden"><%= submission.invitation_status %></td>
+      <% end %>
+      <td><%= link_to 'Show', submission_path(id: submission.id, filter: filter) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

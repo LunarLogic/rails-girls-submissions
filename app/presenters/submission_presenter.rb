@@ -47,11 +47,27 @@ class SubmissionPresenter < SimpleDelegator
     "https://www.codecademy.com/#{codecademy_username}"
   end
 
+  def invitation_status
+    if !invitation_token
+      :not_invited
+    elsif invitation_confirmed
+      :confirmed
+    elsif expired
+      :expired
+    else
+      :invited
+    end
+  end
+
   private
 
   attr_reader :rates, :submission_repository, :user
 
   def submission
     __getobj__
+  end
+
+  def expired
+    invitation_token_created_at < Setting.get.days_to_confirm_invitation.days.ago
   end
 end

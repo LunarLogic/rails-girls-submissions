@@ -1,14 +1,16 @@
 <%= render 'filters' %>
 
-<% if submissions_participants.empty? %>
+<% if submission_presenters.empty? %>
   <%= render 'empty_table', message: "No participants confirmed attending yet" %>
 <% else %>
-  <%= render 'result_table', { submissions: submissions_participants,
-                               table_title: "participants",
-                               filter: :participants } %>
-    <aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
-      <ul class="download-list">
-        <li><%= link_to "Download", csv_participants_path, class: "btn btn-small" %></li>
-      </ul>
-    </aside>
+  <%= render 'list',
+    submission_presenters: submission_presenters,
+    filter: filter,
+    columns: [:full_name, :age, :average_rate]
+  %>
+  <aside class="aside-widget aside-widget-fixed aside-widget-dashboard">
+    <ul class="download-list">
+      <li><%= link_to "Download", csv_participants_path, class: "btn btn-small" %></li>
+    </ul>
+  </aside>
 <% end %>
