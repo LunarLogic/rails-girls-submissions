@@ -212,21 +212,49 @@ $input-height: $bs2;
   color: $grey-default;
 }
 
-.tooltiptext {
+.tooltip-text {
   visibility: hidden;
+  text-align: justify;
   width: 300px;
   background-color: $rg-navy;
   color: $grey-super-light;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
+  padding: 15px;
 
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
-  right: 105%;
+  left: 105%;
+  margin-top: -20%;
+  pointer-events: all;
+  opacity: 1;
 }
 
-.tooltip:hover .tooltiptext {
+.tooltip-arrow{
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right:10px solid $rg-navy;
+  position: absolute;
+  z-index: 1;
+  left: 103.5%;
+  margin-top: -30px;
+  margin-left: -1px;
+}
+
+.with-tooltip:focus + .tooltip-text{
+  visibility: visible;
+}
+
+.with-tooltip:focus ~ .tooltip-arrow{
+  visibility: visible;
+}
+
+.tooltip-text:hover{
+  visibility: visible;
+}
+
+.tooltip-text:hover + .tooltip-arrow{
   visibility: visible;
 }
