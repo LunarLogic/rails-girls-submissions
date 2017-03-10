@@ -5,12 +5,14 @@ describe "testing updating settings:" do
     FactoryGirl.create(:setting)
     login_as(FactoryGirl.create(:user), scope: :user)
     visit settings_path
-    fill_in 'Available spots', with: 5
-    fill_in 'Required rates num', with: 5
-    fill_in 'Days to confirm invitation', with: 7
-    fill_in 'Beginning of preparation period', with: "2016/06/21"
-    fill_in 'Beginning of registration period', with: "2016/06/22"
-    fill_in 'Beginning of closed period', with: "2016/06/23"
+
+    find("#setting_available_spots").set(5)
+    find("#setting_required_rates_num").set(5)
+    find("#setting_days_to_confirm_invitation").set(7)
+    find("#setting_beginning_of_preparation_period").set("2016/06/21")
+    find("#setting_beginning_of_registration_period").set("2016/06/22")
+    find("#setting_beginning_of_closed_period").set("2016/06/23")
+
     click_button "Save settings"
   end
 
