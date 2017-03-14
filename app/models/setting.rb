@@ -26,7 +26,8 @@ class Setting < ActiveRecord::Base
       beginning_of_closed_period: "Thu, 23 Jun 2016 00:00:00 CEST +02:00",
       event_start_date: "Sat, 16 Apr 2016",
       event_end_date: "Sun, 17 Apr 2016",
-      event_url: "railsgirls.com/krakow"
+      event_url: "railsgirls.com/krakow",
+      event_venue: ""
     })
   end
 
@@ -41,6 +42,7 @@ class Setting < ActiveRecord::Base
     settings.event_start_date = setting_params[:event_start_date]
     settings.event_end_date = setting_params[:event_end_date]
     settings.event_url = setting_params[:event_url]
+    settings.event_venue = setting_params[:event_venue]
 
     settings.save!
   end

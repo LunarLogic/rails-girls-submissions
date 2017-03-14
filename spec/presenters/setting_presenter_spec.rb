@@ -25,4 +25,12 @@ RSpec.describe SettingPresenter do
 
     it { is_expected.to eq("railsgirls.com/lodz") }
   end
+
+  describe "#event_venue" do
+    subject { described_class.new(setting).event_venue }
+
+    let(:setting_params) { { event_venue: "krakow" } }
+
+    it { is_expected.to eq("krakow") }
+  end
 end

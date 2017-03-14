@@ -15,6 +15,10 @@ class SettingPresenter
     setting.event_url
   end
 
+  def event_venue
+    setting.event_venue
+  end
+
   private
 
   attr_reader :setting
