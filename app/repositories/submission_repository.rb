@@ -24,8 +24,7 @@ class SubmissionRepository
   end
 
   def to_invite
-    rated_not_invited
-    .limit(Setting.get.available_spots - invited_not_expired.length)
+    rated_not_invited.limit(limit_to_invite_at_the_moment)
   end
 
   def to_remind
@@ -67,6 +66,11 @@ class SubmissionRepository
 
   def rated_not_invited
     rated.where('invitation_token IS ?', nil)
+  end
+
+  def limit_to_invite_at_the_moment
+    limit = Setting.get.available_spots - invited_not_expired.length
+    limit >= 0 ? limit : 0
   end
 
   def invited_not_expired
