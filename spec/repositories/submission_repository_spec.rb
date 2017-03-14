@@ -40,7 +40,7 @@ describe SubmissionRepository do
     describe "#results" do
       subject { submission_repository.results }
       before { allow(submission_repository).to receive(:rated).and_return([]) }
-      
+
       it "is an alias for rated" do
         expect(subject).to eq []
       end
@@ -103,11 +103,11 @@ describe SubmissionRepository do
 
     let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
 
-    let(:unrated_submission) do
+    let!(:unrated_submission) do
       FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num - 1)
     end
 
-    let(:invited_expiring_in_two_days_submission) do
+    let!(:invited_expiring_in_two_days_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -118,7 +118,7 @@ describe SubmissionRepository do
         rates_val: 3)
     end
 
-    let(:expired_submission) do
+    let!(:expired_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -129,7 +129,7 @@ describe SubmissionRepository do
         rates_val: 4)
     end
 
-    let(:confirmed_submission) do
+    let!(:confirmed_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -140,7 +140,7 @@ describe SubmissionRepository do
         rates_val: 4)
     end
 
-    let(:not_invited_submission) do
+    let!(:not_invited_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -150,7 +150,7 @@ describe SubmissionRepository do
         rates_val: 5)
     end
 
-    let(:not_invited_submission_2) do
+    let!(:not_invited_submission_2) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -160,7 +160,7 @@ describe SubmissionRepository do
         rates_val: 4)
     end
 
-    let(:not_invited_over_the_limit_submission) do
+    let!(:not_invited_over_the_limit_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
@@ -171,26 +171,46 @@ describe SubmissionRepository do
     end
 
     describe "#to_invite" do
-      let(:submissions_to_invite) { [not_invited_submission, not_invited_submission_2] }
+      context "when it's possible to invite more people at the moment" do
+        let(:submissions_to_invite) { [not_invited_submission, not_invited_submission_2] }
+        subject { submission_repository.to_invite }
 
-      subject { submission_repository.to_invite }
+        it { expect(subject).to eq(submissions_to_invite) }
+      end
 
-      it { expect(subject).to eq(submissions_to_invite) }
+      context "when all the spots are confirmed or some mails are not confirmed and not expired " do
+        let(:submissions_to_invite) { [] }
+        let(:setting) { instance_double(Setting, available_spots: 2, days_to_confirm_invitation: 7, required_rates_num: 1) }
+        subject { submission_repository.to_invite }
+
+        it { expect(subject).to eq(submissions_to_invite) }
+      end
     end
 
     describe "#to_remind" do
-      let(:submissions_to_remind) { [invited_expiring_in_two_days_submission] }
+      context "days_to_confirm_invitation is at least 2" do
+        let(:submissions_to_remind) { [invited_expiring_in_two_days_submission] }
 
-      context "the deadline is at least 2 days from now" do
         subject { submission_repository.to_remind }
 
-        it { expect(subject).to eq(submissions_to_remind) }
+        it "returns those expiring in two days" do
+          expect(subject).to eq(submissions_to_remind)
+        end
       end
-      context "the deadline is shorter than 2 days" do
-        let(:setting) { instance_double(Setting, available_spots: 4, days_to_confirm_invitation: 1, required_rates_num: 1) }
+
+      context "days_to_confirm_invitation is less than 2" do
+        let(:submissions_to_remind) { [] }
         subject { submission_repository.to_remind }
 
-        it { expect(subject).to eq([]) }
+        before do
+          allow(setting).to receive(:days_to_confirm_invitation).and_return(1)
+          allow(invited_expiring_in_two_days_submission).to receive(:invitation_token_created_at)
+            .and_return(6.hours.ago)
+        end
+
+        it "doesn't send reminders for such short deadlines" do
+          expect(subject).to eq(submissions_to_remind)
+        end
       end
     end
   end
