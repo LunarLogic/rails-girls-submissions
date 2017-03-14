@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FooterPresenter do
+RSpec.describe SettingPresenter do
   subject { described_class.new(setting) }
   let(:setting) { FactoryGirl.create(:setting, setting_params) }
 

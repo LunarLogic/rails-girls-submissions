@@ -1,4 +1,4 @@
-class FooterPresenter
+class SettingPresenter
   def initialize(setting)
     @setting = setting
   end
