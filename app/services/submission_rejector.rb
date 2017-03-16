@@ -1,8 +1,7 @@
 class SubmissionRejector
   RULES = [
     Rules::EnglishRule.new,
-    Rules::FirstTimeRule.new,
-    Rules::AdultRule.new
+    Rules::FirstTimeRule.new
   ]
 
   def initialize(rules = RULES)
