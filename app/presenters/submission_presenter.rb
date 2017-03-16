@@ -49,13 +49,13 @@ class SubmissionPresenter < SimpleDelegator
 
   def invitation_status
     if !invitation_token
-      :not_invited
+      "not invited"
     elsif invitation_confirmed
-      :confirmed
+      "confirmed"
     elsif expired
-      :expired
+      "expired"
     else
-      :invited
+      "invited"
     end
   end
 
