@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe FooterPresenter do
+RSpec.describe SettingPresenter do
   subject { described_class.new(setting) }
   let(:setting) { FactoryGirl.create(:setting, setting_params) }
 
@@ -24,5 +24,13 @@ RSpec.describe FooterPresenter do
     let(:setting_params) { { event_url: "railsgirls.com/lodz" } }
 
     it { is_expected.to eq("railsgirls.com/lodz") }
+  end
+
+  describe "#event_venue" do
+    subject { described_class.new(setting).event_venue }
+
+    let(:setting_params) { { event_venue: "krakow" } }
+
+    it { is_expected.to eq("krakow") }
   end
 end

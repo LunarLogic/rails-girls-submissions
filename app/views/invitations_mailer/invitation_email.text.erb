@@ -4,9 +4,9 @@ Confirm your invitation: <%= submissions_confirm_invitation_url(invitation_token
 This link expires in one week.
 
 Where?
-<%= Rails.application.secrets.event_venue %>
+<%= @event_venue %>
 
 When?
-<%= Rails.application.secrets.event_date %>
+<%= @event_dates %>
 
-If you have any questions, contact us: <%= Rails.application.secrets.contact_email %>
+If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %>

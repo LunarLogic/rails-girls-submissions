@@ -12,6 +12,7 @@ describe "testing updating settings:" do
     find("#setting_beginning_of_preparation_period").set("2016/06/21")
     find("#setting_beginning_of_registration_period").set("2016/06/22")
     find("#setting_beginning_of_closed_period").set("2016/06/23")
+    find("#setting_event_venue").set("krakow")
 
     click_button "Save settings"
   end
@@ -23,5 +24,6 @@ describe "testing updating settings:" do
     expect(Setting.get.beginning_of_preparation_period).to eq("Thu, 21 Jun 2016 00:00:00 CEST +02:00")
     expect(Setting.get.beginning_of_registration_period).to eq("Thu, 22 Jun 2016 00:00:00 CEST +02:00")
     expect(Setting.get.beginning_of_closed_period).to eq("Thu, 23 Jun 2016 00:00:00 CEST +02:00")
+    expect(Setting.get.event_venue).to eq("krakow")
   end
 end

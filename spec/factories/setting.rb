@@ -9,5 +9,6 @@ FactoryGirl.define do
     event_start_date "2016-04-16"
     event_end_date "2016-04-17"
     event_url "railsgirls.com/krakow"
+    event_venue "krakow"    
   end
 end

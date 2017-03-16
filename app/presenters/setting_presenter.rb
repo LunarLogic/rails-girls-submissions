@@ -1,4 +1,4 @@
-class FooterPresenter
+class SettingPresenter
   def initialize(setting)
     @setting = setting
   end
@@ -13,6 +13,10 @@ class FooterPresenter
 
   def event_url
     setting.event_url
+  end
+
+  def event_venue
+    setting.event_venue
   end
 
   private
