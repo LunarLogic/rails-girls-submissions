@@ -125,7 +125,7 @@ RSpec.describe SubmissionPresenter do
 
     context ":not_invited" do
       before { allow(submission).to receive(:invitation_token).and_return(nil) }
-      it { is_expected.to eq(:not_invited) }
+      it { is_expected.to eq("not invited") }
     end
 
     context ":confirmed" do
@@ -133,7 +133,7 @@ RSpec.describe SubmissionPresenter do
         allow(submission).to receive(:invitation_token).and_return('aa')
         allow(submission).to receive(:invitation_confirmed).and_return(true)
       end
-      it { is_expected.to eq(:confirmed) }
+      it { is_expected.to eq("confirmed") }
     end
 
     context ":expired" do
@@ -142,7 +142,7 @@ RSpec.describe SubmissionPresenter do
         allow(submission).to receive(:invitation_confirmed).and_return(false)
         allow(submission).to receive(:invitation_token_created_at).and_return(100.years.ago)
       end
-      it { is_expected.to eq(:expired) }
+      it { is_expected.to eq("expired") }
     end
 
     context ":invited" do
@@ -155,7 +155,7 @@ RSpec.describe SubmissionPresenter do
         allow(submission).to receive(:invitation_confirmed).and_return(false)
         allow(submission).to receive(:invitation_token_created_at).and_return(1.hour.ago)
       end
-      it { is_expected.to eq(:invited) }
+      it { is_expected.to eq("invited") }
     end
   end
 end
