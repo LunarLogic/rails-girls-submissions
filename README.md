@@ -36,7 +36,7 @@
   * Make sure your gems are up-to-date: `bundle install`
   * Annotate your specs with `js: true`, which will change the driver to `selenium` for the particular test:
 
- ```
+```
 describe "the rating process", js: true do
   #...  
   it "visits submission page, finds and clicks rate button" do
@@ -49,3 +49,15 @@ end
 Another advantage of using `selenium` is that while running the specs, it opens s browser window and shows live the actions it performs, which could be useful for debugging the specs.
 
 The configuration for the drivers can be found in the `spec/rails_helper`.
+
+## Registration flow
+  As soon as an applicant sends their submission the following things happen:
+  1. If a submission breaks the default rules (an applicant took part in RailsGirls before or they can't speak English), it is rejected (see "Rejected tab"). Else, it shows in the "Valid" tab.
+  * Admins use "To rate" tab to assess the submission - show a submission, comment on it and give a rate.
+  * If the number of admins who rated a submission is large enough (see "Settings"), the submission is moved from "To rate" tab to "Results" tab.
+  * "Results" hold all rated submission ordered by their average rate. At first, they should have "Invitation" status of "not invited".
+  * You can send an email to the set number of applicants from the top of the list (to set the number see "Settings") - their "Invitation" status should change to "invited".
+  * The invited applicants have some time to confirm the invitations (to set the time see "Settings"). If the invitation is confirmed in the time, the "Invitation" status changes to "confirmed". Else, the status is changed to "expired".
+  * All the applicants who confirmed an invitation can be seen in "Participants" tab. It is your participants list, which you can download by clicking a "Download" button.
+
+## Setting automatic emails and reminders
