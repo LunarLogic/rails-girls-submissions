@@ -1,6 +1,6 @@
-# RailsGirls
+# RailsGirlsSubmissions
 
- RailsGirls application is designed to receive and rate submissions for RailsGirls workshops.
+ RailsGirlsSubmissions application is designed to receive and rate submissions for RailsGirls workshops.
 
 ## Setup
      git clone git@github.com:LunarLogic/rails-girls-submissions.git
@@ -61,3 +61,29 @@ The configuration for the drivers can be found in the `spec/rails_helper`.
   * All the applicants who confirmed an invitation can be seen in "Participants" tab. It is your participants list, which you can download by clicking a "Download" button.
 
 ## Setting automatic emails and reminders
+
+## Adapting the app for other events
+If you go through the process and have to change something that's not mentioned here, please create a PR or drop us a line!
+
+You might want to change:
+  1. Login page - replace `app/assets/images/rails-girls-krakow-2016.png`
+  * "Coming soon" page - `views/submissions/preparation.html.erb`
+  * "Thank you" page - `views/submissions/thank_you.html.erb`
+  * "Closed" page - `views/submissions/closed.html.erb`
+  * "Invitation confirmed" page - `views/submissions/invitation_confirmed.html.erb`
+  * "Invitation expired" page - `views/submissions/invitation_expired.html.erb`
+  * `404.html`, `422.html`, `500.html`
+  * rejection rules - add or remove rule classes (`app/services/rules`) and reflect the changes in `app/services/submission_rejector`'s `RULES` array
+  * styles - `app/assets/stylesheets`
+  * settings (in the admin panel of the app)
+  * submission form
+    * title - `app/views/submissions/_form.html.erb`
+    * footer/side pane - `app/views/submissions/new.html.erb`, replace `app/assets/images/rails-girls-krakow-2016.png`
+    * fields
+      * use "QuestionCreator" (admin panel) for managing "how well do you..." questions
+      * to change possible answers to questions to "how well do you..." questions look into
+        * `value` enum in `app/models/answer`
+        * the legend in `app/views/questions/_form.html.erb`
+        * the answer form in `app/views/submissions/_answer_form.html.erb`
+      * removing other fields - the easiest way is to add `visibility="hidden"` and some `value="some value of a correct type"` to the field in `app/views/submissions/_form.html.erb`
+      * adding new fields - well... you probably need to go through the whole flow including view, controller, model, specs, migrations...
