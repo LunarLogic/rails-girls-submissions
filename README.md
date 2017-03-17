@@ -13,6 +13,12 @@
      bundle exec rake db:setup
      rails s
 
+## Testing emails locally
+
+  * `gem install mailcatcher`
+  * run `mailcatcher` in a terminal
+  * go to [http://localhost:1080/](http://localhost:1080/)
+
 ## Servers and deployment
 
  * CI: https://circleci.com/gh/LunarLogic/rails-girls-submissions
