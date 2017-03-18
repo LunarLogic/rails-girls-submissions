@@ -112,7 +112,7 @@ describe SubmissionRepository do
         :submission,
         :with_rates,
         invitation_token: 'xxx',
-        invitation_token_created_at: (confirmation_days - 1.days - 1.hour).ago,
+        invitation_token_created_at: (confirmation_days - 2.days).ago,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 3)
@@ -123,7 +123,7 @@ describe SubmissionRepository do
         :submission,
         :with_rates,
         invitation_token: 'zzz',
-        invitation_token_created_at: (confirmation_days + 1.days).ago,
+        invitation_token_created_at: (confirmation_days + 1.day).ago,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 4)
