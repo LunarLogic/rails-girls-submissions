@@ -1,16 +1,61 @@
-<h3>You're invited to the Rails Girls workshop!</h3>
-<p>
-  <%= link_to "Confirm your invitation.", submissions_confirm_invitation_url(invitation_token: @token) %>
-  This link expires in one week.
-</p>
-<p>
-  <strong>Where?</strong><br />
-  <%= @event_venue %>
-</p>
-<p>
-  <strong>When?</strong><br />
-  <%= @event_dates %>
-</p>
-<p>
-  If you have any questions, contact us: <%= mail_to Rails.application.secrets.mailchimp["contact_email"] %>
-</p>
+<table class="main">
+  <tr>
+    <td class="wrapper">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td>
+            <h1>Congratulations!</h1>
+            <h3 class="email-header">We would like to welcome you onboard of </br>Rails Girls Kraków 2017!</h3>
+
+            <p>Now read carefully:</p>
+            <ul>
+              <li>
+              Because there were so many people willing to participate, we'd love to get a confirmation from you. Please, click on the confirmation link, if you are still interested in taking part in the workshop.
+
+              <table border="0" cellpadding="-40px" cellspacing="0" class="btn btn-primary">
+                <tbody>
+                  <tr>
+                    <td align="center">
+                      <table class="button-in-list" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                          <tr>
+                            <td> <%= link_to "Confirm your invitation", submissions_confirm_invitation_url(invitation_token: @token) %>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              The link will expire <%= @days_to_confirm %> days from now. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
+              </li>
+              <li>To get ready for the workshop, install Ruby on Rails on the laptop you are planning to use during the workshop. This instruction should help you:  <a href="http://guides.railsgirls.com/install">http://guides.railsgirls.com/install</a>
+              We will be helping people that didn't manage to do it on Friday, but please, try doing it yourself - you'll have more time to learn other fascinating things :)
+              </li>
+              <li>We invited a photographer. The pictures will be taken during the event and published in social media.
+              </li>
+              <li>If you happen to be under 18 years old, please take a parental consent form with you.</li>
+            </ul>
+
+
+            <p>Thank you again for becoming a member of Rails Girls Kraków 2017. See you in <%= Rails.application.secrets.event_venue %> on <%= Rails.application.secrets.event_date %>.</p>
+
+            <p>If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %></p>
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td align="right">
+                    <p> With love, </br>
+                        Rails Girls Kraków Team</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
