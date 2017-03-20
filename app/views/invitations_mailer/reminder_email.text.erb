@@ -5,6 +5,7 @@
 <%= link_to "Confirm your invitation", submissions_confirm_invitation_url(invitation_token: @token) %>
 The link will expire two days from now. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
 </p>
+
 <p>If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %></p>
 <p> With love, </br>
 Rails Girls Kraków Team</p>
