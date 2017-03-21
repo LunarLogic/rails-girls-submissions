@@ -1,9 +1,6 @@
 .thanks {
   margin-top: 2rem;
   text-align: center;
-  background: image-url('pattern.png');
-  background-size: 100%;
-  background-repeat: no-repeat;
   img {
     max-width: 300px;
   }
@@ -20,5 +17,10 @@
     font-size: 1rem;
     line-height: 1.4;
     margin-top: 2rem;
+  }
+  @include media($tablet) {
+    background: image-url('pattern.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
   }
 }

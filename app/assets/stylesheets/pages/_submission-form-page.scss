@@ -20,7 +20,7 @@
 }
 
 .pattern-wrapper{
-  @include media($desktop) {
+  @include media(1350px) {
     background: image-url('pattern.png');
     background-size: 100%;
   }
