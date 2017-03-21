@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170314134338) do
+ActiveRecord::Schema.define(version: 20170321103842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,18 +56,19 @@ ActiveRecord::Schema.define(version: 20170314134338) do
   add_index "rates", ["user_id"], name: "index_rates_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
-    t.integer  "required_rates_num",               null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.datetime "beginning_of_preparation_period",  null: false
-    t.datetime "beginning_of_registration_period", null: false
-    t.datetime "beginning_of_closed_period",       null: false
-    t.date     "event_start_date",                 null: false
-    t.date     "event_end_date",                   null: false
-    t.string   "event_url",                        null: false
-    t.integer  "available_spots",                  null: false
-    t.integer  "days_to_confirm_invitation",       null: false
+    t.integer  "required_rates_num",                               null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.datetime "beginning_of_preparation_period",                  null: false
+    t.datetime "beginning_of_registration_period",                 null: false
+    t.datetime "beginning_of_closed_period",                       null: false
+    t.date     "event_start_date",                                 null: false
+    t.date     "event_end_date",                                   null: false
+    t.string   "event_url",                                        null: false
+    t.integer  "available_spots",                                  null: false
+    t.integer  "days_to_confirm_invitation",                       null: false
     t.string   "event_venue"
+    t.boolean  "invitation_process_started",       default: false, null: false
   end
 
   create_table "submissions", force: :cascade do |t|

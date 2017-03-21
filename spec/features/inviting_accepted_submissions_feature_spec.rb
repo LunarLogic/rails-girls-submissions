@@ -23,6 +23,7 @@ describe 'inviting accepted submissions' do
     click_link('Send')
     click_link('Send')
     expect(ActionMailer::Base.deliveries.count).to eq(1)
+    expect(setting.invitation_process_started).to be true
     expect(accepted_submission.reload.invitation_token).not_to be_nil
   end
 
