@@ -5,7 +5,6 @@
 
 # Example:
 #
-# set :output, "/path/to/my/cron_log.log"
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -18,6 +17,10 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+
+set :output, "log/cron.log"
+
+set :environment, ENV['RAILS_ENV'] || 'production'
 
 every :day, at: '6:00 am' do
   rake 'scheduled:remind_about_expiring_invitations'

@@ -75,8 +75,8 @@ class SubmissionRepository
 
   def invited_not_expired
     with_rates_if_any
-      .where('invitation_token IS NOT ? AND invitation_token_created_at > ?',
-        nil, Setting.get.days_to_confirm_invitation.days.ago)
+      .where('invitation_token IS NOT ? AND DATE(invitation_token_created_at) > ?',
+    nil, Setting.get.days_to_confirm_invitation.days.ago.to_date)
       .order('AVG(value) DESC')
   end
 
@@ -87,8 +87,10 @@ class SubmissionRepository
   def expiring_in_two_days
     days_to_confirm_invitation = Setting.get.days_to_confirm_invitation
 
+    from = (days_to_confirm_invitation - 1).days.ago.to_date
+    to = (days_to_confirm_invitation - 2).days.ago.to_date
     invited_not_expired_not_confirmed.where(
-      'invitation_token_created_at > ? AND invitation_token_created_at < ?',
-      (days_to_confirm_invitation - 1).days.ago, (days_to_confirm_invitation - 2).days.ago)
+      'DATE(invitation_token_created_at) > ? AND DATE(invitation_token_created_at) <= ?',
+      from, to)
   end
 end
