@@ -1,15 +1,11 @@
-<h1>Confirm your Rails Girls Kraków 2017 invitation!</h1>
-<h3 class="email-header">Looks like you didn't confirm your invitation. This is the last chance to do that.</h3>
+Confirm your Rails Girls Kraków 2017 invitation!
+Looks like you didn't confirm your invitation. This is the last chance to do that.
 
-<p>Please, click on the confirmation link, if you are still interested in taking part in the workshop.
+Please, click on the confirmation link, if you are still interested in taking part in the workshop.
 <%= link_to "Confirm your invitation", submissions_confirm_invitation_url(invitation_token: @token) %>
-The link will expire two days from now. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
-</p>
+The link will expire tomorrow. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
 
-<p>If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %></p>
-<p> With love, </br>
-Rails Girls Kraków Team</p>
-<a href="https://twitter.com/railsgirls_krk">follow on Twitter</a>
-<a href="https://www.facebook.com/RailsGirlsKrakow/">friend on Facebook</a>
 
-<span>Copyright © 2017 Rails Girls Krakow, All rights reserved.</span>
+If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %>
+With love,
+Rails Girls Kraków Team
