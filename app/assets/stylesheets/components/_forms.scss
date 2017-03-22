@@ -215,18 +215,21 @@ $input-height: $bs2;
 .tooltip-text {
   visibility: hidden;
   text-align: justify;
-  width: 300px;
   background-color: $rg-navy;
   color: $grey-super-light;
-  padding: 15px;
-
-  /* Position the tooltip */
-  position: absolute;
+  display: block;
+  pointer-events: all;
   z-index: 1;
+  height: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  @include media($desktop) {
+  position: absolute;
   left: 105%;
   margin-top: -20%;
-  pointer-events: all;
-  opacity: 1;
+  width: 300px;
+  }
 }
 
 .tooltip-arrow{
@@ -235,26 +238,48 @@ $input-height: $bs2;
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right:10px solid $rg-navy;
+  border-right: 10px solid $rg-navy;
   position: absolute;
   z-index: 1;
   left: 103.5%;
   margin-top: -30px;
   margin-left: -1px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
 }
 
-.with-tooltip:focus + .tooltip-text{
+.with-tooltip:focus + .tooltip-text {
   visibility: visible;
+  opacity: 1;
+  padding: 15px;
+  height: auto;
+  margin-top: 5%;
+  @include media($desktop) {
+    margin-top: -20%;
+  }
 }
 
-.with-tooltip:focus ~ .tooltip-arrow{
+.tooltip-text:hover {
   visibility: visible;
+  opacity: 1;
+  padding: 15px;
+  height: auto;
+  margin-top: 5%;
+  @include media($desktop) {
+    margin-top: -20%;
+  }
 }
 
-.tooltip-text:hover{
-  visibility: visible;
+.with-tooltip:focus ~ .tooltip-arrow {
+  @include media($desktop) {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
-.tooltip-text:hover + .tooltip-arrow{
-  visibility: visible;
+.tooltip-text:hover + .tooltip-arrow {
+  @include media($desktop) {
+    visibility: visible;
+    opacity: 1;
+  }
 }
