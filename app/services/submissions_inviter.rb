@@ -13,7 +13,7 @@ class SubmissionsInviter
   end
 
   private
-  
+
   attr_reader :event_dates, :event_venue
 
   def invite(submission)

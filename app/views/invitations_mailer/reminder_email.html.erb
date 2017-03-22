@@ -1,16 +1,48 @@
-<h3>Last chance to confirm your invitation to the Rails Girls workshop!</h3>
-<p>
-  <%= link_to "Confirm your invitation.", submissions_confirm_invitation_url(invitation_token: @token) %>
-  This link expires tomorrow!
-</p>
-<p>
-  <strong>Where?</strong><br />
-  <%= @event_venue %>
-</p>
-<p>
-  <strong>When?</strong><br />
-  <%= @event_dates %>
-</p>
-<p>
-  If you have any questions, contact us: <%= mail_to Rails.application.secrets.mailchimp["contact_email"] %>
-</p>
+<table class="main">
+  <tr>
+    <td class="wrapper">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td>
+            <h1>Confirm your Rails Girls Kraków 2017 invitation!</h1>
+            <h3 class="email-header">Looks like you didn't confirm your invitation. This is the last chance to do that.</h3>
+
+            <p>Please, click on the confirmation link, if you are still interested in taking part in the workshop.
+
+              <table border="0" cellpadding="-40px" cellspacing="0" class="btn btn-primary">
+                <tbody>
+                  <tr>
+                    <td align="center">
+                      <table class="button-in-list" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                          <tr>
+                            <td> <%= link_to "Confirm your invitation.", submissions_confirm_invitation_url(invitation_token: @token) %>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+			The link will expire tomorrow. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
+            </p>
+
+            <p>If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %></p>
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td align="right">
+                    <p> With love, </br>
+                        Rails Girls Kraków Team</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

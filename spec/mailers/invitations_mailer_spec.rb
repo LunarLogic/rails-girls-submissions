@@ -12,7 +12,7 @@ RSpec.describe InvitationsMailer, type: :mailer do
     end
 
     it 'sends correct confirmation url' do
-      expect(mail.body.encoded).to include("#{url}?invitation_token=#{submission.invitation_token}")
+      expect(mail.html_part.body).to include("#{url}?invitation_token=#{submission.invitation_token}")
     end
   end
 

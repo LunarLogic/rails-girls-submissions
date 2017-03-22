@@ -1,12 +1,11 @@
-Last chance to confirm your invitation to the Rails Girls workshop!
+Confirm your Rails Girls Kraków 2017 invitation!
+Looks like you didn't confirm your invitation. This is the last chance to do that.
 
-Confirm your invitation: <%= submissions_confirm_invitation_url(invitation_token: @token) %>
-This link expires tomorrow!
+Please, click on the confirmation link, if you are still interested in taking part in the workshop.
+<%= link_to "Confirm your invitation", submissions_confirm_invitation_url(invitation_token: @token) %>
+The link will expire tomorrow. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
 
-Where?
-<%= @event_venue %>
-
-When?
-<%= @event_dates %>
 
 If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %>
+With love,
+Rails Girls Kraków Team

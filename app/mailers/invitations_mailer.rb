@@ -4,6 +4,7 @@ class InvitationsMailer < ApplicationMailer
     @token = submission.invitation_token
     @event_dates = event_dates
     @event_venue = event_venue
+    @days_to_confirm = Setting.get.days_to_confirm_invitation
     mail(to: email, subject: 'Your application has been accepted!')
   end
 
