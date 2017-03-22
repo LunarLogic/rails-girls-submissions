@@ -38,7 +38,6 @@
 .link-return {
   display: block;
   text-decoration: none;
-  margin-left: $bs2;
 
   &:hover,
   &:focus,
@@ -51,17 +50,10 @@
     content: " to all submissions";
   }
 
-  @include media($tablet) {
+  @include media($desktop) {
     position: fixed;
-    padding: 0 $bs-1;
     line-height: $bs3;
     text-decoration: none;
-
-    &:hover,
-    &:focus,
-    &:active {
-      outline: 1px dotted $rg-red;
-    }
 
     &:after {
       display: none;
