@@ -8,15 +8,6 @@
   }
 }
 
-.aside-widget-fixed {
-
-  @include media($big-screen) {
-    position: fixed;
-    right: 10%;
-    top: 2 * $bs2;
-  }
-}
-
 .aside-widget-rating {
 
   @include media($medium-screen) {
@@ -45,12 +36,8 @@
 .aside-widget-text {
   display: block;
   color: $rg-red;
-  font-size: $baseline;
-
-  @include media($big-screen) {
-    font-size: $bs1;
-    font-weight: 400;
-  }
+  font-size: $bs1;
+  font-weight: 400;
 }
 
 .aside-widget-header {
