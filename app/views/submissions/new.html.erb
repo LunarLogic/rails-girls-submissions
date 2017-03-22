@@ -3,7 +3,12 @@
 	<div class="l-wrapper-narrow">
 	  <%= render 'form', { submission: submission, answers: answers, show_errors: show_errors } %>
 
-	  <%= link_to "#{footer_presenter.event_url}", "http://#{footer_presenter.event_url}", target: "_blank",
-	      class: "form-aside-link", title: "Rails Girls Kraków website" %>
+	  <aside class="aside-widget aside-widget-submission" itemscope itemtype="http://schema.org/Event">
+	    <span class="aside-widget-text" itemprop="name">Rails Girls Kraków 2017</span>
+		<span class="aside-widget-text" itemprop="startDate" content="2016-04-16T06:00">
+			<%= footer_presenter.event_dates %>
+		</span>
+	   	<%= link_to "#{footer_presenter.event_url}", "http://#{footer_presenter.event_url}", target: "_blank",lass: "form-aside-link", title: "Rails Girls Kraków website" %>
+	   </aside>
 	</div>
 </div>
