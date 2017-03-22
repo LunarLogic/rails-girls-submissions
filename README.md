@@ -29,7 +29,7 @@
 
 ## Testing
 
-1. RSpec: ```bundle exec rspec spec``` (in the app's directory)
+* RSpec: ```bundle exec rspec spec``` (in the app's directory)
 
 * Capybara: by default, capybara uses the `rack_test` driver, which is not suitable for testing some features dependent on JavaScript. In such cases:
   * Install chromedriver: `brew install chromedriver`
@@ -61,23 +61,22 @@
 
 
 ## Registration flow
-  As soon as an applicant sends their submission the following things happen:
-  1. If a submission breaks the default rules (an applicant took part in RailsGirls before or they can't speak English), it is rejected (see "Rejected tab"). Else, it shows in the "Valid" tab.
-  * Admins use "To rate" tab to assess the submission - show a submission, comment on it and give a rate.
-  * If the number of admins who rated a submission is large enough (see "Settings"), the submission is moved from "To rate" tab to "Results" tab.
-  * "Results" hold all rated submission ordered by their average rate. At first, they should have "Invitation" status of "not invited".
-  * By clicking a "Send emails" button you can start sending emails. Two tasks scheduled in your crontab will be executed every day starting from now:
-   * One will send invitation emails to applicants with the best average rate if there is an available spot. This means at first there will be `available_spots` (see "Settings") number of invitations sent. It might happen some spots are freed after some time (i.e. when someone's invitation expired - see below). In this case, there will be a number of invitations sent so that all the spots are filled. 
-If a applicant was sent an invitation email, their "Invitation" status should change to "invited".
-   * The other - a reminder email - will be send to all the applicants who received an invitation email and their invitation expires in two days. 
-  * Invited applicants have some time (to set the time see "Settings") to confirm the invitations. They do it by clicking on the link in the invitation email. If the invitation is confirmed in time (which can be set in "Settings"), the "Invitation" status changes to "confirmed". Otherwise, it changes to "expired".
-  * All the applicants who confirmed an invitation can be seen in "Participants" tab. It is your participants list, which you can download by clicking a "Download" button.
+As soon as an applicant sends their submission the following things happen:
+ 1. If a submission breaks the default rules (an applicant took part in RailsGirls before or they can't speak English), it is rejected (see "Rejected tab"). Else, it shows in the "Valid" tab.
+ 2. Admins use "To rate" tab to assess the submission - show a submission, comment on it and give a rate.
+ 3. If the number of admins who rated a submission is large enough (see "Settings"), the submission is moved from "To rate" tab to "Results" tab.
+ 4. "Results" hold all rated submission ordered by their average rate. At first, they should have "Invitation" status of "not invited".
+ 5. By clicking a "Send emails" button you can start sending emails. Two tasks scheduled in your crontab will be executed every day starting from now:
+    * One will send invitation emails to applicants with the best average rate if there is an available spot. This means at first there will be `available_spots` (see "Settings") number of invitations sent. It might happen some spots are freed after some time (i.e. when someone's invitation expired - see below). In this case, there will be a number of invitations sent so that all the spots are filled. If a applicant was sent an invitation email, their "Invitation" status should change to "invited".
+    * The other - a reminder email - will be send to all the applicants who received an invitation email and their invitation expires in two days. 
+ 6. Invited applicants have some time (to set the time see "Settings") to confirm the invitations. They do it by clicking on the link in the invitation email. If the invitation is confirmed in time (which can be set in "Settings"), the "Invitation" status changes to "confirmed". Otherwise, it changes to "expired".
+ 7. All the applicants who confirmed an invitation can be seen in "Participants" tab. It is your participants list, which you can download by clicking a "Download" button.
 
 ## Adapting the app for other events
 If you had to change something that is not mentioned here, while going through the process, please create a PR or drop us a line!
 
 You might want to change:
-  1. Login page - replace `app/assets/images/rails-girls-krakow-2016.png`
+  * Login page - replace `app/assets/images/rails-girls-krakow-2016.png`
   * "Coming soon" page - `views/submissions/preparation.html.erb`
   * "Thank you" page - `views/submissions/thank_you.html.erb`
   * "Closed" page - `views/submissions/closed.html.erb`
