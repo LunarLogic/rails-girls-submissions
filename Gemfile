@@ -38,8 +38,7 @@ gem 'unicorn'
 gem 'pg'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  gem 'pry-rails'
   gem 'awesome_print'
 end
 
@@ -57,7 +56,6 @@ group :development do
 end
 
 group :test do
-  gem 'pry-rails'
   gem 'rspec-rails', '~> 3.0'
   gem 'database_cleaner', require: false
   gem "factory_girl_rails", "~> 4.0", require: false

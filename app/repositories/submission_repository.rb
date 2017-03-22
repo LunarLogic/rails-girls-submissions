@@ -10,7 +10,7 @@ class SubmissionRepository
   def to_rate
     with_rates_if_any
       .having('count("rates") < ?', Setting.get.required_rates_num)
-      .order('created_at ASC')
+      .order('submissions.created_at ASC')
   end
 
   def rated
