@@ -1,18 +1,25 @@
 class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:confirm_invitation, :new, :create, :thank_you]
-  
+
   layout 'admin', only: :show
 
   def confirm_invitation
     token = params.require(:invitation_token)
     submission = Submission.find_by!(invitation_token: token)
-    if submission.invitation_expired?
+
+    case submission.invitation_status
+    when :not_invited
+      raise "A user with invitation_status = :not_invited is in possesion of an invitation token."
+    when :confirmed
+      render 'invitation_confirmed'
+    when :expired
       render 'invitation_expired'
-    else
+    when :invited
       submission.confirm_invitation!
       render 'invitation_confirmed'
     end
-  rescue
+  rescue => e
+    logger.error(e)
     render text: "Something went wrong. Please make sure the address you are trying to visit
                   is correct, otherwise contact us by replying to the email you received
                   the confirmation link from."
