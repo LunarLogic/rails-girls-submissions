@@ -48,4 +48,22 @@ class Submission < ActiveRecord::Base
       raise 'Submission not invited!'
     end
   end
+
+  def invitation_status
+    if !invitation_token
+      :not_invited
+    elsif invitation_confirmed
+      :confirmed
+    elsif expired
+      :expired
+    else
+      :invited
+    end
+  end
+
+  private
+
+  def expired
+    invitation_token_created_at < Setting.get.days_to_confirm_invitation.days.ago
+  end
 end
