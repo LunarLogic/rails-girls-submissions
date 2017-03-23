@@ -5,7 +5,9 @@ class SubmissionsInviter
   end
 
   def call(submissions)
-    if submissions.empty?
+    if !Setting.registration_period?
+      false
+    elsif submissions.empty?
       false
     else
       submissions.each { |submission| invite(submission) }

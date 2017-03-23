@@ -10,65 +10,84 @@ describe 'inviting accepted submissions' do
     allow(Setting).to receive(:get).and_return(setting)
   end
 
-  it 'sends only one invitation email to each accepted submission' do
-    accepted_submission = FactoryGirl.create(
-      :submission,
-      :with_rates,
-      invitation_token: nil,
-      rates_num: setting.required_rates_num,
-      rates_val: 1)
+  context "sending invitation emails" do
+    let!(:accepted_submission) do
+      FactoryGirl.create(
+            :submission,
+            :with_rates,
+            invitation_token: nil,
+            rates_num: setting.required_rates_num,
+            rates_val: 1)
+    end
 
-    login_as(user, scope: :user)
-    visit submissions_results_path
-    click_link('Send')
-    click_link('Send')
-    expect(ActionMailer::Base.deliveries.count).to eq(1)
-    expect(setting.invitation_process_started).to be true
-    expect(accepted_submission.reload.invitation_token).not_to be_nil
+    it 'sends only one invitation email to each accepted submission' do
+      allow(Setting).to receive(:registration_period?).and_return(true)
+
+      login_as(user, scope: :user)
+      visit submissions_results_path
+      click_link('Send')
+
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      expect(setting.invitation_process_started).to be true
+      expect(accepted_submission.reload.invitation_token).not_to be_nil
+    end
+
+    it "doesn't send invitation emails if the registration closed" do
+      allow(Setting).to receive(:registration_period?).and_return(false)
+
+      login_as(user, scope: :user)
+      visit submissions_results_path
+      click_link('Send')
+
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
+      expect(accepted_submission.reload.invitation_token).to be_nil
+    end
   end
 
-  it 'confirms submission' do
-    invited_submission = FactoryGirl.create(
-      :submission,
-      :with_rates,
-      invitation_token: 'xxx',
-      invitation_token_created_at: Time.now,
-      invitation_confirmed: false,
-      rates_num: setting.required_rates_num,
-      rates_val: 1)
+  context "confirming invitations" do
+    it 'confirms submission' do
+      invited_submission = FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'xxx',
+        invitation_token_created_at: Time.now,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 1)
 
-    visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
-    expect(invited_submission.reload.invitation_confirmed).to be true
-    expect(page).to have_text('confirmed')
-  end
+      visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
+      expect(invited_submission.reload.invitation_confirmed).to be true
+      expect(page).to have_text('confirmed')
+    end
 
-  it "doesn't confirm submission with expired invitation token" do
-    invited_submission = FactoryGirl.create(
-      :submission,
-      :with_rates,
-      invitation_token: 'zzz',
-      invitation_token_created_at: confirmation_days.ago - 1,
-      invitation_confirmed: false,
-      rates_num: setting.required_rates_num,
-      rates_val: 1)
+    it "doesn't confirm submission with expired invitation token" do
+      invited_submission = FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'zzz',
+        invitation_token_created_at: confirmation_days.ago - 1,
+        invitation_confirmed: false,
+        rates_num: setting.required_rates_num,
+        rates_val: 1)
 
-    visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
-    expect(invited_submission.reload.invitation_confirmed).to be false
-    expect(page).to have_text('expired')
-  end
+      visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
+      expect(invited_submission.reload.invitation_confirmed).to be false
+      expect(page).to have_text('expired')
+    end
 
-  it 'show correct info when invitation is already confirmed but token expired' do
-    confirmed_submission = FactoryGirl.create(
-      :submission,
-      :with_rates,
-      invitation_token: 'yyy',
-      invitation_token_created_at: confirmation_days.ago - 1,
-      invitation_confirmed: true,
-      rates_num: setting.required_rates_num,
-      rates_val: 1)
+    it 'show correct info when invitation is already confirmed but token expired' do
+      confirmed_submission = FactoryGirl.create(
+        :submission,
+        :with_rates,
+        invitation_token: 'yyy',
+        invitation_token_created_at: confirmation_days.ago - 1,
+        invitation_confirmed: true,
+        rates_num: setting.required_rates_num,
+        rates_val: 1)
 
-    visit submissions_confirm_invitation_path(invitation_token: confirmed_submission.invitation_token)
-    expect(page).to have_text('confirmed')
+      visit submissions_confirm_invitation_path(invitation_token: confirmed_submission.invitation_token)
+      expect(page).to have_text('confirmed')
+    end
   end
 
   context 'handling exceptions' do
