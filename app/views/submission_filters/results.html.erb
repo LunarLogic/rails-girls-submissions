@@ -5,7 +5,7 @@
 <% else %>
   <%= link_to "Send emails", send_invitation_emails_path,
     method: :post,
-    data: { confirm: "Are you sure?" },
+    data: { confirm: "From now on invitation and reminder emails will be sent to participants from the top of the list.\nFor details, see the apps's README.\n\nDo you want to continue?" },
     class: "btn btn-small btn-emails"
   %>
   <%= render 'list',
