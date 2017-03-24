@@ -222,6 +222,9 @@ $input-height: $bs2;
   z-index: 1;
   height: 0;
   opacity: 0;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
 
   @include media($desktop) {
@@ -245,6 +248,9 @@ $input-height: $bs2;
   margin-top: -30px;
   margin-left: -1px;
   opacity: 0;
+  -webkit-transition: opacity 0.5s ease-in;
+  -moz-transition: opacity 0.5s ease-in;
+  -o-transition: opacity 0.5s ease-in;
   transition: opacity 0.5s ease-in;
 }
 
