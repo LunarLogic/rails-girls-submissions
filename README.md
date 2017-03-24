@@ -9,7 +9,7 @@
      gem install bundler
      bundle
 
-   Then create your own `secrets.yml` file. Replace the example values for dev/test environment and set the environment variables on your production server. The mailer is configured to work with Mailchimp.
+   Then create your own `secrets.yml` file. We use omniauth-github for authenticating users. You need to add new application on Github and fill `secrets.yml` with corresponding `app_id` and `app_secret`. Replace the example values for dev/test environment and set the environment variables on your production server. The mailer is configured to work with Mailchimp.
 
      cp config/secrets.yml.example config/secrets.yml
 
@@ -68,7 +68,7 @@ As soon as an applicant sends their submission the following things happen:
  4. "Results" hold all rated submission ordered by their average rate. At first, they should have "Invitation" status of "not invited".
  5. By clicking a "Send emails" button you can start sending emails. Two tasks scheduled in your crontab will be executed every day starting from now:
     * One will send invitation emails to applicants with the best average rate if there is an available spot. This means at first there will be `available_spots` (see "Settings") number of invitations sent. It might happen some spots are freed after some time (i.e. when someone's invitation expired - see below). In this case, there will be a number of invitations sent so that all the spots are filled. If a applicant was sent an invitation email, their "Invitation" status should change to "invited".
-    * The other - a reminder email - will be send to all the applicants who received an invitation email and their invitation expires in two days. 
+    * The other - a reminder email - will be send to all the applicants who received an invitation email and their invitation expires in two days.
  6. Invited applicants have some time (to set the time see "Settings") to confirm the invitations. They do it by clicking on the link in the invitation email. If the invitation is confirmed in time (which can be set in "Settings"), the "Invitation" status changes to "confirmed". Otherwise, it changes to "expired".
  7. All the applicants who confirmed an invitation can be seen in "Participants" tab. It is your participants list, which you can download by clicking a "Download" button.
 
