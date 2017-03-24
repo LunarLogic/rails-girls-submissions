@@ -13,10 +13,10 @@
                 <tbody>
                   <tr>
                     <td align="center">
-                      <table class="button-in-list" border="0" cellpadding="0" cellspacing="0">
+                      <table border="0" cellpadding="0" cellspacing="0">
                         <tbody>
                           <tr>
-                            <td> <%= link_to "Confirm your invitation.", submissions_confirm_invitation_url(invitation_token: @token) %>
+                            <td> <%= link_to "Confirm your invitation", submissions_confirm_invitation_url(invitation_token: @token) %>
                             </td>
                           </tr>
                         </tbody>
@@ -26,7 +26,7 @@
                 </tbody>
               </table>
 
-            The link will expire tomorrow. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
+            The link will expire soon. If you don't confirm before then, we'll invite someone else from the standby list and you’ll lose your place.
             </div>
 
             <div>If you have any questions, contact us: <%= Rails.application.secrets.mailchimp["contact_email"] %></div>

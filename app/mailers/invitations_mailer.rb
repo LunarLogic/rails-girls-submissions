@@ -5,7 +5,7 @@ class InvitationsMailer < ApplicationMailer
     @event_dates = event_dates
     @event_venue = event_venue
     @days_to_confirm = Setting.get.days_to_confirm_invitation
-    mail(to: email, subject: 'Your application has been accepted!')
+    mail(to: email, subject: 'Confirm your Rails Girls Kraków 2017 participation!')
   end
 
   def reminder_email(submission, event_dates, event_venue)
@@ -13,6 +13,6 @@ class InvitationsMailer < ApplicationMailer
     @token = submission.invitation_token
     @event_dates = event_dates
     @event_venue = event_venue
-    mail(to: email, subject: 'Your invitation link expires tomorrow!')
+    mail(to: email, subject: 'Your invitation link expires soon!')
   end
 end
