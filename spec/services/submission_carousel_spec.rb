@@ -1,19 +1,6 @@
 require 'rails_helper'
 
 describe SubmissionCarousel do
-  describe "#self.build" do
-    let(:filter) { :valid }
-    let(:incorrect_filter) { :vld }
-
-    before { stub_const("#{described_class}::FILTERS", [filter]) }
-
-    subject { described_class.build(incorrect_filter) }
-
-    it "raises ArgumentError if given filter is not in the list" do
-      expect { subject }.to raise_error(ArgumentError)
-    end
-  end
-
   describe "#next" do
     let(:submission_repository) { double }
 

@@ -29,12 +29,16 @@ class SubmissionsController < ApplicationController
     submission = Submission.find(params[:id])
     submission_filter = params[:filter].to_sym
 
-    begin
-      submission_carousel = SubmissionCarousel.build(submission_filter)
-    rescue ArgumentError => e
-      logger.error(e)
+    result = SubmissionFilterGuard.new(submission, submission_filter).call
+    message = result.errors.first
+
+    if message == :forbidden_filter
       return render file: "public/404.html", status: 404
+    elsif message == :incorrect_filter
+      return redirect_to "/admin/submissions/#{submission_filter}"
     end
+
+    submission_carousel = SubmissionCarousel.build(submission_filter)
 
     render :show, locals: {
       submission: SubmissionPresenter.build(submission, current_user),

@@ -64,12 +64,16 @@ RSpec.describe SubmissionsController, type: :controller do
 
   describe "GET #show" do
     let(:submission) { FactoryGirl.create(:submission) }
-    let(:invalid_submission_filter) { "filter" }
 
     before { sign_in(FactoryGirl.create(:user)) }
 
     it "renders 404 if an invalid submission filter is typed in the path" do
-      get :show, filter: invalid_submission_filter, id: submission.id
+      get :show, filter: :invalid_filter, id: submission.id
+      expect(response).to have_http_status(404)
+    end
+
+    it "redirects to index for a given filter if the submission doesn't belong to the filter" do
+      get :show, filter: :rated, id: submission.id
       expect(response).to have_http_status(404)
     end
   end
