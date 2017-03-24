@@ -10,11 +10,15 @@ class SubmissionCarousel
   end
 
   def next(current_submission)
-    submission_repository.next(submissions, current_submission) || submission_repository.first(submissions)
+    submission_repository.next(submissions, current_submission) ||
+      submission_repository.first(submissions) ||
+      current_submission
   end
 
   def previous(current_submission)
-    submission_repository.previous(submissions, current_submission) || submission_repository.last(submissions)
+    submission_repository.previous(submissions, current_submission) ||
+      submission_repository.last(submissions) ||
+      current_submission
   end
 
   private

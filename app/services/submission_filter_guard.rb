@@ -10,7 +10,7 @@ class SubmissionFilterGuard
   def call
     if !FILTERS.include?(filter)
       result = Result.new(filter, false, [:forbidden_filter])
-    elsif !submission_belongs_to_the_filter?
+    elsif !submission_belongs_to_the_filter? && !back_from_rating?
       result = Result.new(filter, false, [:incorrect_filter])
     else
       result = Result.new(filter, true, [])
@@ -26,5 +26,9 @@ class SubmissionFilterGuard
   def submission_belongs_to_the_filter?
     filtered_submissions = submission_repository.send(filter)
     filtered_submissions.include?(submission)
+  end
+
+  def back_from_rating?
+    submission.status == "rated"
   end
 end

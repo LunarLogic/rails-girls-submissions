@@ -74,4 +74,19 @@ describe SubmissionCarousel do
       end
     end
   end
+
+  describe "#previous or #next" do
+    let(:submission_repository) { double(first: nil, previous: nil, next: nil, last: nil) }
+
+    # see sspec/services/submission_filter_guard_spec.rb
+    context "when it shows a rated submission in a filter that's different that :rated" do
+      let(:current_submission) { instance_double(Submission, status: "rated") }
+      let(:carousel) { described_class.new(submission_repository, []) }
+
+      it "shows the same submission" do
+        expect(carousel.next(current_submission)).to eq(current_submission)
+        expect(carousel.previous(current_submission)).to eq(current_submission)
+      end
+    end
+  end
 end
