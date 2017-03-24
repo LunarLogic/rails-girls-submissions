@@ -29,6 +29,6 @@ class SubmissionFilterGuard
   end
 
   def back_from_rating?
-    submission.status == "rated"
+    submission.status == :rated
   end
 end

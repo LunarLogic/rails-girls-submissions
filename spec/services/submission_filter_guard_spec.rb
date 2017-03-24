@@ -33,7 +33,7 @@ RSpec.describe SubmissionFilterGuard do
       end
 
       context "unless its because a to_rate submission was just rated" do
-        let(:status) { "rated" }
+        let(:status) { :rated }
 
         it "doesn't return an error" do
           expect(subject.success).to equal(true)

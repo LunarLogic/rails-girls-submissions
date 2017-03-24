@@ -80,7 +80,7 @@ describe SubmissionCarousel do
 
     # see sspec/services/submission_filter_guard_spec.rb
     context "when it shows a rated submission in a filter that's different that :rated" do
-      let(:current_submission) { instance_double(Submission, status: "rated") }
+      let(:current_submission) { instance_double(Submission, status: :rated) }
       let(:carousel) { described_class.new(submission_repository, []) }
 
       it "shows the same submission" do

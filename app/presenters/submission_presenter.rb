@@ -47,8 +47,12 @@ class SubmissionPresenter < SimpleDelegator
     "https://www.codecademy.com/#{codecademy_username}"
   end
 
+  def status
+    symbol_to_string(submission.status)
+  end
+
   def invitation_status
-    submission.invitation_status.to_s.gsub('_', ' ')
+    symbol_to_string(submission.invitation_status)
   end
 
   private
@@ -57,5 +61,9 @@ class SubmissionPresenter < SimpleDelegator
 
   def submission
     __getobj__
+  end
+
+  def symbol_to_string(symbol)
+    symbol.to_s.gsub('_', ' ')
   end
 end
