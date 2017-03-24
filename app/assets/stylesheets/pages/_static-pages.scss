@@ -18,20 +18,19 @@
   }
 
   @include media($tablet) {
-
     background: center $bs3 no-repeat;
   }
 }
 
 .login-page {
-  background-image: image-url('rails-girls-krakow-2016.png');
-  background-size: auto 500px;
-  padding-top: 600px;
+  background-image: image-url('cover.png');
+  background-size: 600px auto;
+  padding-top: 400px;
 }
 
 .closed-page {
   background-image: image-url('fb.png');
-  background-size: auto auto;
+  background-size: cover;
   padding-top: 400px;
 }
 
@@ -40,6 +39,12 @@
 }
 
 .soon-page {
-  background-color: $rg-red;
+  margin-top: 2%;
   text-align: center;
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  img {
+    max-width: 100%;
+  }
 }

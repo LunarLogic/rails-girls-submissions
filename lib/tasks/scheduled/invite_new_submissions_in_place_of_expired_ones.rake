@@ -1,7 +1,7 @@
 namespace :scheduled do
   task invite_new_submissions_in_place_of_expired_ones: :environment do
     setting = Setting.get
-    return unless setting.invitation_process_started
+    next unless setting.invitation_process_started
 
     logger.info("invite_new_submissions_in_place_of_expired_ones started")
     submissions = SubmissionRepository.new.to_invite

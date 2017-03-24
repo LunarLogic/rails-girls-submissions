@@ -15,11 +15,11 @@ class Submission < ActiveRecord::Base
 
   def status
     if rejected
-      "rejected"
+      :rejected
     elsif rated?
-      "rated"
+      :rated
     else
-      "to rate"
+      :to_rate
     end
   end
 

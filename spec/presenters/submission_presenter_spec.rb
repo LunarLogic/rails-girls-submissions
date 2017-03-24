@@ -126,4 +126,11 @@ RSpec.describe SubmissionPresenter do
     before { allow(submission).to receive(:invitation_status).and_return(:example_status) }
     it { is_expected.to eq("example status")}
   end
+
+  describe "#status" do
+    subject { submission_presenter.status }
+
+    before { allow(submission).to receive(:status).and_return(:example_status) }
+    it { is_expected.to eq("example status")}
+  end
 end
