@@ -1,18 +1,25 @@
 class SubmissionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:confirm_invitation, :new, :create, :thank_you]
-  
+
   layout 'admin', only: :show
 
   def confirm_invitation
     token = params.require(:invitation_token)
     submission = Submission.find_by!(invitation_token: token)
-    if submission.invitation_expired?
+
+    case submission.invitation_status
+    when :not_invited
+      raise "A user with invitation_status = :not_invited is in possesion of an invitation token."
+    when :confirmed
+      render 'invitation_confirmed'
+    when :expired
       render 'invitation_expired'
-    else
+    when :invited
       submission.confirm_invitation!
       render 'invitation_confirmed'
     end
-  rescue
+  rescue => e
+    logger.error(e)
     render text: "Something went wrong. Please make sure the address you are trying to visit
                   is correct, otherwise contact us by replying to the email you received
                   the confirmation link from."
@@ -22,12 +29,16 @@ class SubmissionsController < ApplicationController
     submission = Submission.find(params[:id])
     submission_filter = params[:filter].to_sym
 
-    begin
-      submission_carousel = SubmissionCarousel.build(submission_filter)
-    rescue ArgumentError => e
-      logger.error(e)
+    result = SubmissionFilterGuard.new(submission, submission_filter).call
+    message = result.errors.first
+
+    if message == :forbidden_filter
       return render file: "public/404.html", status: 404
+    elsif message == :incorrect_filter
+      return redirect_to "/admin/submissions/#{submission_filter}"
     end
+
+    submission_carousel = SubmissionCarousel.build(submission_filter)
 
     render :show, locals: {
       submission: SubmissionPresenter.build(submission, current_user),
