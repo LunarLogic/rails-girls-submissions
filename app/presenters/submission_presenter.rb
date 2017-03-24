@@ -48,15 +48,7 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def invitation_status
-    if !invitation_token
-      "not invited"
-    elsif invitation_confirmed
-      "confirmed"
-    elsif expired
-      "expired"
-    else
-      "invited"
-    end
+    submission.invitation_status.to_s.gsub('_', ' ')
   end
 
   private
@@ -65,9 +57,5 @@ class SubmissionPresenter < SimpleDelegator
 
   def submission
     __getobj__
-  end
-
-  def expired
-    invitation_token_created_at < Setting.get.days_to_confirm_invitation.days.ago
   end
 end

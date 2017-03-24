@@ -67,4 +67,45 @@ RSpec.describe Submission, type: :model do
       expect{ not_invited_submission.invitation_expired? }.to raise_error('Submission not invited!')
     end
   end
+
+  describe "#invitation_status" do
+    let(:submission) { FactoryGirl.build(:submission) }
+
+    subject { submission.invitation_status }
+
+    context ":not_invited" do
+      before { allow(submission).to receive(:invitation_token).and_return(nil) }
+      it { is_expected.to eq(:not_invited) }
+    end
+
+    context ":confirmed" do
+      before do
+        allow(submission).to receive(:invitation_token).and_return('aa')
+        allow(submission).to receive(:invitation_confirmed).and_return(true)
+      end
+      it { is_expected.to eq(:confirmed) }
+    end
+
+    context ":expired" do
+      before do
+        allow(submission).to receive(:invitation_token).and_return('aa')
+        allow(submission).to receive(:invitation_confirmed).and_return(false)
+        allow(submission).to receive(:invitation_token_created_at).and_return(100.years.ago)
+      end
+      it { is_expected.to eq(:expired) }
+    end
+
+    context ":invited" do
+      let(:setting) { double(days_to_confirm_invitation: 5) }
+
+      before do
+        allow(Setting).to receive(:get).and_return(setting)
+
+        allow(submission).to receive(:invitation_token).and_return('aa')
+        allow(submission).to receive(:invitation_confirmed).and_return(false)
+        allow(submission).to receive(:invitation_token_created_at).and_return(1.hour.ago)
+      end
+      it { is_expected.to eq(:invited) }
+    end
+  end
 end

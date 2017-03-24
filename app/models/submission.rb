@@ -16,13 +16,15 @@ class Submission < ActiveRecord::Base
   def status
     if rejected
       "rejected"
+    elsif rated?
+      "rated"
     else
-      rates.length >= Setting.get.required_rates_num ? "rated" : "to rate"
+      "to rate"
     end
   end
 
   def rated?
-    status == "rated"
+    rates.length >= Setting.get.required_rates_num
   end
 
   def average_rate
@@ -47,5 +49,23 @@ class Submission < ActiveRecord::Base
     else
       raise 'Submission not invited!'
     end
+  end
+
+  def invitation_status
+    if !invitation_token
+      :not_invited
+    elsif invitation_confirmed
+      :confirmed
+    elsif old_token?
+      :expired
+    else
+      :invited
+    end
+  end
+
+  private
+
+  def old_token?
+    invitation_token_created_at < Setting.get.days_to_confirm_invitation.days.ago
   end
 end
