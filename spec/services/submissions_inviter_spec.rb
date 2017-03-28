@@ -21,7 +21,8 @@ describe SubmissionsInviter do
         expect(InvitationsMailer).to receive(:invitation_email)
           .with(to_invite_submission, event_dates, event_venue, contact_email).and_return(message_delivery)
         expect(message_delivery).to receive(:deliver_now)
-        expect(subject).to eq(submissions)
+        expect(subject.success).to eq(true)
+        expect(subject.errors.first).to eq("You have sent the emails.")
       end
 
       context "and an excpetion is thrown down the line" do
@@ -52,7 +53,8 @@ describe SubmissionsInviter do
       let(:submissions) { [] }
 
       it "returns false" do
-        expect(subject).to eq(false)
+        expect(subject.success).to eq(false)
+        expect(subject.errors.first).to eq("There are no emails to send.")
       end
     end
 
@@ -63,7 +65,10 @@ describe SubmissionsInviter do
 
       let(:submissions) { [to_invite_submission] }
 
-      it { is_expected.to eq(false) }
+      it "returns false" do
+        expect(subject.success).to eq(false)
+        expect(subject.errors.first).to eq("Registration is closed")
+      end
     end
   end
 end
