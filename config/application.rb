@@ -30,5 +30,12 @@ module RailsGirlsSubmissions
     config.action_view.field_error_proc = Proc.new do |html_tag, instance|
       "<span class='field_with_errors'>#{html_tag}</span>".html_safe
     end
+
+    host = Rails.application.secrets.host
+    https = Rails.application.secrets.https
+    if Rails.env.production? && host
+      config.action_mailer.default_url_options =
+        https ? { host: host, protocol: 'https://' } : { host: host }
+    end
   end
 end
