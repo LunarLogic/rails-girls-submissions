@@ -11,6 +11,6 @@ class MailingsController < ApplicationController
       setting.update_attributes(invitation_process_started: true)
     end
 
-    redirect_to :back, notice: result.errors.first
+    redirect_to :back, notice: result.message
   end
 end

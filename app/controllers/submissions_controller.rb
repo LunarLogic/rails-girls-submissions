@@ -30,7 +30,7 @@ class SubmissionsController < ApplicationController
     submission_filter = params[:filter].to_sym
 
     result = SubmissionFilterGuard.new(submission, submission_filter).call
-    message = result.errors.first
+    message = result.message
 
     if message == :forbidden_filter
       return render file: "public/404.html", status: 404
