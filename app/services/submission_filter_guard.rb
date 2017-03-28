@@ -9,11 +9,11 @@ class SubmissionFilterGuard
 
   def call
     if !FILTERS.include?(filter)
-      result = Result.new(filter, false, [:forbidden_filter])
+      result = Result.new(filter, false, :forbidden_filter)
     elsif !submission_belongs_to_the_filter? && !back_from_rating?
-      result = Result.new(filter, false, [:incorrect_filter])
+      result = Result.new(filter, false, :incorrect_filter)
     else
-      result = Result.new(filter, true, [])
+      result = Result.new(filter, true, nil)
     end
 
     result

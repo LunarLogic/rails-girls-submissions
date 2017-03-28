@@ -1,9 +1,9 @@
 class Result
-  attr_reader :object, :success, :errors
+  attr_reader :object, :success, :message
 
-  def initialize(object, success, errors = nil)
+  def initialize(object, success, message = nil)
     @object = object
     @success = success
-    @errors = errors
+    @message = message
   end
 end

@@ -15,7 +15,7 @@ RSpec.describe SubmissionFilterGuard do
 
       it "returns an error" do
         expect(subject.success).to equal(false)
-        expect(subject.errors).to match_array([:forbidden_filter])
+        expect(subject.message).to eq(:forbidden_filter)
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe SubmissionFilterGuard do
 
       it "returns an error" do
         expect(subject.success).to equal(false)
-        expect(subject.errors).to match_array([:incorrect_filter])
+        expect(subject.message).to eq(:incorrect_filter)
       end
 
       context "unless its because a to_rate submission was just rated" do
@@ -37,7 +37,7 @@ RSpec.describe SubmissionFilterGuard do
 
         it "doesn't return an error" do
           expect(subject.success).to equal(true)
-          expect(subject.errors).to match_array([])
+          expect(subject.message).to eq(nil)
         end
       end
     end
@@ -52,7 +52,7 @@ RSpec.describe SubmissionFilterGuard do
 
       it "returns a success" do
         expect(subject.success).to equal(true)
-        expect(subject.errors).to match_array([])
+        expect(subject.message).to eq(nil)
       end
     end
   end

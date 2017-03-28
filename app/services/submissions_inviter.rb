@@ -8,12 +8,12 @@ class SubmissionsInviter
 
   def call(submissions)
     if !Setting.registration_period?
-      result = Result.new(nil, false, ["Registration is closed"])
+      result = Result.new(nil, false, "Registration is closed")
     elsif submissions.empty?
-      result = Result.new(nil, false, ["There are no emails to send."])
+      result = Result.new(nil, false, "There are no emails to send.")
     else
       submissions.each { |submission| invite(submission) }
-      result = Result.new(nil, true, ["You have sent the emails."])
+      result = Result.new(nil, true, "You have sent the emails.")
     end
 
     result
