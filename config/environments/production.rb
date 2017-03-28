@@ -12,6 +12,11 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
+  host = Rails.application.secrets.host
+  https = Rails.application.secrets.https
+  config.action_mailer.default_url_options =
+    https ? { host: host, protocol: 'https://' } : { host: host }
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
