@@ -35,13 +35,16 @@
     <div class="tooltip-arrow"></div>
   </div>
   <div class="form-field">
-    <%= f.label :description %>
-    <%= f.text_area :description, maxLength: 255, required: true %>
+    <%= f.label :description, "Tell us a little bit about yourself" %>
+    <%= f.text_area :description, maxLength: 500, required: true %>
     <span class="character-counter"></span>
   </div>
 
-  <% answers.each do |answer| %>
-    <%= render "answer_form", answer: answer, question: answer.question, f: f %>
+  <% if answers.present? %>
+      <h3>Help us to understand how much experience you already have so that we can assign you to the right group, where you can learn the most.</h3>
+      <% answers.each do |answer| %>
+        <%= render "answer_form", answer: answer, question: answer.question, f: f %>
+      <% end %>
   <% end %>
 
   <fieldset class="form-field form-field-collection">
@@ -81,12 +84,12 @@
     <%= f.label :first_time, "I did not take part in Rails Girls before" %>
   </div>
   <div class="form-field">
-    <%= f.label :goals %>
-    <%= f.text_area :goals, class: "textarea-small", maxlength: 255, required: true %>
+    <%= f.label :goals, "How are you going to use the knowledge acquired during the workshop? What are your goals and expectations?" %>
+    <%= f.text_area :goals, maxlength: 500, required: true %>
     <span class="character-counter"></span>
   </div>
   <div class="form-field">
-    <%= f.label :problems %>
+    <%= f.label :problems, "Is there anything in particular we should be aware of to make your attendance better/easier?" %>
     <%= f.text_area :problems, class: "textarea-small", maxlength: 255 %>
     <span class="character-counter"></span>
   </div>

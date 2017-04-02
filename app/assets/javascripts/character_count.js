@@ -14,8 +14,8 @@ var init = function() {
     });
   };
 
-  countChars(255, $('#submission_description'));
-  countChars(255, $('#submission_goals'));
+  countChars(500, $('#submission_description'));
+  countChars(500, $('#submission_goals'));
   countChars(255, $('#submission_problems'));
 }
 
