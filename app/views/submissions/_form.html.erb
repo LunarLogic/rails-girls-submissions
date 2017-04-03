@@ -41,7 +41,7 @@
   </div>
 
   <% if answers.present? %>
-      <h3>Help us to understand how much experience you already have so that we can assign you to the right group, where you can learn the most.</h3>
+      <h3>Let us know how experienced you are. We will use this info to assign you to the group in which you can learn the most.</h3>
       <% answers.each do |answer| %>
         <%= render "answer_form", answer: answer, question: answer.question, f: f %>
       <% end %>
@@ -89,7 +89,7 @@
     <span class="character-counter"></span>
   </div>
   <div class="form-field">
-    <%= f.label :problems, "Is there anything in particular we should be aware of to make your attendance better/easier?" %>
+    <%= f.label :problems, "Is there anything we should be aware of to make your attendance better/easier?" %>
     <%= f.text_area :problems, class: "textarea-small", maxlength: 255 %>
     <span class="character-counter"></span>
   </div>
