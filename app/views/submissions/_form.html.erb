@@ -1,5 +1,9 @@
 <%= form_for(submission, html: { class: "form" }) do |f| %>
-  <h1 class="form-header">Apply for Rails Girls Kraków 2017</h1>
+  <h1 class="form-header">Apply for Rails Girls Kraków 2017
+    <span class="aside-widget-text" itemprop="startDate">
+      <%= footer_presenter.event_dates %>
+    </span>
+  </h1>
 
   <% if show_errors %>
     <%= render "errors", submission: submission, answers: answers %>
