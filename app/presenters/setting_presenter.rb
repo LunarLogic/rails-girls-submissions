@@ -5,10 +5,14 @@ class SettingPresenter
 
   def event_dates
     if setting.event_start_date.month == setting.event_end_date.month
-      "#{setting.event_start_date.day}-#{setting.event_end_date.strftime("%d %B")}"
+      "#{setting.event_start_date.day}-#{present_date(setting.event_end_date)}"
     else
-      "#{setting.event_start_date.strftime("%d %B")}-#{setting.event_end_date.strftime("%d %B")}"
+      "#{present_date(setting.event_start_date)}-#{present_date(setting.event_end_date)}"
     end
+  end
+
+  def registration_ends
+    present_date(setting.beginning_of_closed_period)
   end
 
   def event_url
@@ -20,6 +24,10 @@ class SettingPresenter
   end
 
   private
+
+  def present_date(date)
+    date.strftime("%d %B")
+  end
 
   attr_reader :setting
 end
