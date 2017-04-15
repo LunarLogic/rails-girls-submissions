@@ -8,7 +8,6 @@
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
 server "railsgirls.demo.lunarlogic.io", user: "lunar", roles: %w{web app db}
-set :branch, ENV.fetch('BRANCH', 'master')
 
 # role-based syntax
 # ==================
