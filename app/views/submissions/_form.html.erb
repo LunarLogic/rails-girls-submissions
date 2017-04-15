@@ -26,8 +26,7 @@
   </div>
   <div class="form-field">
     <%= f.label :codecademy_username %>
-    <%= f.text_field :codecademy_username, maxLength: 50, required: true, class: 'with-tooltip' %>
-    <span class="tooltip-text">
+    <div class="tooltip-text">
       We would like you to complete <strong>at least 6 units</strong> ("Introduction to Ruby" to "Hashes and Symbols") of
       <%= link_to 'Ruby course at CodeCademy', 'https://www.codecademy.com/learn/ruby', target: '_blank' %>.
       To do so, please register at
@@ -38,8 +37,8 @@
       <em>Note: You can finish your submission now and complete the course later.
         We won't start evaluating the submissions until the end of the registration period.
       </em>
-    </span>
-    <div class="tooltip-arrow"></div>
+    </div>
+    <%= f.text_field :codecademy_username, maxLength: 50, required: true, class: 'with-tooltip' %>
   </div>
   <div class="form-field">
     <%= f.label :description, "Tell us a little bit about yourself" %>
