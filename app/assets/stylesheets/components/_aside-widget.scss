@@ -1,3 +1,5 @@
+$aside-widget-rating-top: $bs2+$bs3;
+
 .aside-widget {
   @include clearfix();
   text-align: center;
@@ -12,11 +14,14 @@
 
   @include media($medium-screen) {
     position: absolute;
-    top: $bs2+$bs3;
+    top: $aside-widget-rating-top;
     right: -($rating-widget-width);
     width: $rating-widget-width;
+    height: calc(100% - #{$aside-widget-rating-top});
     margin: 0 auto $bs2;
     padding-left: $bs3;
+    padding-right: $baseline;
+    overflow: hidden;
   }
 }
 

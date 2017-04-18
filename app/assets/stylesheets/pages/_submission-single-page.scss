@@ -1,4 +1,5 @@
 .l-submission-single {
+  @include clearfix();
   margin-top: $bs1;
 
   @include media($tablet) {
@@ -173,8 +174,12 @@
 }
 
 .submission-comments {
-  text-align: left;
+  height: 70%;
+  width: calc(100% + #{$bs1});
   margin-top: $bs1;
+  padding-right: $bs1;
+  text-align: left;
+  overflow-y: auto;
 }
 
 .submission-comment {
