@@ -11,6 +11,11 @@
   margin-bottom: $bs1;
   word-break: break-all;
   line-height: $bs3;
+  font-size: $bs1;
+
+  @include media($desktop) {
+    font-size: $bs2;
+  }
 }
 
 .submission-header-status {
@@ -19,9 +24,8 @@
 }
 
 .submission-answer {
-  padding: $bs1;
+  padding: $bs1 $bs2;
   margin: 0;
-  text-align: right;
   border-bottom: 1px solid #ccc;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -31,8 +35,18 @@
   }
 
   .submission-answer-label {
+    display: block;
     font-weight: 700;
-    float: left;
+  }
+
+  @include media($tablet) {
+    text-align: right;
+    padding: $bs1;
+
+    .submission-answer-label {
+      float: left;
+      margin-right: $bs-2;
+    }
   }
 }
 
@@ -42,7 +56,6 @@
   .submission-answer-label {
     display: block;
     float: none;
-    margin-bottom: $bs1;
   }
 }
 
