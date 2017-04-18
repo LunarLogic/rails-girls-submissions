@@ -1,7 +1,19 @@
 header {
   @include clearfix;
+  text-align: right;
 }
 
 .btn-nav {
-  float: right;
+  display: inline-block;
+}
+
+.header-menu {
+  @include transform(translate(100%));
+  transition: transform, .3s, ease-in-out;
+  visibility: hidden;
+}
+
+.header-menu-visible {
+  @include transform(none);
+  visibility: visible;
 }
