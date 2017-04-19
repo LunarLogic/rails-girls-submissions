@@ -25,12 +25,16 @@ class SubmissionsController < ApplicationController
                   the confirmation link from."
   end
 
-  def reject
+  def codecademy_status
     submission = Submission.find(params[:id])
-    submission.rejected = true
-    submission.codecademy_status = false
-    submission.rejection_reason = "CodeCademy not present"
-    submission.save
+    status = params.require('completed')
+
+    if status == 'true'
+      submission.update(codecademy_status: true)
+    elsif status == 'false'
+      submission.update(codecademy_status: false)
+    end
+
     redirect_to submission_path(params[:filter], submission)
   end
 

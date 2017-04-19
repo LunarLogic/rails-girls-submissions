@@ -88,7 +88,6 @@ ActiveRecord::Schema.define(version: 20170415171557) do
     t.string   "invitation_token"
     t.datetime "invitation_token_created_at"
     t.boolean  "invitation_confirmed",        default: false
-    t.string   "rejection_reason"
     t.boolean  "codecademy_status"
   end
 
