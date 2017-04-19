@@ -1,0 +1,19 @@
+<% if submission.codecademy_status.nil? %>
+
+  <%= form_tag(codecademy_status_path(filter, submission)) do %>
+    <%= hidden_field_tag 'completed', 'true' %>
+    <%= submit_tag "Completed" %>
+  <% end %>
+  <%= form_tag(codecademy_status_path(filter, submission)) do %>
+    <%= hidden_field_tag 'completed', 'false' %>
+    <%= submit_tag "Incompleted" %>
+  <% end %>
+
+<% else %>
+
+  <% if submission.codecademy_status %>
+    Completed
+  <% else %>
+    Incompleted
+  <% end %>
+<% end %>
