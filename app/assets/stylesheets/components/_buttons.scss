@@ -74,4 +74,12 @@
   position: absolute;
   top: 0;
   right: 0;
+
+  @include media ($tablet) {
+    top: $bs2;
+  }
+}
+
+.btn-menu {
+  margin-top: -1px;
 }
