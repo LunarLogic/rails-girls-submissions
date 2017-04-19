@@ -47,6 +47,14 @@ class SubmissionPresenter < SimpleDelegator
     "https://www.codecademy.com/#{codecademy_username}"
   end
 
+  def codecademy_present?
+    submission.codecademy_status
+  end
+
+  def rejected?
+    submission.rejected
+  end
+
   def status
     symbol_to_string(submission.status)
   end

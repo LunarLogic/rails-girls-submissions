@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170321103842) do
+ActiveRecord::Schema.define(version: 20170415171557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,8 @@ ActiveRecord::Schema.define(version: 20170321103842) do
     t.string   "invitation_token"
     t.datetime "invitation_token_created_at"
     t.boolean  "invitation_confirmed",        default: false
+    t.string   "rejection_reason"
+    t.boolean  "codecademy_status"
   end
 
   add_index "submissions", ["email"], name: "index_submissions_on_email", unique: true, using: :btree

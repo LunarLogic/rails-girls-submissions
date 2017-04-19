@@ -25,6 +25,15 @@ class SubmissionsController < ApplicationController
                   the confirmation link from."
   end
 
+  def reject
+    submission = Submission.find(params[:id])
+    submission.rejected = true
+    submission.codecademy_status = false
+    submission.rejection_reason = "CodeCademy not present"
+    submission.save
+    redirect_to submission_path(params[:filter], submission)
+  end
+
   def show
     submission = Submission.find(params[:id])
     submission_filter = params[:filter].to_sym

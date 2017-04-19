@@ -44,6 +44,17 @@
       <%= link_to submission.codecademy_url, submission.codecademy_url, target: "_blank" %>
     </p>
 
+    <div class="submission-answer" class="submission-answer">
+      <span class="submission-answer-label">Codecademy status:</span>
+      <% if submission.codecademy_present? %>
+        Done
+      <% elsif submission.rejected? %>
+        Missing
+      <% else %>
+        <%= render partial: 'reject_form', locals: { filter: filter, submission: submission } %>
+      <% end %>
+    </div>
+
     <p class="submission-answer submission-answer-block">
       <span class="submission-answer-label">Description:</span>
       <%= submission.description %>
