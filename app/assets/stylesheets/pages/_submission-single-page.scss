@@ -60,6 +60,46 @@
   }
 }
 
+.submission-codecademy-status-container {
+  text-align: left;
+}
+
+.submission-codecademy-status-text {
+  margin-right: $bs-2;
+  color: $grey-default;
+  font-style: italic;
+}
+
+.submission-codecademy-status-form {
+  display: inline-block;
+}
+
+.submission-codecademy-status-indicator {
+  @include appearance(none);
+  @include transform(translateY(-$bs-4));
+  display: inline-block;
+  width: $baseline;
+  height: $baseline;
+  padding: 0;
+  margin-right: $bs-2;
+  border-radius: 50%;
+  border: none;
+  background-size: 100%;
+  font-size: 0.1em;
+  color: transparent;
+  overflow: hidden;
+  vertical-align: middle;
+  cursor: pointer;
+
+  &.completed {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABtElEQVRIx7VWu0oDQRQdJAQr8QOChaWFWIiFhV/gRl3BSoRoNhGxFJH9ET9gsZAtJNmkEMwX+CGLiIhsEYKEeO56Byez78gsXJLcx7mPc2c2QuQ8F/3mequ370JGkBAyZQlZ55KPqPowsM9gswIhH790ovOedYqAiIPHEA86ux0crN28tOok9J10ZGMf8o0otgj8VqnsEVU1SnTbIF8ZRxh5lcct4/tV1bFSjBxpohOeecTGyuBaknhcc5wwofFYFgVXsOS4fLV6am1cZuaJqvvWDkhf1Tgh4qdxF7znlNFbAHyXR/vaDg5XlC48xnQFHxiavV21csR9MdBDd3i8pHBhs34k+FTOaLd1EEepSgPfRsyn5A3gNdVOWGwLhVwtOkCqE+a3QQ6o5loD34L+QxLZDeyaXgBhyZXPTADgjnJ47n7Bm5v4/c76p87gKAGeliBzRAC+/LuPrHt8vnFgAPC6yHj0EeWSDP0Z7N/KFTJ0gmzwNJIL1xQBJ7BPIM8gfrlow+bWtOxBA7l7zqAYPHHQOKO5q4Kzmr3s2GjuulaczL1wtE7MvDI1Tsy89FMS/etvyw8kpRGtoMLqFQAAAABJRU5ErkJggg==);
+  }
+
+  &.incompleted {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAByklEQVRIx7VWvW7CMBD2xAOgCFVV1YGBQDdI1jIzM/cJ+gAdeB2mipEZIR4giqoqCTwBD8DAhNI7+4x/ajvQKpFOJPbdd3ff3dkwFnjKUdov48miHIw3IEeQC8mRr+Ee6LB7n3KY9AFgRWB1g1y4LtjcBh5P3sDgRMZnkCWszcuX9Hk/nXVQ8J2v4Z7QqbkN2DaBf2iRfUL6T40BgQ7XlXaAEYpcpBxP3u+mFWyulNqZEOcn2rwb3HIi6NJrQgXltMi1YpgM4HsNFHS9gMPkEXR28DvQsCRdK8lhn1I765zD95YUM5cTAj+QztqqyZljYgtTn6PS0gFQ0V4OypECSR60vayyAqDuQroXjIYIP+a/O8QA+kInIPpaXrmyEy2M+xtGU1ljbzt5FoAFGXxr705wboNzInSOTLbW/nXW8RZzlPYIvNaz8ekjlmx55WAadBBZDgrMzOtgajpooijiESuK5HuFNbqFokCR0y7vIBV1jxzmVyfQbeEi+9pUgGcqWkWJ5fhgOzHb1D9o6xAVlRnATnNuDhqB+Y6KrYsCw0kMgYSOCr7Y9mFHm+0d15pSexeOlYn7yoQJ5VP61yvTqkk7l76V/r//tvwAcWwqc78JcI8AAAAASUVORK5CYII=);
+  }
+}
+
 .submission-rating-form {
   margin-bottom: $bs1;
   padding-bottom: $bs1;

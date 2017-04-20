@@ -1,19 +1,24 @@
-<% if submission.codecademy_status.nil? %>
+<div class="submission-codecademy-status-container">
+  <% if submission.codecademy_status.nil? %>
+    <span class="submission-codecademy-status-text"> Was the course completed?</span>
 
-  <%= form_tag(codecademy_status_path(filter, submission)) do %>
-    <%= hidden_field_tag 'completed', 'true' %>
-    <%= submit_tag "Completed" %>
-  <% end %>
-  <%= form_tag(codecademy_status_path(filter, submission)) do %>
-    <%= hidden_field_tag 'completed', 'false' %>
-    <%= submit_tag "Incompleted" %>
-  <% end %>
+    <%= form_tag(codecademy_status_path(filter, submission), class: "submission-codecademy-status-form") do %>
+      <%= hidden_field_tag 'completed', 'true' %>
+      <%= submit_tag "Completed", class: "submission-codecademy-status-indicator completed", title: "Completed" %>
+    <% end %>
+    <%= form_tag(codecademy_status_path(filter, submission), class: "submission-codecademy-status-form") do %>
+      <%= hidden_field_tag 'completed', 'false' %>
+      <%= submit_tag "Incompleted", class: "submission-codecademy-status-indicator incompleted", title: "Not completed" %>
+    <% end %>
 
-<% else %>
-
-  <% if submission.codecademy_status %>
-    Completed
   <% else %>
-    Incompleted
+
+    <% if submission.codecademy_status %>
+      <span class="submission-codecademy-status-text">Course completed</span>
+      <i class="submission-codecademy-status-indicator completed" aria-hidden="true"></i>
+    <% else %>
+      <span class="submission-codecademy-status-text">Course not completed</span>
+      <i class="submission-codecademy-status-indicator incompleted" aria-hidden="true"></i>
+    <% end %>
   <% end %>
-<% end %>
+</div>

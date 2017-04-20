@@ -24,62 +24,60 @@
       <span class="submission-header-status"><%= submission.status %></span>
     </h1>
 
-    <p class="submission-answer">
+    <div class="submission-answer">
       <span class="submission-answer-label">Email:</span>
       <%= submission.email %>
-    </p>
+    </div>
 
-    <p class="submission-answer">
+    <div class="submission-answer">
       <span class="submission-answer-label">Age:</span>
       <%= submission.age %>
-    </p>
+    </div>
 
-    <p class="submission-answer">
+    <div class="submission-answer">
       <span class="submission-answer-label">Codecademy username:</span>
       <%= submission.codecademy_username %>
-    </p>
+    </div>
 
-    <p class="submission-answer">
+    <div class="submission-answer">
       <span class="submission-answer-label">Codecademy url:</span>
       <%= link_to submission.codecademy_url, submission.codecademy_url, target: "_blank" %>
-      </br>
-
       <%= render partial: 'codecademy_status', locals: { filter: filter, submission: submission } %>
-    </p>
+    </div>
 
-    <p class="submission-answer submission-answer-block">
+    <div class="submission-answer submission-answer-block">
       <span class="submission-answer-label">Description:</span>
       <%= submission.description %>
-    </p>
+    </div>
 
-    <p class="submission-answer">
+    <div class="submission-answer">
       <span class="submission-answer-label">English:</span>
       <%= submission.english %>
-    </p>
+    </div>
 
-    <p class="submission-answer">
+    <div class="submission-answer">
       <span class="submission-answer-label">Operating system:</span>
       <%= submission.operating_system %>
-    </p>
+    </div>
 
     <% answers.each do |answer| %>
       <%= render "answer_show", answer: answer %>
     <% end %>
 
-    <p class="submission-answer">
+    <div class="submission-answer">
       <span class="submission-answer-label">First time:</span>
       <%= submission.first_time ? "Yes" : "I took part in Rails Girls" %>
-    </p>
+    </div>
 
-    <p class="submission-answer submission-answer-block">
+    <div class="submission-answer submission-answer-block">
       <span class="submission-answer-label">Goals:</span>
       <%= submission.goals %>
-    </p>
+    </div>
 
-    <p class="submission-answer submission-answer-block">
+    <div class="submission-answer submission-answer-block">
       <span class="submission-answer-label">Problems:</span>
       <%= submission.problems %>
-    </p>
+    </div>
 
     <% if !submission.rejected? %>
       <aside class="aside-widget aside-widget-rating">
