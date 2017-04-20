@@ -8,7 +8,7 @@
     <% end %>
     <%= form_tag(codecademy_status_path(filter, submission), class: "submission-codecademy-status-form") do %>
       <%= hidden_field_tag 'completed', 'false' %>
-      <%= submit_tag "Incompleted", class: "submission-codecademy-status-indicator incompleted", title: "Not completed" %>
+      <%= submit_tag "Not completed", class: "submission-codecademy-status-indicator incompleted", title: "Not completed" %>
     <% end %>
 
   <% else %>
