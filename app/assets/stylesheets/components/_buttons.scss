@@ -20,7 +20,7 @@
 
 .btn-small {
   @extend .btn;
-  padding: $bs-1 $baseline;
+  padding: $baseline/2 $baseline;
 }
 
 .btn-right-align {
@@ -78,8 +78,4 @@
   @include media ($tablet) {
     top: $bs2;
   }
-}
-
-.btn-menu {
-  margin-top: -1px;
 }
