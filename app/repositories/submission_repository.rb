@@ -53,6 +53,14 @@ class SubmissionRepository
       .reorder('created_at DESC').first
   end
 
+  def comments(submission)
+    submission.comments.order(:updated_at)
+  end
+
+  def rates(submission)
+    submission.rates.order(:updated_at)
+  end
+
   private
 
   def not_rejected

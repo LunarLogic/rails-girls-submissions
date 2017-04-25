@@ -52,13 +52,14 @@ class SubmissionsController < ApplicationController
     end
 
     submission_carousel = SubmissionCarousel.build(submission_filter)
+    submission_repo = SubmissionRepository.new
 
     render :show, locals: {
       submission: SubmissionPresenter.build(submission, current_user),
       answers: AnswerPresenter.collection(submission.answers),
       comment: Comment.new,
-      comment_presenters: CommentPresenter.collection(submission.comments),
-      rate_presenters: RatePresenter.collection(submission.rates),
+      comment_presenters: CommentPresenter.collection(submission_repo.comments(submission)),
+      rate_presenters: RatePresenter.collection(submission_repo.rates(submission)),
       previous_submission_id: submission_carousel.previous(submission).id,
       next_submission_id: submission_carousel.next(submission).id,
       filter: submission_filter

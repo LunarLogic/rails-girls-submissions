@@ -238,4 +238,28 @@ describe SubmissionRepository do
 
     it { expect(subject).to eq([confirmed_submission]) }
   end
+
+  describe '#comments' do
+    let(:submission) { double(comments: comments) }
+    let(:comments) { double }
+    before { allow(comments).to receive(:order) }
+
+    it "delegates sorting comments to the db" do
+      submission_repository.comments(submission)
+      expect(submission).to have_received(:comments)
+      expect(comments).to have_received(:order).with(:updated_at)
+    end
+  end
+
+  describe '#rates' do
+    let(:submission) { double(rates: rates) }
+    let(:rates) { double }
+    before { allow(rates).to receive(:order) }
+
+    it "delegates sorting rates to the db" do
+      submission_repository.rates(submission)
+      expect(submission).to have_received(:rates)
+      expect(rates).to have_received(:order).with(:updated_at)
+    end
+  end
 end
