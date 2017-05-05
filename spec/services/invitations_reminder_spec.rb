@@ -11,7 +11,7 @@ describe InvitationsReminder do
     subject { described_class.new(event_dates, event_venue, contact_email).call([to_remind_submission]) }
 
     it 'sends a reminder email' do
-      allow(Setting).to receive(:registration_period?).and_return(true)
+      allow(Setting).to receive(:registration_period?).and_return(false)
 
       expect(InvitationsMailer).to receive(:reminder_email)
         .with(to_remind_submission, event_dates, event_venue, contact_email).and_return(message_delivery)
@@ -20,8 +20,8 @@ describe InvitationsReminder do
     end
 
     it "returns if the registration is closed" do
-      allow(Setting).to receive(:registration_period?).and_return(false)
-      
+      allow(Setting).to receive(:registration_period?).and_return(true)
+
       expect(InvitationsMailer).not_to receive(:reminder_email)
 
       subject

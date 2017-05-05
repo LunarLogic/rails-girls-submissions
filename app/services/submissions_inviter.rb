@@ -7,8 +7,8 @@ class SubmissionsInviter
   end
 
   def call(submissions)
-    if !Setting.registration_period?
-      result = Result.new(nil, false, "Registration is closed")
+    if Setting.registration_period?
+      result = Result.new(nil, false, "Registration is still open")
     elsif submissions.empty?
       result = Result.new(nil, false, "There are no emails to send.")
     else

@@ -10,7 +10,7 @@ describe SubmissionsInviter do
     subject { described_class.new(event_dates, event_venue, contact_email, logger).call(submissions) }
 
     context "there are submissions to invite" do
-      before { allow(Setting).to receive(:registration_period?).and_return(true) }
+      before { allow(Setting).to receive(:registration_period?).and_return(false) }
 
       let(:to_invite_submission) { instance_double(Submission) }
       let(:message_delivery) { instance_double(ActionMailer::MessageDelivery) }
@@ -48,7 +48,7 @@ describe SubmissionsInviter do
     end
 
     context "there are no submissions to invite" do
-      before { allow(Setting).to receive(:registration_period?).and_return(true) }
+      before { allow(Setting).to receive(:registration_period?).and_return(false) }
 
       let(:submissions) { [] }
 
@@ -61,13 +61,13 @@ describe SubmissionsInviter do
     context "the registration is closed" do
       let(:to_invite_submission) { instance_double(Submission) }
 
-      before { allow(Setting).to receive(:registration_period?).and_return(false) }
+      before { allow(Setting).to receive(:registration_period?).and_return(true) }
 
       let(:submissions) { [to_invite_submission] }
 
       it "returns false" do
         expect(subject.success).to eq(false)
-        expect(subject.message).to eq("Registration is closed")
+        expect(subject.message).to eq("Registration is still open")
       end
     end
   end

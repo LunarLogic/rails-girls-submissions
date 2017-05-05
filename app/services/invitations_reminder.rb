@@ -6,8 +6,8 @@ class InvitationsReminder
   end
 
   def call(submissions)
-    return unless Setting.registration_period?
-    
+    return if Setting.registration_period?
+
     submissions.each { |submission| remind_about_expiring_invitation(submission) }
   end
 

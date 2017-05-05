@@ -21,7 +21,7 @@ describe 'inviting accepted submissions' do
     end
 
     it 'sends only one invitation email to each accepted submission' do
-      allow(Setting).to receive(:registration_period?).and_return(true)
+      allow(Setting).to receive(:registration_period?).and_return(false)
 
       login_as(user, scope: :user)
       visit submissions_results_path
@@ -32,8 +32,8 @@ describe 'inviting accepted submissions' do
       expect(accepted_submission.reload.invitation_token).not_to be_nil
     end
 
-    it "doesn't send invitation emails if the registration closed" do
-      allow(Setting).to receive(:registration_period?).and_return(false)
+    it "doesn't send invitation emails if the registration open" do
+      allow(Setting).to receive(:registration_period?).and_return(true)
 
       login_as(user, scope: :user)
       visit submissions_results_path
