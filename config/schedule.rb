@@ -22,7 +22,7 @@ set :output, "log/cron.log"
 
 set :environment, ENV['RAILS_ENV'] || 'production'
 
-every :day, at: '6:00 am' do
-  rake 'scheduled:remind_about_expiring_invitations'
-  rake 'scheduled:invite_new_submissions_in_place_of_expired_ones'
-end
+# every :day, at: '6:00 am' do
+#   rake 'scheduled:remind_about_expiring_invitations'
+#   rake 'scheduled:invite_new_submissions_in_place_of_expired_ones'
+# end
