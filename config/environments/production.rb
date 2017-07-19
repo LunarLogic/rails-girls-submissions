@@ -13,9 +13,7 @@ Rails.application.configure do
   }
 
   host = Rails.application.secrets.host
-  https = Rails.application.secrets.https
-  config.action_mailer.default_url_options =
-    https ? { host: host, protocol: 'https://' } : { host: host }
+  config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -58,9 +56,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  if Rails.application.secrets.https
-    config.force_ssl = true
-  end
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.

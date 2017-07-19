@@ -32,10 +32,8 @@ module RailsGirlsSubmissions
     end
 
     host = Rails.application.secrets.host
-    https = Rails.application.secrets.https
     if Rails.env.production? && host
-      config.action_mailer.default_url_options =
-        https ? { host: host, protocol: 'https://' } : { host: host }
+      config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
     end
   end
 end
