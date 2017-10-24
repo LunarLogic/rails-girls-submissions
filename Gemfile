@@ -34,6 +34,10 @@ gem 'whenever', require: false
 # gem 'capistrano-rails', group: :development
 gem 'pg'
 
+group :production do
+  gem 'unicorn'
+end
+
 group :development, :test do
   gem 'pry-rails'
   gem 'awesome_print'
