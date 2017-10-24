@@ -7,7 +7,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
-server "railsgirls.demo.lunarlogic.io", user: "lunar", roles: %w{web app db}
+server "staging.railsgirls.lunarlogic.io", user: "lunar", roles: %w{web app db}
 set :branch, ENV.fetch('BRANCH', 'master')
 
 # role-based syntax
