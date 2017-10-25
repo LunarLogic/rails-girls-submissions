@@ -6,10 +6,10 @@ checkout:
     - cp config/secrets.yml.example config/secrets.yml
     - cp config/allowed_users.yml.example config/allowed_users.yml
 deployment:
-  demo:
+  staging:
     branch: master
     commands:
-        - bundle exec cap demo deploy
+        - bundle exec cap staging deploy
 dependencies:
   pre:
     - echo "export rvm_ignore_gemsets_flag=1" >> ~/.rvmrc
