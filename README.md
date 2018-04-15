@@ -9,7 +9,7 @@
      gem install bundler
      bundle
 
-   Then create your own `secrets.yml` file. We use omniauth-github for authenticating users. You need to add new application on Github and fill `secrets.yml` with corresponding `app_id` and `app_secret`. Replace the example values for dev/test environment and set the environment variables on your production server. The mailer is configured to work with Mailchimp.
+   Then create your own `secrets.yml` file. We use omniauth-github for authenticating users. You need to add new application on Github (use `http://localhost:3000` as homepage URL and `http://localhost:3000/users/auth/github/callback` as authorization callback URL) and fill `secrets.yml` with corresponding `app_id` and `app_secret`. Replace the example values for dev/test environment and set the environment variables on your production server. The mailer is configured to work with Mailchimp.
 
      cp config/secrets.yml.example config/secrets.yml
 
