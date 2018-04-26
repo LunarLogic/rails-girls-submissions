@@ -77,8 +77,16 @@ class SubmissionRepository
   end
 
   def limit_to_invite_at_the_moment
-    limit = Setting.get.available_spots - invited_not_expired.length
+    limit = Setting.get.available_spots - confirmed_or_still_able_to_confirm_spots
     limit >= 0 ? limit : 0
+  end
+
+  def confirmed_or_still_able_to_confirm_spots
+    confirmed.length + invited_not_expired_not_confirmed.length
+  end
+
+  def confirmed
+    Submission.where('invitation_confirmed = ?', true)
   end
 
   def invited_not_expired

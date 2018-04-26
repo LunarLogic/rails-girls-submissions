@@ -9,7 +9,9 @@ FactoryGirl.define do
     operating_system :windows
     first_time true
     goals "Tons of money!\nTons of money!\nTons of money!\n"
-    problems "I'm shortsighted - can't see money's a shitty goal. :c"
+    problems "I'm shortsighted - can't see money's a poor goal. :c"
+    invitation_confirmed false
+    invitation_token nil
     rejected false
 
     trait :with_rates do
@@ -21,6 +23,10 @@ FactoryGirl.define do
       after(:create) do |submission, ev|
         create_list(:rate, ev.rates_num, value: ev.rates_val, submission: submission)
       end
+    end
+
+    trait :invited do
+      sequence(:invitation_token) { |n| "#{n}#{n}#{n}"}
     end
   end
 end
