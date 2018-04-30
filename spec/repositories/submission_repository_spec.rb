@@ -98,89 +98,129 @@ describe SubmissionRepository do
   end
 
   context "mailer methods" do
-    before { allow(Setting).to receive(:get).and_return(setting)}
+    before { allow(Setting).to receive(:get).and_return(setting) }
     let(:setting) { instance_double(Setting, available_spots: 4, days_to_confirm_invitation: 7, required_rates_num: 1) }
 
-    let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
+    let(:two_days_ago) { (Setting.get.days_to_confirm_invitation.days - 2.days).ago }
+    let(:expired) { (Setting.get.days_to_confirm_invitation.days + 1.day).ago }
 
-    let!(:unrated_submission) do
+    let(:unrated_submission) do
       FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num - 1)
     end
 
-    let!(:invited_expiring_in_two_days_submission) do
+    let(:invited_expiring_in_two_days_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: 'xxx',
-        invitation_token_created_at: (confirmation_days - 2.days).ago,
-        invitation_confirmed: false,
-        rates_num: setting.required_rates_num,
-        rates_val: 3)
+        :invited,
+        invitation_token_created_at: two_days_ago,
+        rates_num: setting.required_rates_num)
     end
 
-    let!(:expired_submission) do
+    let(:invited_expiring_in_two_days_submission_2) do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: 'zzz',
-        invitation_token_created_at: (confirmation_days + 1.day).ago,
-        invitation_confirmed: false,
-        rates_num: setting.required_rates_num,
-        rates_val: 4)
+        :invited,
+        invitation_token_created_at: two_days_ago,
+        rates_num: setting.required_rates_num)
     end
 
-    let!(:confirmed_submission) do
+    let(:expired_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: 'yyy',
-        invitation_token_created_at: (confirmation_days - 1.days - 1.hour).ago,
+        :invited,
+        invitation_token_created_at: expired,
+        rates_num: setting.required_rates_num)
+    end
+
+    let(:confirmed_submission) do
+      FactoryGirl.create(
+        :submission,
+        :invited,
+        :with_rates,
+        invitation_token_created_at: two_days_ago,
         invitation_confirmed: true,
-        rates_num: setting.required_rates_num,
-        rates_val: 4)
+        rates_num: setting.required_rates_num)
     end
 
-    let!(:not_invited_submission) do
+    let(:confirmed_submission_2) do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: nil,
-        invitation_confirmed: false,
+        invitation_token_created_at: two_days_ago,
+        invitation_confirmed: true,
+        rates_num: setting.required_rates_num)
+    end
+
+    let(:not_invited_submission) do
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
         rates_num: setting.required_rates_num,
         rates_val: 5)
     end
 
-    let!(:not_invited_submission_2) do
+    let(:not_invited_submission_2) do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: nil,
-        invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 4)
     end
 
-    let!(:not_invited_over_the_limit_submission) do
+    let(:not_invited_over_the_limit_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: nil,
-        invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 1)
     end
 
     describe "#to_invite" do
-      context "when it's possible to invite more people at the moment" do
+      context "when some spots are confirmed and it's possible to invite more people at the moment" do
+        let!(:list_of_submissions) { [
+           unrated_submission,
+           invited_expiring_in_two_days_submission,
+           not_invited_submission,
+           not_invited_submission_2,
+           not_invited_over_the_limit_submission,
+           confirmed_submission
+        ] }
         let(:submissions_to_invite) { [not_invited_submission, not_invited_submission_2] }
         subject { submission_repository.to_invite }
 
         it { expect(subject).to eq(submissions_to_invite) }
       end
 
-      context "when all the spots are confirmed or some mails are not confirmed and not expired " do
+      context "when no spots are confirmed and it's possible to invite more people at the moment" do
+        let!(:list_of_submissions) { [
+           unrated_submission,
+           invited_expiring_in_two_days_submission,
+           not_invited_submission,
+           not_invited_submission_2,
+           not_invited_over_the_limit_submission,
+        ] }
+        let(:submissions_to_invite) { [
+          not_invited_submission, not_invited_submission_2, not_invited_over_the_limit_submission
+        ] }
+        subject { submission_repository.to_invite }
+        it { expect(subject).to eq(submissions_to_invite) }
+      end
+
+      context "when all the spots are confirmed or not expired yet" do
+        let!(:list_of_submissions) { [
+           unrated_submission,
+           invited_expiring_in_two_days_submission,
+           invited_expiring_in_two_days_submission_2,
+           not_invited_submission,
+           not_invited_submission_2,
+           not_invited_over_the_limit_submission,
+           confirmed_submission,
+           confirmed_submission_2
+        ] }
         let(:submissions_to_invite) { [] }
-        let(:setting) { instance_double(Setting, available_spots: 2, days_to_confirm_invitation: 7, required_rates_num: 1) }
         subject { submission_repository.to_invite }
 
         it { expect(subject).to eq(submissions_to_invite) }
@@ -188,6 +228,15 @@ describe SubmissionRepository do
     end
 
     describe "#to_remind" do
+      let!(:list_of_submissions) { [
+        unrated_submission,
+        invited_expiring_in_two_days_submission,
+        not_invited_submission,
+        not_invited_submission_2,
+        not_invited_over_the_limit_submission,
+        confirmed_submission
+      ]}
+      let(:submissions_to_invite) { [] }
       context "days_to_confirm_invitation is at least 2" do
         let(:submissions_to_remind) { [invited_expiring_in_two_days_submission] }
 
@@ -220,19 +269,17 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: 'yyy',
+        :invited,
         invitation_confirmed: true,
-        rates_num: setting.required_rates_num,
-        rates_val: 4)
+        rates_num: setting.required_rates_num)
     end
+
     let!(:not_confirmed_submission) do
       FactoryGirl.create(
         :submission,
         :with_rates,
-        invitation_token: 'yyy',
-        invitation_confirmed: false,
-        rates_num: setting.required_rates_num,
-        rates_val: 4)
+        :invited,
+        rates_num: setting.required_rates_num)
     end
     subject { submission_repository.participants }
 
