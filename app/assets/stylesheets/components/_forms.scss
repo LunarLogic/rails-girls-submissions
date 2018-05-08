@@ -1,8 +1,4 @@
-$input-height: $bs2;
-
-.form {
-  margin: 2 * $input-height 0;
-}
+$input-height: $bs3;
 
 .form-centered {
   text-align: center;
@@ -10,12 +6,28 @@ $input-height: $bs2;
 
 .form-header {
   text-align: center;
-  margin-bottom: 2 * $input-height;
+  margin-bottom: $input-height;
+
+  @include media($tablet) {
+    margin-bottom: 2 * $input-height;
+  }
+}
+
+.end-date {
+  display: block;
+  color: white;
+  background-color: $purple-500;
+  padding: 0.3rem 1rem;
+  font-size: $fs2;
+
+  @include media($tablet) {
+    display: inline-block;
+  }
 }
 
 .form-field {
   @include clearfix();
-  margin-bottom: $input-height;
+  margin-bottom: $bs2;
 
   &:last-of-type {
     margin-bottom: $bs4;

@@ -1,14 +1,18 @@
-<div class="pattern-wrapper">
-	<div class="header-image"><%= image_tag 'cover.png' %></div>
-	<div class="l-wrapper-narrow">
-	  <%= render 'form', { submission: submission, answers: answers, show_errors: show_errors, footer_presenter: footer_presenter } %>
-
-	  <aside class="aside-widget aside-widget-submission" itemscope itemtype="http://schema.org/Event">
-	    <span class="aside-widget-text" itemprop="name">Rails Girls Kraków 2017</span>
-      <span class="aside-widget-text" itemprop="startDate" content="2017-05-19T06:00">
-        <%= footer_presenter.event_dates %>
-      </span>
-	   	<%= link_to "#{footer_presenter.event_url}", "http://#{footer_presenter.event_url}", target: "_blank", class: "form-aside-link", title: "Rails Girls Kraków website" %>
-	  </aside>
-	</div>
+<div class="hero-section">
+  <div class="hero-section-content l-wrapper-medium">
+    <div class="info-box">
+      <h1 class="info-title">
+        <span class="info-title-small">Rails Girls Kraków</span>
+        <span class="info-title-big">Get excited and learn to build the web</span>
+      </h1>
+      <ul class="info-list">
+        <li class="info-list-item"> 29-30 June 2018 </li>
+        <li class="info-list-item"> KPT, Podole 60, Kraków</li>
+        <li class="info-list-item"><a href="http://www.railsgirls.com/krakow">railsgirls.com/krakow</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="l-wrapper-medium application-form">
+  <%= render 'form', { submission: submission, answers: answers, show_errors: show_errors, footer_presenter: footer_presenter } %>
 </div>

@@ -5,11 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Lato:400,300,700&subset=latin,latin-ext' %>
+  <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Lato:400,300,700,900&subset=latin,latin-ext' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <meta name="description" property="og:description" content="Get excited and learn to build the web. Apply for Rails Girls Kraków 2018.">
+  <meta property="og:image" content="<%= asset_url('/railsgirls2018.png') %>" />
 </head>
-<body>
+
+</head>
+<body class="applications-page">
 <p id="notice"><%= notice %></p>
 
 <% if flash[:error] %>

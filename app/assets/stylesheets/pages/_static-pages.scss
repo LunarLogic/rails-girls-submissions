@@ -22,8 +22,12 @@
   }
 }
 
+.applications-page {
+  background-color: $pink-300;
+}
+
 .login-page, .closed-page{
-  background-image: image-url('cover.png');
+  background: image-url('cover.svg') top center no-repeat;
   background-size: 100% auto;
   padding-top: 400px;
   background-repeat: no-repeat;
