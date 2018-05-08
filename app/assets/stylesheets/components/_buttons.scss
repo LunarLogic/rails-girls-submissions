@@ -23,6 +23,11 @@
   padding: $baseline/2 $baseline;
 }
 
+.btn-big {
+  @extend .btn;
+  font-size: $fs1;
+}
+
 .btn-right-align {
   float: right;
 }

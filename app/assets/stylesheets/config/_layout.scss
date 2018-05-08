@@ -9,6 +9,11 @@
   max-width: 1200px;
 }
 
+.l-wrapper-medium {
+  @extend %wrapper;
+  max-width: 900px;
+}
+
 .l-wrapper-narrow {
   @extend %wrapper;
   max-width: 600px;

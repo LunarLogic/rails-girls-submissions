@@ -1,8 +1,8 @@
-<div class="l-wrapper l-wrapper-narrow">
+<div class="l-wrapper l-wrapper-medium">
   <article class="l-static-container login-page">
     <%- if devise_mapping.omniauthable? %>
       <%- resource_class.omniauth_providers.each do |provider| %>
-      <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: "btn-small" %><br />
+      <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: "btn" %><br />
       <% end -%>
     <% end -%>
   </article>

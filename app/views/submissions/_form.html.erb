@@ -1,10 +1,10 @@
 <%= form_for(submission, html: { class: "form" }) do |f| %>
-  <h1 class="form-header">Apply for Rails Girls Kraków 2017
+  <h1 class="form-header">Apply for Rails Girls Kraków 2018
     <span class="aside-widget-text" itemprop="startDate">
       <%= footer_presenter.event_dates %>
     </span>
-    <span class="aside-widget-text" itemprop="endDate">
-      Registration ends on <%= footer_presenter.registration_ends %>
+    <span class="end-date" itemprop="endDate">
+      Application form closes on <%= footer_presenter.registration_ends %>
     </span>
   </h1>
 
@@ -100,6 +100,6 @@
     <span class="character-counter"></span>
   </div>
   <div class="form-field">
-    <%= f.submit "Apply for workshop", class: "btn-small" %>
+    <%= f.submit "Apply for workshop", class: "btn-big" %>
   </div>
 <% end %>

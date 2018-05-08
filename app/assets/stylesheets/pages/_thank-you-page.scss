@@ -1,13 +1,19 @@
 .thanks {
-  padding-top: 2rem;
+  padding: 3rem 1rem;
   text-align: center;
-  width: 100%;
-  margin: 0 auto;
+  width: 95%;
+  margin: 2rem auto;
+  background-color: white;
+  box-shadow: 0 0 30px rgba(218, 158, 163, 0.32);
+
+  @include media($tablet) {
+    padding: 3rem 2rem;
+  }
+
   img {
     max-width: 100%;
-  }
-  img {
     max-width: 300px;
+    margin: 0 0 2rem;
   }
 
   h1 { color: $rg-red; }
@@ -17,15 +23,9 @@
     line-height: 1.4;
    }
 
-  small {
+  .small-text {
     display: block;
-    font-size: 1rem;
+    font-size: $fs1;
     line-height: 1.4;
-    margin-top: 2rem;
-  }
-  @include media($tablet) {
-    background: image-url('pattern.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
   }
 }
