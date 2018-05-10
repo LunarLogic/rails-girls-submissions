@@ -37,7 +37,7 @@
   background-color: white;
   width: 100%;
   padding: 2rem;
-  box-shadow: 0 0 30px rgba(218, 158, 163, 0.32);
+  box-shadow: 0 0 30px $pink-opaque;
 
   @include media($tablet) {
     width: 23rem;
@@ -96,7 +96,7 @@
 .application-form {
   background-color: white;
   padding: 3rem 1rem 1rem;
-  box-shadow: 0 0 30px rgba(218, 158, 163, 0.32);
+  box-shadow: 0 0 30px $pink-opaque;
 
   @include media($desktop) {
     padding: 5rem 9rem 1rem;

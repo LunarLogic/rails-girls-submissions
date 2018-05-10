@@ -21,6 +21,7 @@
 
 /vendor/.byebug_history
 
+.vscode/
 # Ignore all failing integration tests' screenshots
 screenshot_*.html
 .DS_Store
