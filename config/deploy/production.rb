@@ -22,7 +22,7 @@
 # role :db,  %w{deploy@example.com}
 
 
-server "railsgirls.lunarlogic.io", user: "lunar", roles: %w{web app db}
+server "railsgirlskrakow.pl", user: "lunar", roles: %w{web app db}
 
 # Configuration
 # =============
