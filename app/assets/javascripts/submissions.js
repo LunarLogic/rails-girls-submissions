@@ -13,5 +13,5 @@ var submitRating = function() {
   });
 };
 
-$(document).on('page:change', setRating);
-$(document).on('page:change', submitRating);
+$(document).on('turbolinks:load', setRating);
+$(document).on('turbolinks:load', submitRating);
