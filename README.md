@@ -89,7 +89,9 @@ You might want to change:
   * emails
     * content - files in `app/views/invitations_mailer` and `app/mailers/invitations_mailer.rb`
     * schedule - `config/schedule.rb`
+  * default HTML `<title>` - `app/views/layouts/application.html.erb`
   * submission form
+    * HTML `<title>` - `app/views/submissions/new.html.erb`
     * title - `app/views/submissions/_form.html.erb`
     * footer/side pane - `app/views/submissions/new.html.erb`, replace `app/assets/images/rails-girls-krakow-2016.png`
     * fields
