@@ -99,6 +99,13 @@
     <%= f.text_area :problems, class: "textarea-small", maxlength: 255 %>
     <span class="character-counter"></span>
   </div>
+  <div class="form-field form-field-boolean" style="display: flex;">
+    <%= check_box_tag :processing_consent, "1", false, required: true, style: "flex-shrink: 0;" %>
+    <%= label_tag :processing_consent do  %>
+      I consent to the organizers processing my data for the purpose of organizing the&nbsp;workshop, as described in
+      <%= link_to 'the privacy policy', page_path("privacy_policy"), target: "_blank" %>
+    <% end %>
+  </div>
   <div class="form-field">
     <%= f.submit "Apply for workshop", class: "btn-big" %>
   </div>
