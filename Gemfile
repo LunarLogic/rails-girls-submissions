@@ -34,6 +34,8 @@ gem 'whenever', require: false
 # gem 'capistrano-rails', group: :development
 gem 'pg'
 
+gem 'high_voltage', '~> 3.1'
+
 group :production do
   gem 'unicorn'
 end

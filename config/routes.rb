@@ -35,4 +35,6 @@ Rails.application.routes.draw do
 
     resources :questions, only: [:index, :new, :create, :destroy]
   end
+
+  get "/pages/*id" => 'pages#show', as: :page, format: false
 end
