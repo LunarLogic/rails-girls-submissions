@@ -5,4 +5,4 @@ var init = function() {
   menuCollapse($('#btn-menu'));
 }
 
-$(document).on('ready page:load', init);
+$(document).on('turbolinks:load', init);
