@@ -1,4 +1,6 @@
 class Setting < ActiveRecord::Base
+  attr_accessor :end_of_registration_period
+
   validate :preparation_is_before_registration,
            :registration_is_before_closed,
            :start_is_before_end
@@ -15,6 +17,15 @@ class Setting < ActiveRecord::Base
             presence: true
   validates :available_spots, :required_rates_num, :days_to_confirm_invitation,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
+  def end_of_registration_period
+    (beginning_of_closed_period - 1.day).end_of_day
+  end
+
+  def end_of_registration_period=(value)
+    value = value.is_a?(Time) ? value : Time.zone.parse(value)
+    self.beginning_of_closed_period = (value + 1.day).beginning_of_day
+  end
 
   def self.get
     self.first || self.create({
@@ -38,7 +49,7 @@ class Setting < ActiveRecord::Base
     settings.days_to_confirm_invitation = setting_params[:days_to_confirm_invitation]
     settings.beginning_of_preparation_period = setting_params[:beginning_of_preparation_period]
     settings.beginning_of_registration_period = setting_params[:beginning_of_registration_period]
-    settings.beginning_of_closed_period = setting_params[:beginning_of_closed_period]
+    settings.end_of_registration_period = setting_params[:end_of_registration_period]
     settings.event_start_date = setting_params[:event_start_date]
     settings.event_end_date = setting_params[:event_end_date]
     settings.event_url = setting_params[:event_url]

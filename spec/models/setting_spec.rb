@@ -41,4 +41,20 @@ RSpec.describe Submission, type: :model do
     }
     expect(FactoryGirl.build(:setting, params)).not_to be_valid
   end
+
+  it "correctly calculates end_of_registration_period on read" do
+    beginning_of_closed_period = Time.zone.parse('2016-06-27')
+    expected_end_of_registration_period = Time.zone.parse('2016-06-26').end_of_day
+    setting = FactoryGirl.build(:setting, {beginning_of_closed_period: beginning_of_closed_period})
+
+    expect(setting.end_of_registration_period).to eq(expected_end_of_registration_period)
+  end
+
+  it "correctly calculates end_of_registration_period on write" do
+    end_of_registration_period = Time.zone.parse('2016-06-26')
+    expected_beginning_of_closed_period = Time.zone.parse('2016-06-27').beginning_of_day
+    setting = FactoryGirl.build(:setting, {end_of_registration_period: end_of_registration_period})
+
+    expect(setting.beginning_of_closed_period).to eq(expected_beginning_of_closed_period)
+  end
 end

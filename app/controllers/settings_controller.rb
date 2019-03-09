@@ -18,14 +18,16 @@ class SettingsController < ApplicationController
   private
 
   def setting_params
-    params.require(:setting).permit(:available_spots, :required_rates_num, :days_to_confirm_invitation,
-      :beginning_of_preparation_period, :beginning_of_registration_period, :beginning_of_closed_period,
-      :event_start_date, :event_end_date, :event_url, :event_venue)
+    params.require(:setting).permit(
+      :available_spots, :required_rates_num, :days_to_confirm_invitation,
+      :beginning_of_preparation_period, :beginning_of_registration_period, :end_of_registration_period,
+      :event_start_date, :event_end_date, :event_url, :event_venue
+    )
   end
 
   def dates_order_ok?(params)
     params[:beginning_of_preparation_period] < params[:beginning_of_registration_period] &&
-    params[:beginning_of_registration_period] < params[:beginning_of_closed_period] &&
+    params[:beginning_of_registration_period] <= params[:end_of_registration_period] &&
     params[:event_start_date] < params[:event_end_date]
   end
 end

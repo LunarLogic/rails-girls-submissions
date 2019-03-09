@@ -11,7 +11,7 @@ describe "testing updating settings:" do
     find("#setting_days_to_confirm_invitation").set(7)
     find("#setting_beginning_of_preparation_period").set("2016/06/21")
     find("#setting_beginning_of_registration_period").set("2016/06/22")
-    find("#setting_beginning_of_closed_period").set("2016/06/23")
+    find("#setting_end_of_registration_period").set("2016/06/22")
     find("#setting_event_venue").set("krakow")
 
     click_button "Save settings"

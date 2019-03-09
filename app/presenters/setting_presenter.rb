@@ -16,7 +16,7 @@ class SettingPresenter
   end
 
   def registration_ends
-    present_date(setting.beginning_of_closed_period)
+    present_date(setting.end_of_registration_period)
   end
 
   def event_url
