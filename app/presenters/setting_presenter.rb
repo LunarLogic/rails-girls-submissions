@@ -11,6 +11,10 @@ class SettingPresenter
     end
   end
 
+  def event_dates_with_year
+    "#{event_dates} #{setting.event_end_date.year}"
+  end
+
   def registration_ends
     present_date(setting.beginning_of_closed_period)
   end
@@ -26,7 +30,7 @@ class SettingPresenter
   private
 
   def present_date(date)
-    date.strftime("%d %B")
+    date.strftime("%-d %B")
   end
 
   attr_reader :setting
