@@ -49,12 +49,16 @@ class Setting < ActiveRecord::Base
 
   def self.preparation_period?
     settings = self.get
-    settings.beginning_of_preparation_period <= Time.now && Time.now < settings.beginning_of_registration_period
+    preparation_period = settings.beginning_of_preparation_period...settings.beginning_of_registration_period
+
+    preparation_period.cover?(Time.zone.now)
   end
 
   def self.registration_period?
     settings = self.get
-    settings.beginning_of_registration_period <= Time.now && Time.now < settings.beginning_of_closed_period
+    registration_period = settings.beginning_of_registration_period...settings.beginning_of_closed_period
+
+    registration_period.cover?(Time.zone.now)
   end
 
   private

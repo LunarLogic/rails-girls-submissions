@@ -39,6 +39,8 @@ end
 
 Capybara.javascript_driver = :selenium
 
+Timecop.safe_mode = true
+
 RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
 

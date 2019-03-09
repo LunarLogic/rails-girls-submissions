@@ -50,7 +50,7 @@ describe 'inviting accepted submissions' do
         :submission,
         :with_rates,
         invitation_token: 'xxx',
-        invitation_token_created_at: Time.now,
+        invitation_token_created_at: Time.zone.now,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
         rates_val: 1)

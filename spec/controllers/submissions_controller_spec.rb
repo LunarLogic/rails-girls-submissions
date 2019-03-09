@@ -10,22 +10,27 @@ RSpec.describe SubmissionsController, type: :controller do
 
     context "current date falls during the preparation period"  do
       it "renders RailsGirls coming soon template" do
-        allow(Time).to receive(:now).and_return("2016-06-23 17:20:53 +0200")
-        expect(subject).to render_template(:preparation)
+        Timecop.travel(Time.zone.parse("2016-06-23 17:20:53 +0200")) do
+          expect(subject).to render_template(:preparation)
+        end
       end
     end
 
     context "current date falls during the registration period"  do
       it "renders registration form" do
-        allow(Time).to receive(:now).and_return("2016-06-24 17:20:53 +0200")
-        expect(subject).to render_template(:new)
+        # allow(Time).to receive(:now).and_return("2016-06-24 17:20:53 +0200")
+        Timecop.travel(Time.zone.parse("2016-06-24 17:20:53 +0200")) do
+          expect(subject).to render_template(:new)
+        end
       end
     end
 
     context "current date falls during the closed period"  do
       it "renders registraton closed template" do
-        allow(Time).to receive(:now).and_return("2016-06-25 17:20:53 +0200")
-        expect(subject).to render_template(:closed)
+        # allow(Time).to receive(:now).and_return("2016-06-25 17:20:53 +0200")
+        Timecop.travel(Time.zone.parse("2016-06-25 17:20:53 +0200")) do
+          expect(subject).to render_template(:closed)
+        end
       end
     end
   end
