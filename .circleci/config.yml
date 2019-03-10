@@ -1,0 +1,47 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/LunarLogic/rails-girls-submissions
+    parallelism: 1
+    docker:
+      - image: circleci/ruby:2.3.7-browsers
+        environment:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: railsgirls
+      - image: postgres:9.6.9-alpine
+        environment:
+          POSTGRES_USER: railsgirls
+          POSTGRES_DB: railsgirls_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - checkout
+
+      - type: cache-restore
+        name: Restore bundle cache
+        key: rails-girls-{{ checksum "Gemfile.lock" }}
+
+      - run: bundle install --path vendor/bundle --jobs=4 --retry=3
+
+      - type: cache-save
+        name: Store bundle cache
+        key: rails-girls-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+
+      # Checkout
+      #   This would typically go in either a build or a build-and-test job when using workflows
+      - run: cp config/secrets.yml.example config/secrets.yml
+      - run: cp config/allowed_users.yml.example config/allowed_users.yml
+      - run: bundle exec rake db:setup
+      # Test
+      #   This would typically be a build job when using workflows, possibly combined with build
+      - run: bundle exec rspec --color --require spec_helper --format progress spec
+      # Deployment
+      - deploy:
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              bundle exec cap staging deploy
+            else
+              echo "${CIRCLE_BRANCH} is not master branch, so no deploy"
+            fi
