@@ -25,22 +25,6 @@
     <%= f.number_field :age, required: true, min: 0, max: 110 %>
   </div>
   <div class="form-field">
-    <%= f.label :codecademy_username %>
-    <div class="tooltip-text">
-      We would like you to complete <strong>at least 6 units</strong> ("Introduction to Ruby" to "Hashes and Symbols") of
-      <%= link_to 'Ruby course at CodeCademy', 'https://www.codecademy.com/learn/ruby', target: '_blank' %>.
-      To do so, please register at
-      <%= link_to 'CodeCademy', 'https://www.codecademy.com/register?redirect=%2Flearn%2Fruby', target: '_blank' %>
-      and put your username below, so we can verify your progress.
-      <br>
-      <br>
-      <em>Note: You can finish your submission now and complete the course later.
-        We won't start evaluating the submissions until the end of the registration period.
-      </em>
-    </div>
-    <%= f.text_field :codecademy_username, maxLength: 50, required: true, class: 'with-tooltip' %>
-  </div>
-  <div class="form-field">
     <%= f.label :description, "Tell us a little bit about yourself" %>
     <%= f.text_area :description, maxLength: 500, required: true %>
     <span class="character-counter"></span>

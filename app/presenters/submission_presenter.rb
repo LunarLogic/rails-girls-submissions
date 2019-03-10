@@ -43,10 +43,6 @@ class SubmissionPresenter < SimpleDelegator
     rate ? rate.value : 0
   end
 
-  def codecademy_url
-    "https://www.codecademy.com/#{codecademy_username}"
-  end
-
   def status
     symbol_to_string(submission.status)
   end

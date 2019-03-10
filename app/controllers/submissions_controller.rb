@@ -25,19 +25,6 @@ class SubmissionsController < ApplicationController
                   the confirmation link from."
   end
 
-  def codecademy_status
-    submission = Submission.find(params[:id])
-    status = params.require('completed')
-
-    if status == 'true'
-      submission.update(codecademy_status: true)
-    elsif status == 'false'
-      submission.update(codecademy_status: false)
-    end
-
-    redirect_to submission_path(params[:filter], submission)
-  end
-
   def show
     submission = Submission.find(params[:id])
     submission_filter = params[:filter].to_sym
@@ -104,8 +91,10 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
-    params.require(:submission).permit(:full_name, :email, :age, :codecademy_username,
-      :description, :english, :operating_system, :first_time, :goals, :problems)
+    params.require(:submission).permit(
+      :full_name, :email, :age, :description, :english, :operating_system, :first_time, :goals,
+      :problems
+    )
   end
 
   def answers_params

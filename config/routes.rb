@@ -18,7 +18,6 @@ Rails.application.routes.draw do
     get "/submissions/to_rate", to: "submission_filters#to_rate"
     get "/submissions/results", to: "submission_filters#results"
     get "/submissions/participants", to: "submission_filters#participants"
-    post "/submissions/:filter/:id/codecademy_status", to: "submissions#codecademy_status", as: :codecademy_status
 
     get "/csv/participants", to: "csv#participants"
 

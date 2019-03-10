@@ -112,14 +112,6 @@ RSpec.describe SubmissionPresenter do
     end
   end
 
-  describe "#codecademy_url" do
-    subject { submission_presenter.codecademy_url }
-
-    before { allow(submission).to receive(:codecademy_username).and_return("tim") }
-
-    it { is_expected.to eq("https://www.codecademy.com/tim") }
-  end
-
   describe "#invitation_status" do
     subject { submission_presenter.invitation_status }
 
