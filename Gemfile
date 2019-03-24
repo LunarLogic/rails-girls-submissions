@@ -33,6 +33,8 @@ gem 'whenever', require: false
 gem 'pg'
 
 gem 'high_voltage', '~> 3.1'
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
 
 group :production do
   gem 'unicorn'

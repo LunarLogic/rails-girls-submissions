@@ -35,5 +35,7 @@ module RailsGirlsSubmissions
     if Rails.env.production? && host
       config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
     end
+
+    config.active_job.queue_adapter = :delayed_job
   end
 end

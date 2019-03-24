@@ -33,6 +33,10 @@ Rails.application.routes.draw do
     put "/settings/update", to: "settings#update"
 
     resources :questions, only: [:index, :new, :create, :destroy]
+    authenticate :user do
+      match "/background_jobs" => DelayedJobWeb, :anchor => false, :via => [:get, :post],
+        as: :background_jobs
+    end
   end
 
   get "/pages/*id" => 'pages#show', as: :page, format: false

@@ -15,7 +15,7 @@ describe "showing a submission" do
   it "shows a submission and goes back to the list view" do
     click_link('Show')
     expect(current_path).to eq submission_path(filter, submission.id)
-    click_link('Back')
+    click_link('Back', class: 'link-return')
     expect(current_path).to eq filtered_submissions_path
   end
 end
