@@ -34,7 +34,7 @@ class Submission < ActiveRecord::Base
 
   def generate_invitation_token!
     self.invitation_token = Devise.friendly_token
-    self.invitation_token_created_at = Time.current
+    self.invitation_token_created_at = Time.zone.now
     save!
   end
 

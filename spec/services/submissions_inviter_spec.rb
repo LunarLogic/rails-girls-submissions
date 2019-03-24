@@ -5,9 +5,8 @@ describe SubmissionsInviter do
     let(:event_dates) { double }
     let(:event_venue) { double }
     let(:contact_email) { double }
-    let(:logger) { double }
 
-    subject { described_class.new(event_dates, event_venue, contact_email, logger).call(submissions) }
+    subject { described_class.new(event_dates, event_venue, contact_email).call(submissions) }
 
     context "there are submissions to invite" do
       before { allow(Setting).to receive(:registration_period?).and_return(false) }
@@ -25,24 +24,21 @@ describe SubmissionsInviter do
         expect(subject.message).to eq("You have sent the emails.")
       end
 
-      context "and an excpetion is thrown down the line" do
+      context "and an exception is thrown down the line" do
         let(:error) { StandardError }
 
         before do
           allow(InvitationsMailer).to receive(:invitation_email).and_raise(error)
-          allow(logger).to receive(:error).and_return(nil)
-          allow(to_invite_submission).to receive(:update_attributes)
         end
 
         it "rollbacks the invitation token generation" do
-          expect(to_invite_submission).to receive(:generate_invitation_token!)
+          submission = FactoryGirl.create(:to_rate_submission)
           expect(InvitationsMailer).to receive(:invitation_email)
-            .with(to_invite_submission, event_dates, event_venue, contact_email).and_raise(error)
-          expect(logger).to receive(:error).with(error)
-          expect(to_invite_submission).to receive(:update_attributes)
-            .with({ invitation_token: nil, invitation_token_created_at: nil })
+            .with(submission, event_dates, event_venue, contact_email).and_raise(error)
 
-          subject
+          expect {
+            described_class.new(event_dates, event_venue, contact_email).call([submission])
+          }.to raise_error(error).and not_change { submission.reload.attributes }
         end
       end
     end

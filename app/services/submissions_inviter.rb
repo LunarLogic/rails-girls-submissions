@@ -1,9 +1,8 @@
 class SubmissionsInviter
-  def initialize(event_dates, event_venue, contact_email, logger = Logger.new(STDOUT))
+  def initialize(event_dates, event_venue, contact_email)
     @event_dates = event_dates
     @event_venue = event_venue
     @contact_email = contact_email
-    @logger = logger
   end
 
   def call(submissions)
@@ -21,15 +20,12 @@ class SubmissionsInviter
 
   private
 
-  attr_reader :event_dates, :event_venue, :contact_email, :logger
+  attr_reader :event_dates, :event_venue, :contact_email
 
   def invite(submission)
-    begin
+    Submission.transaction do
       submission.generate_invitation_token!
       InvitationsMailer.invitation_email(submission, event_dates, event_venue, contact_email).deliver_now
-    rescue => e
-      logger.error(e)
-      submission.update_attributes(invitation_token: nil, invitation_token_created_at: nil)
     end
   end
 end
