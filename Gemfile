@@ -63,7 +63,7 @@ group :test do
   gem 'database_cleaner', require: false
   gem "factory_girl_rails", "~> 4.0", require: false
   gem 'selenium-webdriver', require: false
-  gem 'chromedriver-helper'
+  gem 'webdrivers', '~> 3.0'
   gem 'capybara', require: false
   gem 'capybara-screenshot'
   gem 'timecop'
