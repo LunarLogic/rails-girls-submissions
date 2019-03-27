@@ -10,7 +10,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <p id="notice"><%= notice %></p>
+  <p id="notice"><%= sanitize notice, tags: [], attributes: [] %></p>
 
   <%= render 'layouts/header' %>
 

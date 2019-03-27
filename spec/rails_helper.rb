@@ -11,6 +11,7 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'selenium-webdriver'
 require 'capybara-screenshot/rspec'
+require_relative 'support/background_job_helpers'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -99,4 +100,6 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.infer_spec_type_from_file_location!
+
+  config.include BackgroundJobHelpers, :include_background_job_helpers
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'inviting accepted submissions' do
+describe 'inviting accepted submissions', :include_background_job_helpers do
   let(:setting) { FactoryGirl.build(:setting, available_spots: 2) }
   let!(:user) { FactoryGirl.create(:user) }
   let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
@@ -27,6 +27,8 @@ describe 'inviting accepted submissions' do
       visit submissions_results_path
       click_link('Send')
 
+      execute_background_jobs
+
       expect(ActionMailer::Base.deliveries.count).to eq(1)
       expect(setting.invitation_process_started).to be true
       expect(accepted_submission.reload.invitation_token).not_to be_nil
@@ -38,6 +40,8 @@ describe 'inviting accepted submissions' do
       login_as(user, scope: :user)
       visit submissions_results_path
       click_link('Send')
+
+      execute_background_jobs
 
       expect(ActionMailer::Base.deliveries.count).to eq(0)
       expect(accepted_submission.reload.invitation_token).to be_nil
