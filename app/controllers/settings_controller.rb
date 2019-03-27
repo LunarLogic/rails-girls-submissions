@@ -9,7 +9,7 @@ class SettingsController < ApplicationController
   def update
     if dates_order_ok?(setting_params)
       Setting.set(setting_params)
-      redirect_to :back, notice: "Settings are updated"
+      redirect_to :back, notice: "Settings updated"
     else
       redirect_to :back, notice: "Registration start must be after preparation start and before closed start"
     end
