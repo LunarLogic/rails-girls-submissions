@@ -9,7 +9,7 @@
      gem install bundler
      bundle
 
-   Then create your own `secrets.yml` file. We use omniauth-github for authenticating users. You need to add new application on Github (use `http://localhost:3000` as homepage URL and `http://localhost:3000/users/auth/github/callback` as authorization callback URL) and fill `secrets.yml` with corresponding `app_id` and `app_secret`. Replace the example values for dev/test environment and set the environment variables on your production server. The mailer is configured to work with Mailchimp.
+   Then create your own `secrets.yml` file. We use omniauth-github for authenticating users. You need to add new application on Github (use `http://localhost:3000` as homepage URL and `http://localhost:3000/users/auth/github/callback` as authorization callback URL) and fill `secrets.yml` with corresponding `app_id` and `app_secret`. Replace the example values for dev/test environment and set the environment variables on your production server. The mailer is configured to work with Mandrill (see Email setup section below).
 
      cp config/secrets.yml.example config/secrets.yml
 
@@ -26,6 +26,32 @@
 
    To access the admin panel, go to `/admin` and log in to the app through GitHub.
    Then, click "Settings" in the upper-right corner and configure your application.
+
+### Email setup
+
+We use [Mandrill](https://mandrillapp.com) to send transactional emails. For Mandrill to work
+properly, you must provide appropriate config through `config/secrets.yml` (`host` and all keys
+under the `mandrill` namespace).
+
+`sender_email` under `mandrill` in `config/secrets.yml` is the email address that all emails will be
+sent from. This is different than the contact email you can configure through the settings panel.
+The contact email appears in the reply-to field in the emails.
+
+Imagine a scenario in which your team uses a Gmail account for communication - you'd like all
+replies to your email go to that address. You can't use Mandrill to send emails from a Gmail
+account, as Mandrill requires you to configure your domain first and you don't own gmail.com.
+
+There are two solutions to that problem:
+
+1. Set `sender_email` to an email under a domain that you configured in Mandrill and set the contact
+   email through the settings panel to your Gmail address. The sender email can be set to something
+   like `no-reply@your-domain.com` - only the domain part is important, the account doesn't actually
+   have to exist.
+2. Set `sender_email` to an email under a domain that you configured in Mandrill and add a forward
+   rule which is going to forward all emails from this address to your Gmail address. In that case
+   `sender_email` can be equal to the contact email.
+
+Usually the first solution is easier to set up.
 
 ## Testing
 
@@ -87,7 +113,7 @@ You might want to change:
   * styles - `app/assets/stylesheets`
   * settings (in the admin panel of the app)
   * emails
-    * content - files in `app/views/invitations_mailer` and `app/mailers/invitations_mailer.rb`
+    * content - files in `app/views/invitations_mailer`, `app/mailers/application_mailer.rb`, and `app/mailers/invitations_mailer.rb`
     * schedule - `config/schedule.rb`
   * default HTML `<title>` - `app/views/layouts/application.html.erb`
   * submission form

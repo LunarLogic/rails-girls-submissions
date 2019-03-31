@@ -1,19 +1,19 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  host = Rails.application.secrets.host
+  config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              'smtp.mandrillapp.com',
     port:                 587,
-    domain:               Rails.application.secrets.mailchimp["domain"],
+    domain:               host,
     user_name:            Rails.application.secrets.mailchimp["username"],
     password:             Rails.application.secrets.mailchimp["password"],
     authentication:       'plain',
     enable_starttls_auto: true
   }
-
-  host = Rails.application.secrets.host
-  config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
 
   # Code is not reloaded between requests.
   config.cache_classes = true
