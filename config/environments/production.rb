@@ -9,8 +9,8 @@ Rails.application.configure do
     address:              'smtp.mandrillapp.com',
     port:                 587,
     domain:               host,
-    user_name:            Rails.application.secrets.mailchimp["username"],
-    password:             Rails.application.secrets.mailchimp["password"],
+    user_name:            Rails.application.secrets.mandrill["username"],
+    password:             Rails.application.secrets.mandrill["api_key"],
     authentication:       'plain',
     enable_starttls_auto: true
   }
