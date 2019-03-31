@@ -1,5 +1,19 @@
+<h1 class="form-header">Settings</h1>
+
+<% if settings.errors.present? %>
+  <div class="form-error-box">
+    <h2 class="form-error-header">
+        Some settings need to be corrected
+      </h2>
+    <ul class="form-error-list">
+      <% settings.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for(settings, url: settings_update_path, method: :put) do |f| %>
-  <h1 class="form-header"> Settings </h1>
   <div class="form-field">
     <%= f.label "The \"Coming soon!\" page is displayed since" %>
     <%= f.date_field :beginning_of_preparation_period, required: true %>
@@ -28,6 +42,11 @@
   <div class="form-field">
     <%= f.label :event_venue %>
     <%= f.text_field :event_venue %>
+  </div>
+  <div class="form-field">
+    <%= f.label :contact_email %>
+    <%# <%= f.email_field :contact_email, required: true %1> %>
+    <%= f.email_field :contact_email %>
   </div>
   <div class="form-field">
     <%= f.label "Number of participants" %>

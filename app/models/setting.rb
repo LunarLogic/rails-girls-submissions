@@ -14,6 +14,7 @@ class Setting < ActiveRecord::Base
             :available_spots,
             :required_rates_num,
             :days_to_confirm_invitation,
+            :contact_email,
             presence: true
   validates :available_spots, :required_rates_num, :days_to_confirm_invitation,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -38,24 +39,9 @@ class Setting < ActiveRecord::Base
       event_start_date: "Sat, 16 Apr 2016",
       event_end_date: "Sun, 17 Apr 2016",
       event_url: "railsgirls.com/krakow",
-      event_venue: ""
+      event_venue: "",
+      contact_email: "example@example.com",
     })
-  end
-
-  def self.set(setting_params)
-    settings = self.get
-    settings.available_spots = setting_params[:available_spots]
-    settings.required_rates_num = setting_params[:required_rates_num]
-    settings.days_to_confirm_invitation = setting_params[:days_to_confirm_invitation]
-    settings.beginning_of_preparation_period = setting_params[:beginning_of_preparation_period]
-    settings.beginning_of_registration_period = setting_params[:beginning_of_registration_period]
-    settings.end_of_registration_period = setting_params[:end_of_registration_period]
-    settings.event_start_date = setting_params[:event_start_date]
-    settings.event_end_date = setting_params[:event_end_date]
-    settings.event_url = setting_params[:event_url]
-    settings.event_venue = setting_params[:event_venue]
-
-    settings.save!
   end
 
   def self.preparation_period?

@@ -3,9 +3,10 @@ class MailingsController < ApplicationController
     setting = Setting.get
     submissions = SubmissionRepository.new.to_invite
     setting_presenter = SettingPresenter.new(setting)
-    contact_email = Rails.application.secrets.mailchimp["contact_email"]
-    result = SubmissionsInviter.new(setting_presenter.event_dates, setting_presenter.event_venue,
-      contact_email).call(submissions, deliver_now_or_later: :later)
+    contact_email = setting.contact_email
+    result = SubmissionsInviter.new(
+      setting_presenter.event_dates, setting_presenter.event_venue, contact_email
+    ).call(submissions, deliver_now_or_later: :later)
 
     if result.success
       setting.update_attributes(invitation_process_started: true)
