@@ -38,5 +38,14 @@ namespace :deploy do
   end
 end
 
+namespace :delayed_job do
+  task :restart do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      execute "sudo systemctl restart delayed_job"
+    end
+  end
+end
+
 after 'deploy:publishing', 'deploy:restart'
+after 'deploy:published', 'delayed_job:restart'
 after "deploy:finishing",  "deploy:cleanup"
