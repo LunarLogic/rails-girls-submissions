@@ -20,9 +20,9 @@
     <%= f.label :email %>
     <%= f.email_field :email, maxLength: 50, required: true %>
   </div>
-  <div class="form-field">
-    <%= f.label :age %>
-    <%= f.number_field :age, required: true, min: 0, max: 110 %>
+  <div class="form-field form-field-boolean">
+    <%= f.check_box :adult %>
+    <%= f.label :adult, "I am over 18 years old" %>
   </div>
   <div class="form-field">
     <%= f.label :description, "Tell us a little bit about yourself" %>

@@ -54,7 +54,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
     context "with invaild submission parameters" do
       let(:submission_attributes) do
-        { full_name: "NN", email: "nn", age: 200 }
+        { full_name: "NN", email: "nn" }
       end
 
       it "shows form again" do

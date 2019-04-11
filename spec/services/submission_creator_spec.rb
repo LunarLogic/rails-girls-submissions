@@ -19,7 +19,7 @@ RSpec.describe SubmissionCreator do
     end
 
     context "when the submission is invalid" do
-      let(:submission) { FactoryGirl.build(:submission, age: -1) }
+      let(:submission) { FactoryGirl.build(:submission, email: "foo") }
 
       it "doesn't create either the submission or the answers" do
         expect { subject }.to not_change(Submission, :count).and not_change(Answer, :count)

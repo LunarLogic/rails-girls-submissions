@@ -14,11 +14,6 @@ RSpec.describe Submission, type: :model do
     expect(FactoryGirl.build(:submission, email: "invalid@emaiio")).not_to be_valid
   end
 
-  it "requires age between 0 and 110" do
-    expect(FactoryGirl.build(:submission, age: -30)).not_to be_valid
-    expect(FactoryGirl.build(:submission, age: 130)).not_to be_valid
-  end
-
   describe '#generate_invitation_token!' do
     let(:submission) { FactoryGirl.create(:submission) }
 

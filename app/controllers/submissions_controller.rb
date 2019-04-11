@@ -92,8 +92,8 @@ class SubmissionsController < ApplicationController
 
   def submission_params
     params.require(:submission).permit(
-      :full_name, :email, :age, :description, :english, :operating_system, :first_time, :goals,
-      :problems
+      :full_name, :email, :adult, :description, :english, :operating_system, :first_time, :goals,
+      :problems,
     )
   end
 

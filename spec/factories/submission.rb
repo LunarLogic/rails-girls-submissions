@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :submission, aliases: [:to_rate_submission] do
     sequence(:full_name) { |n| "User#{n}" }
     sequence(:email) { |n| "user#{n}@domain.com" }
-    age 20
+    adult true
     description "I'm super nice!\nI'm super nice!\nI'm super nice!\n"
     english :basic
     operating_system :windows

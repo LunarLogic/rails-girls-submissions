@@ -30,8 +30,8 @@
     </div>
 
     <div class="submission-answer">
-      <span class="submission-answer-label">Age:</span>
-      <%= submission.age %>
+      <span class="submission-answer-label">Adult:</span>
+      <%= (submission.adult? ? '&#9989;' : '&#10060;').html_safe %>
     </div>
 
     <div class="submission-answer submission-answer-block">

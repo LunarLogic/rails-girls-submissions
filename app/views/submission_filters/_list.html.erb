@@ -7,8 +7,8 @@
       <% if columns.include?(:email) %>
         <th class="submission-header-narrow submission-mobile-hidden">Email</th>
       <% end %>
-      <% if columns.include?(:age) %>
-        <th class="submission-header-narrow submission-mobile-hidden">Age</th>
+      <% if columns.include?(:adult) %>
+        <th class="submission-header-narrow submission-mobile-hidden">Adult</th>
       <% end %>
       <% if columns.include?(:average_rate) %>
         <th class="submission-header-narrow submission-mobile-hidden">Average</th>
@@ -35,8 +35,8 @@
       <% if columns.include?(:email) %>
         <td class="submission-mobile-hidden"><%= submission.email %></td>
       <% end %>
-      <% if columns.include?(:age) %>
-        <td class="submission-mobile-hidden"><%= submission.age %></td>
+      <% if columns.include?(:adult) %>
+        <td class="submission-mobile-hidden"><%= (submission.adult? ? '&#9989;' : '&#10060;').html_safe %></td>
       <% end %>
       <% if columns.include?(:average_rate) %>
         <td class="submission-mobile-hidden"><%= submission.average_rate %></td>

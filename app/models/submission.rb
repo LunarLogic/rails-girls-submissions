@@ -1,8 +1,7 @@
 class Submission < ActiveRecord::Base
-  validates :full_name, :age, :email, :description, :english,
+  validates :full_name, :email, :description, :english,
             :operating_system, :goals, presence: true
   validates :first_time, inclusion: { in: [true, false] }
-  validates :age, numericality: { greater_than_or_equal_to: 0, less_than: 110 }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
   validates :email, uniqueness: { case_sensitive: false }
   validates :full_name, :email, length: { maximum: 50 }
