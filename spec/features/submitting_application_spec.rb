@@ -11,6 +11,7 @@ describe "user submits their railsgirls application" do
 
     fill_in :submission_full_name, with: "full name"
     fill_in :submission_email, with: "email@email.com"
+    fill_in :submission_gender, with: "nb"
     check :submission_adult
     fill_in :submission_description, with: "description"
     choose :submission_english_fluent

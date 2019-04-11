@@ -12,6 +12,7 @@ FactoryGirl.define do
     invitation_confirmed false
     invitation_token nil
     rejected false
+    gender 'nb'
 
     trait :with_rates do
       transient do

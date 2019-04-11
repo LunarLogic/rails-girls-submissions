@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190411181705) do
+ActiveRecord::Schema.define(version: 20190411182147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20190411181705) do
     t.datetime "invitation_token_created_at"
     t.boolean  "invitation_confirmed",        default: false
     t.boolean  "adult",                       default: false
+    t.string   "gender"
   end
 
   add_index "submissions", ["email"], name: "index_submissions_on_email", unique: true, using: :btree

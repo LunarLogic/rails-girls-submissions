@@ -34,6 +34,11 @@
       <%= (submission.adult? ? '&#9989;' : '&#10060;').html_safe %>
     </div>
 
+    <div class="submission-answer">
+      <span class="submission-answer-label">Gender:</span>
+      <%= submission.gender %>
+    </div>
+
     <div class="submission-answer submission-answer-block">
       <span class="submission-answer-label">Description:</span>
       <%= submission.description %>
