@@ -4,9 +4,8 @@ class Submission < ActiveRecord::Base
   validates :first_time, inclusion: { in: [true, false] }
   validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i }
   validates :email, uniqueness: { case_sensitive: false }
-  validates :full_name, :email, length: { maximum: 50 }
   validates :description, :goals, length: { maximum: 500 }
-  validates :problems, length: { maximum: 255 }
+  validates :problems, :full_name, :email, length: { maximum: 255 }
 
   has_many :rates, dependent: :destroy
   has_many :comments, dependent: :destroy
