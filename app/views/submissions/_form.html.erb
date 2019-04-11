@@ -35,7 +35,12 @@
   </div>
 
   <% if answers.present? %>
-      <h3>Let us know how experienced you are. We will use this info to assign you to the group in which you can learn the most.</h3>
+      <h3>Let us know your experience level in popular web technologies</h3>
+      <p>
+        We will use this info to assign you to the group in which you can learn the most.<br/>
+        Don't worry if all of this sounds unfamiliar, beginners are perfect candidates for
+        the&nbsp;workshop.
+      </p>
       <% answers.each do |answer| %>
         <%= render "answer_form", answer: answer, question: answer.question, f: f %>
       <% end %>
@@ -83,7 +88,11 @@
     <span class="character-counter"></span>
   </div>
   <div class="form-field">
-    <%= f.label :problems, "Is there anything we should be aware of to make your attendance better/easier?" %>
+    <%= f.label :problems do %>
+      Is there anything we should be aware of to make your experience during the workshop better?
+      For example: your dietary restrictions, allergies, child care for the time of the&nbsp;event,
+      any other kind of assistance. We're dedicated to making our workshop available to everyone.
+    <% end %>
     <%= f.text_area :problems, class: "textarea-small", maxlength: 255 %>
     <span class="character-counter"></span>
   </div>
