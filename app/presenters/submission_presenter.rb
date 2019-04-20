@@ -27,7 +27,7 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def created_at
-    submission.created_at.strftime("%m-%d-%Y")
+    submission.created_at.strftime("%Y-%m-%d")
   end
 
   def next

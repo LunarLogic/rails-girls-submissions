@@ -78,12 +78,10 @@ RSpec.describe SubmissionPresenter do
     subject { submission_presenter.created_at }
 
     before do
-      date = double
-      allow(submission).to receive(:created_at).and_return(date)
-      allow(date).to receive(:strftime).with("%m-%d-%Y").and_return("01-01-2000")
+      allow(submission).to receive(:created_at).and_return(Time.zone.parse('2019-04-21'))
     end
 
-    it { is_expected.to eq("01-01-2000") }
+    it { is_expected.to eq("2019-04-21") }
   end
 
   describe "#current_user_rate_value" do
