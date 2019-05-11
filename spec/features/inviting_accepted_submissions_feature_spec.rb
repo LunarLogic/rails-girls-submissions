@@ -20,7 +20,14 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
             rates_val: 1)
     end
 
-    it 'sends only one invitation email to each accepted submission' do
+    let!(:rejected_submission) do
+      FactoryGirl.create(
+            :submission,
+            rejected: true)
+    end
+
+    it 'sends only one invitation email to each accepted submission and one bad news email to each ' \
+      "submission which didn't get accepted" do
       allow(Setting).to receive(:registration_period?).and_return(false)
 
       login_as(user, scope: :user)
@@ -29,9 +36,10 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
 
       execute_background_jobs
 
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
       expect(setting.invitation_process_started).to be true
       expect(accepted_submission.reload.invitation_token).not_to be_nil
+      expect(rejected_submission.reload.bad_news_sent_at).not_to be_nil
     end
 
     it "doesn't send invitation emails if the registration open" do
@@ -46,6 +54,23 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
       expect(ActionMailer::Base.deliveries.count).to eq(0)
       expect(accepted_submission.reload.invitation_token).to be_nil
     end
+
+    it 'does not send any emails after clicking the button for the second time' do
+      allow(Setting).to receive(:registration_period?).and_return(false)
+
+      login_as(user, scope: :user)
+      visit submissions_results_path
+      click_link('Send')
+
+      execute_background_jobs
+
+      expect {
+        visit submissions_results_path
+        click_link('Send')
+        execute_background_jobs
+      }.not_to change { ActionMailer::Base.deliveries.count }
+    end
+
   end
 
   context "confirming invitations" do

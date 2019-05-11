@@ -19,4 +19,12 @@ class InvitationsMailer < ApplicationMailer
 
     mail(to: email, reply_to: contact_email, subject: 'Your invitation link expires soon!')
   end
+
+  def bad_news_email(submission, available_spots, contact_email)
+    email = submission.email
+    @available_spots = available_spots
+    @contact_email = contact_email
+
+    mail(to: email, reply_to: contact_email, subject: 'Your application for Rails Girls Kraków 2019')
+  end
 end

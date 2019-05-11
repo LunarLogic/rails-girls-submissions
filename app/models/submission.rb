@@ -36,6 +36,11 @@ class Submission < ActiveRecord::Base
     save!
   end
 
+  def mark_bad_news_delivery!
+    self.bad_news_sent_at = Time.zone.now
+    save!
+  end
+
   def confirm_invitation!
     self.invitation_confirmed = true
     save!

@@ -105,7 +105,11 @@ describe SubmissionRepository do
     let(:expired) { (Setting.get.days_to_confirm_invitation.days + 1.day).ago }
 
     let(:unrated_submission) do
-      FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num - 1)
+      FactoryGirl.create(
+        :submission,
+        :with_rates,
+        full_name: "Unrated",
+        rates_num: setting.required_rates_num - 1)
     end
 
     let(:invited_expiring_in_two_days_submission) do
@@ -113,6 +117,7 @@ describe SubmissionRepository do
         :submission,
         :with_rates,
         :invited,
+        full_name: "Invited expiring in two days",
         invitation_token_created_at: two_days_ago,
         rates_num: setting.required_rates_num)
     end
@@ -122,6 +127,7 @@ describe SubmissionRepository do
         :submission,
         :with_rates,
         :invited,
+        full_name: "Invited expiring in two days 2",
         invitation_token_created_at: two_days_ago,
         rates_num: setting.required_rates_num)
     end
@@ -131,6 +137,7 @@ describe SubmissionRepository do
         :submission,
         :with_rates,
         :invited,
+        full_name: "Expired",
         invitation_token_created_at: expired,
         rates_num: setting.required_rates_num)
     end
@@ -140,6 +147,7 @@ describe SubmissionRepository do
         :submission,
         :invited,
         :with_rates,
+        full_name: "Confirmed",
         invitation_token_created_at: two_days_ago,
         invitation_confirmed: true,
         rates_num: setting.required_rates_num)
@@ -148,7 +156,9 @@ describe SubmissionRepository do
     let(:confirmed_submission_2) do
       FactoryGirl.create(
         :submission,
+        :invited,
         :with_rates,
+        full_name: "Confirmed 2",
         invitation_token_created_at: two_days_ago,
         invitation_confirmed: true,
         rates_num: setting.required_rates_num)
@@ -158,6 +168,7 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
+        full_name: "Not invited",
         rates_num: setting.required_rates_num,
         rates_val: 5)
     end
@@ -166,6 +177,7 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
+        full_name: "Not invited 2",
         rates_num: setting.required_rates_num,
         rates_val: 4)
     end
@@ -174,11 +186,16 @@ describe SubmissionRepository do
       FactoryGirl.create(
         :submission,
         :with_rates,
+        full_name: "Not invited over the limit",
         rates_num: setting.required_rates_num,
         rates_val: 1)
     end
 
-    describe "#to_invite" do
+    let!(:rejected_submission) {
+      FactoryGirl.create(:submission, full_name: "Rejected", rejected: true)
+    }
+
+    describe "#to_invite_and_to_send_bad_news" do
       context "when some spots are confirmed and it's possible to invite more people at the moment" do
         let!(:list_of_submissions) { [
            unrated_submission,
@@ -186,12 +203,18 @@ describe SubmissionRepository do
            not_invited_submission,
            not_invited_submission_2,
            not_invited_over_the_limit_submission,
-           confirmed_submission
+           confirmed_submission,
+           rejected_submission,
         ] }
         let(:submissions_to_invite) { [not_invited_submission, not_invited_submission_2] }
-        subject { submission_repository.to_invite }
+        let(:submissions_to_send_bad_news) { [not_invited_over_the_limit_submission, rejected_submission, unrated_submission] }
 
-        it { expect(subject).to eq(submissions_to_invite) }
+        it "sends invitations and bad news to appropriate submissions" do
+          actual_submissions_to_invite, actual_submissions_to_send_bad_news = submission_repository.to_invite_and_to_send_bad_news
+
+          expect(actual_submissions_to_invite).to match_array(submissions_to_invite)
+          expect(actual_submissions_to_send_bad_news).to match_array(submissions_to_send_bad_news)
+        end
       end
 
       context "when no spots are confirmed and it's possible to invite more people at the moment" do
@@ -201,12 +224,19 @@ describe SubmissionRepository do
            not_invited_submission,
            not_invited_submission_2,
            not_invited_over_the_limit_submission,
+           rejected_submission,
         ] }
         let(:submissions_to_invite) { [
           not_invited_submission, not_invited_submission_2, not_invited_over_the_limit_submission
         ] }
-        subject { submission_repository.to_invite }
-        it { expect(subject).to eq(submissions_to_invite) }
+        let(:submissions_to_send_bad_news) { [rejected_submission, unrated_submission] }
+
+        it "sends invitations and bad news to appropriate submissions" do
+          actual_submissions_to_invite, actual_submissions_to_send_bad_news = submission_repository.to_invite_and_to_send_bad_news
+
+          expect(actual_submissions_to_invite).to match_array(submissions_to_invite)
+          expect(actual_submissions_to_send_bad_news).to match_array(submissions_to_send_bad_news)
+        end
       end
 
       context "when all the spots are confirmed or not expired yet" do
@@ -218,12 +248,45 @@ describe SubmissionRepository do
            not_invited_submission_2,
            not_invited_over_the_limit_submission,
            confirmed_submission,
-           confirmed_submission_2
+           confirmed_submission_2,
+           rejected_submission,
         ] }
         let(:submissions_to_invite) { [] }
-        subject { submission_repository.to_invite }
+        let(:submissions_to_send_bad_news) { [
+          not_invited_submission, not_invited_submission_2, not_invited_over_the_limit_submission,
+          rejected_submission, unrated_submission,
+        ] }
 
-        it { expect(subject).to eq(submissions_to_invite) }
+        it "sends invitations and bad news to appropriate submissions" do
+          actual_submissions_to_invite, actual_submissions_to_send_bad_news = submission_repository.to_invite_and_to_send_bad_news
+
+          expect(actual_submissions_to_invite).to match_array(submissions_to_invite)
+          expect(actual_submissions_to_send_bad_news).to match_array(submissions_to_send_bad_news)
+        end
+      end
+
+      context "when all the spots are confirmed or not expired yet and not invited submissions " \
+        "already received bad news, except the unrated submission (because it just got created)" do
+        let!(:list_of_submissions) { [
+           unrated_submission,
+           invited_expiring_in_two_days_submission,
+           invited_expiring_in_two_days_submission_2,
+           not_invited_submission.tap { |s| s.update!(bad_news_sent_at: Time.zone.now) },
+           not_invited_submission_2.tap { |s| s.update!(bad_news_sent_at: Time.zone.now) },
+           not_invited_over_the_limit_submission.tap { |s| s.update!(bad_news_sent_at: Time.zone.now) },
+           confirmed_submission,
+           confirmed_submission_2,
+           rejected_submission.tap { |s| s.update!(bad_news_sent_at: Time.zone.now) },
+        ] }
+        let(:submissions_to_invite) { [] }
+        let(:submissions_to_send_bad_news) { [unrated_submission] }
+
+        it "sends invitations and bad news to appropriate submissions" do
+          actual_submissions_to_invite, actual_submissions_to_send_bad_news = submission_repository.to_invite_and_to_send_bad_news
+
+          expect(actual_submissions_to_invite).to match_array(submissions_to_invite)
+          expect(actual_submissions_to_send_bad_news).to match_array(submissions_to_send_bad_news)
+        end
       end
     end
 

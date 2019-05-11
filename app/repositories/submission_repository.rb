@@ -23,8 +23,11 @@ class SubmissionRepository
     rated
   end
 
-  def to_invite
-    rated_not_invited.limit(limit_to_invite_at_the_moment)
+  def to_invite_and_to_send_bad_news
+    to_invite = rated_not_invited.limit(limit_to_invite_at_the_moment)
+    to_send_bad_news = didnt_receive_bad_news_nor_invitation.where.not(id: to_invite.ids)
+
+    [to_invite, to_send_bad_news]
   end
 
   def to_remind
@@ -65,6 +68,10 @@ class SubmissionRepository
 
   def not_rejected
     Submission.where(rejected: false)
+  end
+
+  def didnt_receive_bad_news_nor_invitation
+    Submission.where(invitation_token: nil, bad_news_sent_at: nil)
   end
 
   def with_rates_if_any

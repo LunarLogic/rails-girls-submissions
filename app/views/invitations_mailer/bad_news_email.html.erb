@@ -1,0 +1,61 @@
+<table class="main">
+  <tr>
+    <td class="wrapper">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td>
+            <p>
+              Hello,
+            </p>
+
+            <p>
+              We’re sorry to say that you were not accepted for this edition of the Rails Girls Kraków
+              workshops. :( We got quite a lot of applications and have only <%= @available_spots %>
+              spots to fill.
+            </p>
+
+            <p>
+              Don’t let it discourage you though! Keep learning and keep moving forward. Stay up to
+              date with other events and workshops by following
+              <%= link_to nil, "https://www.facebook.com/WebMuses" %> and see you again soon!
+            </p>
+
+            <ul>
+              <li>
+                <p>
+                  Is this final?
+                </p>
+                <p>
+                  <strong>We do have a waiting list</strong> which we’ll keep updating right until
+                  the workshops, <strong>so keep an eye on your inbox!</strong>
+                </p>
+              </li>
+              <li>
+                <p>
+                  What should I do to have a better chance of being accepted next time?
+                </p>
+                <p>
+                  We're looking for honest and personal answers that clearly state the reason why
+                  you want to participate.
+                </p>
+              </li>
+            </ul>
+
+            <p>If you have any questions, contact us: <%= mail_to @contact_email %></p>
+
+            <table border="0" cellpadding="0" cellspacing="0">
+              <tbody>
+                <tr>
+                  <td align="right">
+                    <p> With love, </br>
+                        Rails Girls Kraków Team</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
