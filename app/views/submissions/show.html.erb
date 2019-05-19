@@ -73,16 +73,16 @@
       <%= submission.problems %>
     </div>
 
-    <% if !submission.rejected? %>
-      <aside class="aside-widget aside-widget-rating">
+    <aside class="aside-widget aside-widget-rating">
+      <% if !submission.rejected? %>
         <%= form_tag(rate_path(filter, submission), class: "submission-rating-form", id: "js-submission-rating-form") do %>
           <fieldset class="starability-fade fieldset-inline"
                     id="js-user-rating"
                     data-rate="<%= submission.current_user_rate_value %>">
-            <% 5.downto(1) do |rate| %>
-              <%= radio_button_tag("value", rate) %>
-              <%= label_tag("value_" + rate.to_s, rate) %>
-            <% end %>
+                    <% 5.downto(1) do |rate| %>
+                      <%= radio_button_tag("value", rate) %>
+                      <%= label_tag("value_" + rate.to_s, rate) %>
+                    <% end %>
           </fieldset>
         <% end %>
 
@@ -108,21 +108,21 @@
             </span>
           </section>
         <% end %>
+      <% end %>
 
-        <section class="submission-comments">
-          <h2 class="aside-widget-header"> Comments </h2>
-          <% comment_presenters.each do |presenter| %>
-            <div class="submission-comment">
-              <span class="submission-comment-author"><%= presenter.user_nickname %></span>
-              <span class="submission-comment-date"><%= presenter.timestamp %></span>
-              <div class="submission-comment-content"><%= presenter.body %></div>
-              <br>
-            </div>
-          <% end %>
+      <section class="submission-comments">
+        <h2 class="aside-widget-header"> Comments </h2>
+        <% comment_presenters.each do |presenter| %>
+          <div class="submission-comment">
+            <span class="submission-comment-author"><%= presenter.user_nickname %></span>
+            <span class="submission-comment-date"><%= presenter.timestamp %></span>
+            <div class="submission-comment-content"><%= presenter.body %></div>
+            <br>
+          </div>
+        <% end %>
 
-          <%= render 'comments/form', { filter: filter, submission: submission, comment: comment } %>
-        </section>
-      </aside>
-    <% end %>
+        <%= render 'comments/form', { filter: filter, submission: submission, comment: comment } %>
+      </section>
+    </aside>
   </article>
 </div>
