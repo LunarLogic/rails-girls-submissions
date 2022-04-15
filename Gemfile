@@ -28,8 +28,6 @@ gem 'whenever', require: false
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
 gem 'pg'
 
 gem 'high_voltage', '~> 3.1'
@@ -57,6 +55,9 @@ group :development do
   gem "capistrano-rails"
   gem "capistrano3-unicorn"
   gem "quiet_assets"
+  gem 'rbnacl', '>= 3.2', '< 5.0'
+  gem 'rbnacl-libsodium'
+  gem 'bcrypt_pbkdf', '~> 1.0'
 end
 
 group :test do
