@@ -59,6 +59,7 @@ group :development do
   gem 'rbnacl', '>= 3.2', '< 5.0'
   gem 'rbnacl-libsodium'
   gem 'bcrypt_pbkdf', '~> 1.0'
+  gem 'rubocop-rails', require: false
 end
 
 group :test do
