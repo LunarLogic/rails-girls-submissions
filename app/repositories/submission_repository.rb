@@ -48,12 +48,12 @@ class SubmissionRepository
 
   def next(submissions, current_submission)
     submissions.where('submissions.created_at > ?', current_submission.created_at)
-      .reorder('created_at ASC').first
+               .reorder('created_at ASC').first
   end
 
   def previous(submissions, current_submission)
     submissions.where('submissions.created_at < ?', current_submission.created_at)
-      .reorder('created_at DESC').first
+               .reorder('created_at DESC').first
   end
 
   def comments(submission)
@@ -99,7 +99,7 @@ class SubmissionRepository
   def invited_not_expired
     with_rates_if_any
       .where('invitation_token IS NOT ? AND DATE(invitation_token_created_at) > ?',
-    nil, Setting.get.days_to_confirm_invitation.days.ago.to_date)
+             nil, Setting.get.days_to_confirm_invitation.days.ago.to_date)
       .order('AVG(value) DESC')
   end
 
@@ -114,6 +114,7 @@ class SubmissionRepository
     to = (days_to_confirm_invitation - 2).days.ago.to_date
     invited_not_expired_not_confirmed.where(
       'DATE(invitation_token_created_at) > ? AND DATE(invitation_token_created_at) <= ?',
-      from, to)
+      from, to
+    )
   end
 end

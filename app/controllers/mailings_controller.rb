@@ -14,7 +14,7 @@ class MailingsController < ApplicationController
     )
 
     if result.success
-      setting.update_attributes(invitation_process_started: true)
+      setting.update(invitation_process_started: true)
       notice = "#{result.message} Go to Menu &rarr; Background Jobs to check if all emails got delivered successfully."
     else
       notice = result.message

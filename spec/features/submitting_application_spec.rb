@@ -23,7 +23,7 @@ describe "user submits their railsgirls application" do
   let(:action) { click_on "Apply for workshop" }
 
   it "creates a new submission" do
-    choose :"submission_answers_attributes_0_value_well"
+    choose :submission_answers_attributes_0_value_well
 
     expect { action }.to change(Answer, :count).by(1).and change(Submission, :count).by(1)
     expect(current_path).to eq submissions_thank_you_path

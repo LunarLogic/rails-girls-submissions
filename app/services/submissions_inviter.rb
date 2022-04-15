@@ -20,7 +20,7 @@ class SubmissionsInviter
     end
 
     to_invite.each { |submission| invite(submission, deliver_now_or_later) }
-    to_send_bad_news.each { |submission| send_bad_news(submission, deliver_now_or_later)}
+    to_send_bad_news.each { |submission| send_bad_news(submission, deliver_now_or_later) }
 
     message = case deliver_now_or_later
               when :now

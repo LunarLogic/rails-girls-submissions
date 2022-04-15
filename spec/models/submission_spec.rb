@@ -33,21 +33,24 @@ RSpec.describe Submission, type: :model do
         :submission,
         invitation_token: 'xxx',
         invitation_token_created_at: confirmation_days.ago - 1,
-        invitation_confirmed: false)
+        invitation_confirmed: false
+      )
     end
     let(:confirmed_submission) do
       FactoryGirl.build(
         :submission,
         invitation_token: 'xxx',
         invitation_token_created_at: confirmation_days.ago - 1,
-        invitation_confirmed: true)
+        invitation_confirmed: true
+      )
     end
     let(:not_invited_submission) do
       FactoryGirl.build(
         :submission,
         invitation_token: nil,
         invitation_token_created_at: nil,
-        invitation_confirmed: false)
+        invitation_confirmed: false
+      )
     end
 
     it 'returns true when token expired and invitation is not confirmed' do

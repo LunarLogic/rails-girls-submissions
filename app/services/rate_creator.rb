@@ -20,5 +20,6 @@ class RateCreator
   end
 
   private
+
   attr_reader :value, :submission, :user
 end

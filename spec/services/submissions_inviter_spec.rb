@@ -10,11 +10,11 @@ describe SubmissionsInviter do
 
     subject {
       described_class.new(event_dates, event_venue, contact_email, available_spots)
-        .call(
-          to_invite: submissions_to_invite,
-          to_send_bad_news: submissions_to_send_bad_news,
-          deliver_now_or_later: deliver_now_or_later,
-        )
+                     .call(
+                       to_invite: submissions_to_invite,
+                       to_send_bad_news: submissions_to_send_bad_news,
+                       deliver_now_or_later: deliver_now_or_later,
+                     )
     }
 
     context "there are submissions to invite and to send bad news" do
@@ -71,11 +71,11 @@ describe SubmissionsInviter do
 
           expect {
             described_class.new(event_dates, event_venue, contact_email, available_spots)
-              .call(
-                to_invite: [submission],
-                to_send_bad_news: [],
-                deliver_now_or_later: :now,
-              )
+                           .call(
+                             to_invite: [submission],
+                             to_send_bad_news: [],
+                             deliver_now_or_later: :now,
+                           )
           }.to raise_error(error).and not_change { submission.reload.attributes }
         end
       end
@@ -94,11 +94,11 @@ describe SubmissionsInviter do
 
           expect {
             described_class.new(event_dates, event_venue, contact_email, available_spots)
-              .call(
-                to_invite: [],
-                to_send_bad_news: [submission],
-                deliver_now_or_later: :now,
-              )
+                           .call(
+                             to_invite: [],
+                             to_send_bad_news: [submission],
+                             deliver_now_or_later: :now,
+                           )
           }.to raise_error(error).and not_change { submission.reload.attributes }
         end
       end

@@ -48,4 +48,4 @@ end
 
 after 'deploy:publishing', 'deploy:restart'
 after 'deploy:published', 'delayed_job:restart'
-after "deploy:finishing",  "deploy:cleanup"
+after "deploy:finishing", "deploy:cleanup"

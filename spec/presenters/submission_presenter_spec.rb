@@ -85,7 +85,7 @@ RSpec.describe SubmissionPresenter do
   end
 
   describe "#current_user_rate_value" do
-    #overriden with a real objects
+    # overriden with a real objects
     let(:user) { FactoryGirl.create(:user) }
     let(:submission) { FactoryGirl.create(:submission) }
 
@@ -114,13 +114,13 @@ RSpec.describe SubmissionPresenter do
     subject { submission_presenter.invitation_status }
 
     before { allow(submission).to receive(:invitation_status).and_return(:example_status) }
-    it { is_expected.to eq("example status")}
+    it { is_expected.to eq("example status") }
   end
 
   describe "#status" do
     subject { submission_presenter.status }
 
     before { allow(submission).to receive(:status).and_return(:example_status) }
-    it { is_expected.to eq("example status")}
+    it { is_expected.to eq("example status") }
   end
 end

@@ -31,44 +31,44 @@ gem 'whenever', require: false
 
 gem 'pg'
 
-gem 'high_voltage', '~> 3.1'
 gem 'delayed_job_active_record'
 gem 'delayed_job_web'
+gem 'high_voltage', '~> 3.1'
 
 group :production do
   gem 'unicorn'
 end
 
 group :development, :test do
-  gem 'pry-rails'
   gem 'awesome_print'
+  gem 'pry-rails'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
   gem "better_errors"
+  gem 'web-console', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'bcrypt_pbkdf', '~> 1.0'
   gem "capistrano", "~> 3.3"
-  gem "capistrano-rbenv"
   gem "capistrano-bundler"
   gem "capistrano-rails"
+  gem "capistrano-rbenv"
   gem "capistrano3-unicorn"
   gem "quiet_assets"
   gem 'rbnacl', '>= 3.2', '< 5.0'
   gem 'rbnacl-libsodium'
-  gem 'bcrypt_pbkdf', '~> 1.0'
   gem 'rubocop-rails', require: false
+  gem 'spring'
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.0'
-  gem 'database_cleaner', require: false
-  gem "factory_girl_rails", "~> 4.0", require: false
-  gem 'selenium-webdriver', require: false
-  gem 'webdrivers', '~> 3.0'
   gem 'capybara', require: false
   gem 'capybara-screenshot'
+  gem 'database_cleaner', require: false
+  gem "factory_girl_rails", "~> 4.0", require: false
+  gem 'rspec-rails', '~> 3.0'
+  gem 'selenium-webdriver', require: false
   gem 'timecop'
+  gem 'webdrivers', '~> 3.0'
 end

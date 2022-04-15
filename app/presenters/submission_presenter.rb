@@ -17,14 +17,10 @@ class SubmissionPresenter < SimpleDelegator
   def average_rate
     if submission.rated?
       rates.average(:value).to_f.round(2)
-    else
-      nil
     end
   end
 
-  def rates_count
-    rates.count
-  end
+  delegate :count, to: :rates, prefix: true
 
   def created_at
     submission.created_at.strftime("%Y-%m-%d")

@@ -8,9 +8,9 @@ describe "csv downloading process" do
     before do
       allow(Setting).to receive(:get).and_return(setting)
       FactoryGirl.create(:submission, :with_rates,
-        rates_num: setting.required_rates_num,
-        rates_val: 3,
-        invitation_confirmed: true)
+                         rates_num: setting.required_rates_num,
+                         rates_val: 3,
+                         invitation_confirmed: true)
     end
 
     it "visits participants page, clicks 'Download', checks if csv file is downloaded" do

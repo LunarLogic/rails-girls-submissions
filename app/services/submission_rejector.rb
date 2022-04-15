@@ -3,7 +3,7 @@ class SubmissionRejector
     Rules::EnglishRule.new,
     Rules::FirstTimeRule.new,
     Rules::AdultRule.new,
-  ]
+  ].freeze
 
   def initialize(rules = RULES)
     @rules = rules
