@@ -17,8 +17,8 @@ RSpec.describe SubmissionRejector do
     context "when no rules are broken" do
       let!(:rules) { [Rules::EnglishRule.new, Rules::FirstTimeRule.new] }
       let!(:submission) do
-         FactoryGirl.create(:submission, english: "fluent", first_time: true)
-       end
+        FactoryGirl.create(:submission, english: "fluent", first_time: true)
+      end
 
       it "doesn't reject the submission" do
         subject.reject_if_any_rules_broken(submission)

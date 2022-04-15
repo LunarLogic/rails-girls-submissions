@@ -8,9 +8,7 @@ class AnswerPresenter
     @question = question
   end
 
-  def question_text
-    question.text
-  end
+  delegate :text, to: :question, prefix: true
 
   def value
     answer.value.gsub("_", " ")

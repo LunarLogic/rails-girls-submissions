@@ -13,17 +13,19 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
   context "sending invitation emails" do
     let!(:accepted_submission) do
       FactoryGirl.create(
-            :submission,
-            :with_rates,
-            invitation_token: nil,
-            rates_num: setting.required_rates_num,
-            rates_val: 1)
+        :submission,
+        :with_rates,
+        invitation_token: nil,
+        rates_num: setting.required_rates_num,
+        rates_val: 1
+      )
     end
 
     let!(:rejected_submission) do
       FactoryGirl.create(
-            :submission,
-            rejected: true)
+        :submission,
+        rejected: true
+      )
     end
 
     it 'sends only one invitation email to each accepted submission and one bad news email to each ' \
@@ -68,9 +70,8 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
         visit submissions_results_path
         click_link('Send')
         execute_background_jobs
-      }.not_to change { ActionMailer::Base.deliveries.count }
+      }.not_to(change { ActionMailer::Base.deliveries.count })
     end
-
   end
 
   context "confirming invitations" do
@@ -82,7 +83,8 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
         invitation_token_created_at: Time.zone.now,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
-        rates_val: 1)
+        rates_val: 1
+      )
 
       visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
       expect(invited_submission.reload.invitation_confirmed).to be true
@@ -97,7 +99,8 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
         invitation_token_created_at: confirmation_days.ago - 1,
         invitation_confirmed: false,
         rates_num: setting.required_rates_num,
-        rates_val: 1)
+        rates_val: 1
+      )
 
       visit submissions_confirm_invitation_path(invitation_token: invited_submission.invitation_token)
       expect(invited_submission.reload.invitation_confirmed).to be false
@@ -112,7 +115,8 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
         invitation_token_created_at: confirmation_days.ago - 1,
         invitation_confirmed: true,
         rates_num: setting.required_rates_num,
-        rates_val: 1)
+        rates_val: 1
+      )
 
       visit submissions_confirm_invitation_path(invitation_token: confirmed_submission.invitation_token)
       expect(page).to have_text('confirmed')

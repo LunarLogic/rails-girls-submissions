@@ -18,7 +18,7 @@ class SubmissionsController < ApplicationController
       submission.confirm_invitation!
       render 'invitation_confirmed'
     end
-  rescue => e
+  rescue StandardError => e
     logger.error(e)
     render text: "Something went wrong. Please make sure the address you are trying to visit
                   is correct, otherwise contact us by replying to the email you received
@@ -32,11 +32,14 @@ class SubmissionsController < ApplicationController
     result = SubmissionFilterGuard.new(submission, submission_filter).call
     message = result.message
 
+    # rubocop:disable Style/GuardClause
     if message == :forbidden_filter
-      return render file: "public/404.html", status: 404
+      return render file: "public/404.html", status: :not_found
     elsif message == :incorrect_filter
       return redirect_to "/admin/submissions/#{submission_filter}"
     end
+
+    # rubocop:enable Style/GuardClause
 
     submission_carousel = SubmissionCarousel.build(submission_filter)
     submission_repo = SubmissionRepository.new
@@ -99,7 +102,7 @@ class SubmissionsController < ApplicationController
 
   def answers_params
     result = params.require(:submission)
-      .permit(answers_attributes: [:value, :question_id])[:answers_attributes]
+                   .permit(answers_attributes: [:value, :question_id])[:answers_attributes]
     result ? result.values : {}
   end
 

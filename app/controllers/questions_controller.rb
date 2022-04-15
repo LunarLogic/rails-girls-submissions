@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   layout 'admin'
-  
+
   def index
     render :index, locals: { questions: Question.all, question: Question.new }
   end

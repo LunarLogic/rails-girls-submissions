@@ -8,13 +8,14 @@ describe "testing submissions filters:" do
     before do
       FactoryGirl.create(:submission, full_name: "Applicant To Rate")
       FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num,
-        full_name: "Applicant Rated")
+                                                   full_name: "Applicant Rated")
       FactoryGirl.create(:submission, rejected: true, full_name: "Applicant Rejected")
       FactoryGirl.create(
         :submission,
         :with_rates,
         invitation_confirmed: true,
-        full_name: "Applicant Confirmed Invitation")
+        full_name: "Applicant Confirmed Invitation"
+      )
 
       login_as(user, scope: :user)
       visit admin_path

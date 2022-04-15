@@ -26,7 +26,7 @@ FactoryGirl.define do
     end
 
     trait :invited do
-      sequence(:invitation_token) { |n| "#{n}#{n}#{n}"}
+      sequence(:invitation_token) { |n| "#{n}#{n}#{n}" }
       invitation_token_created_at { 2.days.ago }
     end
   end

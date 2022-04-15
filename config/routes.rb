@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "/submissions/preparation", to: "submissions#preparation"
 
   devise_for :users, skip: [:passwords, :registrations],
-    controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+                     controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
   scope "/admin" do
     get "/", to: "submission_filters#valid", as: :admin
@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     resources :questions, only: [:index, :new, :create, :destroy]
     authenticate :user do
       match "/background_jobs" => DelayedJobWeb, :anchor => false, :via => [:get, :post],
-        as: :background_jobs
+            as: :background_jobs
     end
   end
 

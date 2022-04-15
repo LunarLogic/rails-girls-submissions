@@ -34,7 +34,7 @@ class SettingsController < ApplicationController
 
   def dates_order_ok?(params)
     params[:beginning_of_preparation_period] < params[:beginning_of_registration_period] &&
-    params[:beginning_of_registration_period] <= params[:end_of_registration_period] &&
-    params[:event_start_date] < params[:event_end_date]
+      params[:beginning_of_registration_period] <= params[:end_of_registration_period] &&
+      params[:event_start_date] < params[:event_end_date]
   end
 end

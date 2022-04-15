@@ -19,13 +19,9 @@ class SettingPresenter
     present_date(setting.end_of_registration_period)
   end
 
-  def event_url
-    setting.event_url
-  end
+  delegate :event_url, to: :setting
 
-  def event_venue
-    setting.event_venue
-  end
+  delegate :event_venue, to: :setting
 
   private
 

@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require File.expand_path('boot', __dir__)
 
 require 'csv'
 require 'rails/all'
@@ -27,16 +27,17 @@ module RailsGirlsSubmissions
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths << Rails.root.join('app/presenters')
     config.autoload_paths << Rails.root.join('app/repositories')
-    config.action_view.field_error_proc = Proc.new do |html_tag, instance|
-      "<span class='field_with_errors'>#{html_tag}</span>".html_safe
+
+    config.action_view.field_error_proc = proc do |html_tag, _instance|
+      "<span class='field_with_errors'>#{html_tag}</span>".html_safe # rubocop:disable Rails/OutputSafety
     end
 
     host = Rails.application.secrets.host
-    if Rails.env.production? && host
-      config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
-    else
-      config.action_mailer.default_url_options = { host: 'localhost', protocol: 'http://', port: 3000 }
-    end
+    config.action_mailer.default_url_options = if Rails.env.production? && host
+                                                 { host: host, protocol: 'https://' }
+                                               else
+                                                 { host: 'localhost', protocol: 'http://', port: 3000 }
+                                               end
 
     config.active_job.queue_adapter = :delayed_job
   end
