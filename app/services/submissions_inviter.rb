@@ -37,9 +37,9 @@ class SubmissionsInviter
   attr_reader :event_dates, :event_venue, :contact_email, :available_spots
 
   def validate_deliver_now_or_later(value)
-    unless value.in?([:now, :later])
-      raise ArgumentError, "deliver_now_or_later accepts :now or :later, but #{value.inspect} was given"
-    end
+    return if value.in?([:now, :later])
+
+    raise ArgumentError, "deliver_now_or_later accepts :now or :later, but #{value.inspect} was given"
   end
 
   def invite(submission, deliver_now_or_later)

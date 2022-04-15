@@ -1,5 +1,7 @@
-class Rules::AdultRule
-  def broken?(submission)
-    !submission.adult?
+module Rules
+  class AdultRule
+    def broken?(submission)
+      !submission.adult?
+    end
   end
 end

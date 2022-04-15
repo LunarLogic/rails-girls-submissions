@@ -32,11 +32,14 @@ class SubmissionsController < ApplicationController
     result = SubmissionFilterGuard.new(submission, submission_filter).call
     message = result.message
 
+    # rubocop:disable Style/GuardClause
     if message == :forbidden_filter
       return render file: "public/404.html", status: :not_found
     elsif message == :incorrect_filter
       return redirect_to "/admin/submissions/#{submission_filter}"
     end
+
+    # rubocop:enable Style/GuardClause
 
     submission_carousel = SubmissionCarousel.build(submission_filter)
     submission_repo = SubmissionRepository.new

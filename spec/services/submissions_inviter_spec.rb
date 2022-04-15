@@ -76,7 +76,7 @@ describe SubmissionsInviter do
                              to_send_bad_news: [],
                              deliver_now_or_later: :now,
                            )
-          }.to raise_error(error).and not_change { submission.reload.attributes }
+          }.to raise_error(error).and not_change { submission.reload.attributes } # rubocop:disable Lint/AmbiguousBlockAssociation
         end
       end
 
@@ -99,7 +99,7 @@ describe SubmissionsInviter do
                              to_send_bad_news: [submission],
                              deliver_now_or_later: :now,
                            )
-          }.to raise_error(error).and not_change { submission.reload.attributes }
+          }.to raise_error(error).and not_change { submission.reload.attributes } # rubocop:disable Lint/AmbiguousBlockAssociation
         end
       end
     end

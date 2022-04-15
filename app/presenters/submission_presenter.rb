@@ -15,9 +15,9 @@ class SubmissionPresenter < SimpleDelegator
   end
 
   def average_rate
-    if submission.rated?
-      rates.average(:value).to_f.round(2)
-    end
+    return unless submission.rated?
+
+    rates.average(:value).to_f.round(2)
   end
 
   delegate :count, to: :rates, prefix: true

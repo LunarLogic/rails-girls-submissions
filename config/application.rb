@@ -27,8 +27,9 @@ module RailsGirlsSubmissions
     config.active_record.raise_in_transactional_callbacks = true
     config.autoload_paths << Rails.root.join('app/presenters')
     config.autoload_paths << Rails.root.join('app/repositories')
+
     config.action_view.field_error_proc = proc do |html_tag, _instance|
-      "<span class='field_with_errors'>#{html_tag}</span>".html_safe
+      "<span class='field_with_errors'>#{html_tag}</span>".html_safe # rubocop:disable Rails/OutputSafety
     end
 
     host = Rails.application.secrets.host

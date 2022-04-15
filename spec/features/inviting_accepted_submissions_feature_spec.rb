@@ -70,7 +70,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
         visit submissions_results_path
         click_link('Send')
         execute_background_jobs
-      }.not_to change { ActionMailer::Base.deliveries.count }
+      }.not_to(change { ActionMailer::Base.deliveries.count })
     end
   end
 

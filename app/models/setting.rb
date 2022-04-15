@@ -62,25 +62,22 @@ class Setting < ActiveRecord::Base
 
   def preparation_is_before_registration
     return unless beginning_of_registration_period && beginning_of_preparation_period
+    return unless beginning_of_registration_period < beginning_of_preparation_period
 
-    if beginning_of_registration_period < beginning_of_preparation_period
-      errors.add(:beginning_of_preparation_period, "has to be before beginning_of_registration_period")
-    end
+    errors.add(:beginning_of_preparation_period, "has to be before beginning_of_registration_period")
   end
 
   def registration_is_before_closed
     return unless beginning_of_closed_period && beginning_of_registration_period
+    return unless beginning_of_closed_period < beginning_of_registration_period
 
-    if beginning_of_closed_period < beginning_of_registration_period
-      errors.add(:beginning_of_registration_period, "has to be before beginning_of_closed_period")
-    end
+    errors.add(:beginning_of_registration_period, "has to be before beginning_of_closed_period")
   end
 
   def start_is_before_end
     return unless event_end_date && event_start_date
+    return unless event_end_date < event_start_date
 
-    if event_end_date < event_start_date
-      errors.add(:event_start_date, "has to be before event_end_date")
-    end
+    errors.add(:event_start_date, "has to be before event_end_date")
   end
 end
