@@ -22,6 +22,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 
 gem 'omniauth-github'
+gem 'omniauth-rails_csrf_protection'
 
 gem 'whenever', require: false
 
