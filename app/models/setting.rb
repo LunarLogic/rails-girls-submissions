@@ -1,4 +1,4 @@
-class Setting < ActiveRecord::Base
+class Setting < ApplicationRecord
   attr_accessor :end_of_registration_period
 
   validate :preparation_is_before_registration,

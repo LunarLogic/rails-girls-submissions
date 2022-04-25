@@ -1,4 +1,4 @@
-class Submission < ActiveRecord::Base
+class Submission < ApplicationRecord
   validates :full_name, :email, :description, :english,
             :operating_system, :goals, :gender, presence: true
   validates :first_time, inclusion: { in: [true, false] }

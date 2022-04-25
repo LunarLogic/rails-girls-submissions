@@ -36,7 +36,7 @@ RSpec.describe SubmissionsController, type: :controller do
   end
 
   describe "POST #create" do
-    subject { post :create, submission: submission_attributes }
+    subject { post :create, params: { submission: submission_attributes } }
 
     context "with vaild submission parameters" do
       let(:submission_attributes) do
@@ -73,12 +73,12 @@ RSpec.describe SubmissionsController, type: :controller do
     before { sign_in(FactoryGirl.create(:user)) }
 
     it "renders 404 if an invalid submission filter is typed in the path" do
-      get :show, filter: :invalid_filter, id: submission.id
+      get :show, params: { filter: :invalid_filter, id: submission.id }
       expect(response).to have_http_status(404)
     end
 
     it "redirects to index for a given filter if the submission doesn't belong to the filter" do
-      get :show, filter: :rated, id: submission.id
+      get :show, params: { filter: :rated, id: submission.id }
       expect(response).to have_http_status(404)
     end
   end
