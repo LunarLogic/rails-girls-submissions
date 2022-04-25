@@ -55,7 +55,6 @@ group :development do
   gem "capistrano-rails"
   gem "capistrano-rbenv"
   gem "capistrano3-unicorn"
-  gem "quiet_assets"
   gem 'rbnacl', '>= 3.2', '< 5.0'
   gem 'rubocop-rails', require: false
   gem 'spring'
