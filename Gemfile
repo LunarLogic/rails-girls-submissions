@@ -3,7 +3,7 @@ ruby '2.3.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '4.2.11.3'
-gem 'rails', '5.0.7.2'
+gem 'rails', '5.1.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -56,6 +56,7 @@ group :development do
   gem "capistrano-rails"
   gem "capistrano-rbenv"
   gem "capistrano3-unicorn"
+  gem 'listen'
   gem 'rbnacl', '>= 3.2', '< 5.0'
   gem 'rubocop-rails', require: false
   gem 'spring'
