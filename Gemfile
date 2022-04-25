@@ -66,6 +66,7 @@ group :test do
   gem 'capybara-screenshot'
   gem 'database_cleaner', require: false
   gem "factory_girl_rails", "~> 4.0", require: false
+  gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 4.0'
   gem 'selenium-webdriver', require: false
   gem 'timecop'
