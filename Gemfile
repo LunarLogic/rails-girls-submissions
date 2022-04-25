@@ -62,11 +62,11 @@ group :development do
 end
 
 group :test do
-  gem 'capybara', require: false
+  gem 'capybara', '2.16.1', require: false
   gem 'capybara-screenshot'
   gem 'database_cleaner', require: false
   gem "factory_girl_rails", "~> 4.0", require: false
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 4.0'
   gem 'selenium-webdriver', require: false
   gem 'timecop'
   gem 'webdrivers', '~> 3.0'
