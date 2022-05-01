@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "managing questions" do
+describe "managing questions", type: :feature do
   before do
     login_as(FactoryBot.create(:user), scope: :user)
   end
@@ -11,7 +11,7 @@ describe "managing questions" do
 
     visit admin_path
     click_link "Questions"
-    expect(current_path).to eq questions_path
+    expect(page).to have_current_path questions_path, ignore_query: true
     expect(page).to have_selector(".question-list-item", count: count)
   end
 
@@ -21,7 +21,7 @@ describe "managing questions" do
     text = "question's text"
     fill_in "Add a new question", with: text
     click_button('Create')
-    expect(current_path).to eq questions_path
+    expect(page).to have_current_path questions_path, ignore_query: true
     expect(page).to have_text(text)
   end
 
@@ -30,7 +30,7 @@ describe "managing questions" do
 
     visit questions_path
     click_link('Remove')
-    expect(current_path).to eq questions_path
+    expect(page).to have_current_path questions_path, ignore_query: true
     expect(page).not_to have_selector(".question-list-item")
   end
 end

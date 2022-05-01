@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "printing submission's rates in submission show view" do
+describe "printing submission's rates in submission show view", type: :feature do
   let!(:submission) { FactoryBot.create(:submission) }
   let!(:user) { FactoryBot.create(:user) }
   let!(:setting) { FactoryBot.create(:setting) }

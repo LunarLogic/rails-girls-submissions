@@ -6,17 +6,17 @@ RSpec.describe Submission, type: :model do
     expect(FactoryBot.build(:setting)).to be_valid
   end
 
-  include_examples :positive_present_integer, :setting, :available_spots
-  include_examples :positive_present_integer, :setting, :required_rates_num
-  include_examples :positive_present_integer, :setting, :days_to_confirm_invitation
-  include_examples :present, :setting, :beginning_of_preparation_period
-  include_examples :present, :setting, :beginning_of_registration_period
-  include_examples :present, :setting, :beginning_of_closed_period
-  include_examples :present, :setting, :event_start_date
-  include_examples :present, :setting, :event_end_date
-  include_examples :present, :setting, :event_url
-  include_examples :present, :setting, :available_spots
-  include_examples :present, :setting, :required_rates_num
+  include_examples 'positive present integer', :setting, :available_spots
+  include_examples 'positive present integer', :setting, :required_rates_num
+  include_examples 'positive present integer', :setting, :days_to_confirm_invitation
+  include_examples 'present', :setting, :beginning_of_preparation_period
+  include_examples 'present', :setting, :beginning_of_registration_period
+  include_examples 'present', :setting, :beginning_of_closed_period
+  include_examples 'present', :setting, :event_start_date
+  include_examples 'present', :setting, :event_end_date
+  include_examples 'present', :setting, :event_url
+  include_examples 'present', :setting, :available_spots
+  include_examples 'present', :setting, :required_rates_num
 
   it "validates that preparation comes before registration" do
     params = {

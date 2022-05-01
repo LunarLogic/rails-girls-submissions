@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "csv downloading process" do
+describe "csv downloading process", type: :feature do
   let(:user)    { FactoryBot.create(:user) }
   let(:setting) { FactoryBot.create(:setting, available_spots: 1, required_rates_num: 1) }
 

@@ -8,11 +8,11 @@ RSpec.describe SubmissionPresenter do
   let(:submission_presenter) { described_class.new(submission, rates, submission_repository, user) }
 
   describe "is a delegator" do
-    subject { submission_presenter }
+    subject(:presenter) { submission_presenter }
 
     it "acts like a Submission" do
-      is_expected.to eq(submission)
-      is_expected.not_to be_a(Submission)
+      expect(presenter).to eq(submission)
+      expect(presenter).not_to be_a(Submission)
     end
   end
 
@@ -26,13 +26,13 @@ RSpec.describe SubmissionPresenter do
     end
 
     describe "when submission is rated" do
+      subject { submission_presenter.average_rate }
+
       before { FactoryBot.create(:setting, required_rates_num: 2) }
 
       # overriden with real objects since average is calculated in the db
       let(:submission) { FactoryBot.create(:submission, :with_rates, rates_num: 2, rates_val: 2) }
       let(:rates) { submission.rates }
-
-      subject { submission_presenter.average_rate }
 
       it { is_expected.to eq(2) }
     end
@@ -40,8 +40,9 @@ RSpec.describe SubmissionPresenter do
 
   describe "delegates methods to submission_repository" do
     describe "#next" do
-      let(:result) { double }
       subject { submission_presenter.next }
+
+      let(:result) { double }
 
       before do
         date = double
@@ -53,8 +54,9 @@ RSpec.describe SubmissionPresenter do
     end
 
     describe "#previous" do
-      let(:result) { double }
       subject { submission_presenter.previous }
+
+      let(:result) { double }
 
       before do
         date = double
@@ -90,23 +92,19 @@ RSpec.describe SubmissionPresenter do
     let(:submission) { FactoryBot.create(:submission) }
 
     context "when the user has rated the submission" do
+      subject { submission_presenter.current_user_rate_value }
+
       before do
         FactoryBot.create(:rate, submission: submission, user: user, value: 1)
       end
 
-      subject { submission_presenter.current_user_rate_value }
-
-      it "returns its value" do
-        expect(subject).to eq(1)
-      end
+      it { is_expected.to eq(1) }
     end
 
     context "when the user hasn't rated the submission yet" do
       subject { submission_presenter.current_user_rate_value }
 
-      it "returns 0" do
-        expect(subject).to eq(0)
-      end
+      it { is_expected.to eq(0) }
     end
   end
 
@@ -114,6 +112,7 @@ RSpec.describe SubmissionPresenter do
     subject { submission_presenter.invitation_status }
 
     before { allow(submission).to receive(:invitation_status).and_return(:example_status) }
+
     it { is_expected.to eq("example status") }
   end
 
@@ -121,6 +120,7 @@ RSpec.describe SubmissionPresenter do
     subject { submission_presenter.status }
 
     before { allow(submission).to receive(:status).and_return(:example_status) }
+
     it { is_expected.to eq("example status") }
   end
 end

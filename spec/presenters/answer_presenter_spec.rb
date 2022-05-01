@@ -11,10 +11,10 @@ RSpec.describe AnswerPresenter do
   end
 
   describe "#value" do
-    subject { described_class.new(answer, question).value }
+    subject(:value) { described_class.new(answer, question).value }
 
     it "removes underscores from answer's enum value" do
-      is_expected.to eq("a little bit")
+      expect(value).to eq("a little bit")
     end
   end
 end

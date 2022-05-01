@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
-describe "user submits their railsgirls application" do
+describe "user submits their railsgirls application", type: :feature do
   before do
     allow(Setting).to receive(:registration_period?).and_return(true)
     FactoryBot.create(:question)
@@ -26,12 +26,12 @@ describe "user submits their railsgirls application" do
     choose :submission_answers_attributes_0_value_well
 
     expect { action }.to change(Answer, :count).by(1).and change(Submission, :count).by(1)
-    expect(current_path).to eq submissions_thank_you_path
+    expect(page).to have_current_path submissions_thank_you_path, ignore_query: true
   end
 
   it "doesn't create a submission unless all answers are present" do
     expect { action }.to not_change(Answer, :count).and not_change(Submission, :count)
-    expect(current_path).not_to eq submissions_thank_you_path
+    expect(page).to have_no_current_path submissions_thank_you_path, ignore_query: true
     expect(page).to have_text('Your submission needs to be corrected')
   end
 end

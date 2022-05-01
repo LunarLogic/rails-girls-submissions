@@ -6,7 +6,7 @@ describe SubmissionRepository do
 
   before { allow(Setting).to receive(:get).and_return(setting) }
 
-  context "all submissions are divided into valid and (automatically) rejected" do
+  context "when all submissions are divided into valid and (automatically) rejected" do
     let!(:valid_sub) { FactoryBot.create(:submission) }
     let!(:rejected_sub) { FactoryBot.create(:submission, rejected: true) }
 
@@ -23,7 +23,7 @@ describe SubmissionRepository do
     end
   end
 
-  context "valid submissions are divided into rated and to rate" do
+  context "when valid submissions are divided into rated and to rate" do
     let!(:rated_sub) {
       FactoryBot.create(
         :submission,
@@ -41,32 +41,33 @@ describe SubmissionRepository do
     }
 
     describe "#rated" do
-      subject { submission_repository.rated }
+      subject(:rated) { submission_repository.rated }
 
       it "returns valid submissions with a required rates number" do
-        expect(subject).to eq [rated_sub]
+        expect(rated).to eq [rated_sub]
       end
     end
 
     describe "#results" do
-      subject { submission_repository.results }
+      subject(:results) { submission_repository.results }
+
       before { allow(submission_repository).to receive(:rated).and_return([]) }
 
       it "is an alias for rated" do
-        expect(subject).to eq []
+        expect(results).to eq []
       end
     end
 
     describe "#to_rate" do
-      subject { submission_repository.to_rate }
+      subject(:submissions) { submission_repository.to_rate }
 
       it "returns valid submissions that don't have a required rates number" do
-        expect(subject).to eq [unrated_sub]
+        expect(submissions).to eq [unrated_sub]
       end
     end
   end
 
-  context "navigation between submissions" do
+  describe "navigating between submissions" do
     let!(:to_rate_submission_1) { FactoryBot.create(:to_rate_submission, created_at: 1.hour.ago) }
     let!(:to_rate_submission_2) { FactoryBot.create(:to_rate_submission) }
     let(:submissions) { Submission.all }
@@ -75,17 +76,13 @@ describe SubmissionRepository do
       context "when there is a next submission to rate" do
         subject { submission_repository.next(submissions, to_rate_submission_1) }
 
-        it "returns the next submission to rate" do
-          expect(subject).to eq to_rate_submission_2
-        end
+        it { is_expected.to eq to_rate_submission_2 }
       end
 
       context "when there are no more submissions after" do
         subject { submission_repository.next(submissions, to_rate_submission_2) }
 
-        it "doesn't return anything" do
-          expect(subject).to eq nil
-        end
+        it { is_expected.to eq nil }
       end
     end
 
@@ -93,23 +90,20 @@ describe SubmissionRepository do
       context "when there is a previous submission to rate" do
         subject { submission_repository.previous(submissions, to_rate_submission_2) }
 
-        it "returns the previous submission to rate" do
-          expect(subject).to eq to_rate_submission_1
-        end
+        it { is_expected.to eq to_rate_submission_1 }
       end
 
       context "when there are no more submissions before" do
         subject { submission_repository.previous(submissions, to_rate_submission_1) }
 
-        it "doesn't return anything" do
-          expect(subject).to eq nil
-        end
+        it { is_expected.to eq nil }
       end
     end
   end
 
-  context "mailer methods" do
+  describe "mailer methods" do
     before { allow(Setting).to receive(:get).and_return(setting) }
+
     let(:setting) { instance_double(Setting, available_spots: 4, days_to_confirm_invitation: 7, required_rates_num: 1) }
 
     let(:two_days_ago) { (Setting.get.days_to_confirm_invitation.days - 2.days).ago }
@@ -217,7 +211,7 @@ describe SubmissionRepository do
 
     describe "#to_invite_and_to_send_bad_news" do
       context "when some spots are confirmed and it's possible to invite more people at the moment" do
-        let!(:list_of_submissions) {
+        let!(:list_of_submissions) { # rubocop:disable RSpec/LetSetup
           [
             unrated_submission,
             invited_expiring_in_two_days_submission,
@@ -240,7 +234,7 @@ describe SubmissionRepository do
       end
 
       context "when no spots are confirmed and it's possible to invite more people at the moment" do
-        let!(:list_of_submissions) {
+        let!(:list_of_submissions) { # rubocop:disable RSpec/LetSetup
           [
             unrated_submission,
             invited_expiring_in_two_days_submission,
@@ -266,7 +260,7 @@ describe SubmissionRepository do
       end
 
       context "when all the spots are confirmed or not expired yet" do
-        let!(:list_of_submissions) {
+        let!(:list_of_submissions) { # rubocop:disable RSpec/LetSetup
           [
             unrated_submission,
             invited_expiring_in_two_days_submission,
@@ -297,7 +291,7 @@ describe SubmissionRepository do
 
       context "when all the spots are confirmed or not expired yet and not invited submissions " \
         "already received bad news, except the unrated submission (because it just got created)" do
-        let!(:list_of_submissions) {
+        let!(:list_of_submissions) { # rubocop:disable RSpec/LetSetup
           [
             unrated_submission,
             invited_expiring_in_two_days_submission,
@@ -323,7 +317,7 @@ describe SubmissionRepository do
     end
 
     describe "#to_remind" do
-      let!(:list_of_submissions) {
+      let!(:list_of_submissions) { # rubocop:disable RSpec/LetSetup
         [
           unrated_submission,
           invited_expiring_in_two_days_submission,
@@ -334,19 +328,21 @@ describe SubmissionRepository do
         ]
       }
       let(:submissions_to_invite) { [] }
-      context "days_to_confirm_invitation is at least 2" do
+
+      context "when days_to_confirm_invitation is at least 2" do
+        subject(:submissions) { submission_repository.to_remind }
+
         let(:submissions_to_remind) { [invited_expiring_in_two_days_submission] }
 
-        subject { submission_repository.to_remind }
-
         it "returns those expiring in two days" do
-          expect(subject).to eq(submissions_to_remind)
+          expect(submissions).to eq(submissions_to_remind)
         end
       end
 
-      context "days_to_confirm_invitation is less than 2" do
+      context "when days_to_confirm_invitation is less than 2" do
+        subject(:submissions) { submission_repository.to_remind }
+
         let(:submissions_to_remind) { [] }
-        subject { submission_repository.to_remind }
 
         before do
           allow(setting).to receive(:days_to_confirm_invitation).and_return(1)
@@ -355,13 +351,15 @@ describe SubmissionRepository do
         end
 
         it "doesn't send reminders for such short deadlines" do
-          expect(subject).to eq(submissions_to_remind)
+          expect(submissions).to eq(submissions_to_remind)
         end
       end
     end
   end
 
   describe '#participants' do
+    subject { submission_repository.participants }
+
     let!(:confirmed_submission) do
       FactoryBot.create(
         :submission,
@@ -372,7 +370,7 @@ describe SubmissionRepository do
       )
     end
 
-    let!(:not_confirmed_submission) do
+    let(:not_confirmed_submission) do
       FactoryBot.create(
         :submission,
         :with_rates,
@@ -380,14 +378,14 @@ describe SubmissionRepository do
         rates_num: setting.required_rates_num
       )
     end
-    subject { submission_repository.participants }
 
-    it { expect(subject).to eq([confirmed_submission]) }
+    it { is_expected.to eq([confirmed_submission]) }
   end
 
   describe '#comments' do
-    let(:submission) { double(comments: comments) }
+    let(:submission) { instance_double(Submission, comments: comments) }
     let(:comments) { double }
+
     before { allow(comments).to receive(:order) }
 
     it "delegates sorting comments to the db" do
@@ -398,8 +396,9 @@ describe SubmissionRepository do
   end
 
   describe '#rates' do
-    let(:submission) { double(rates: rates) }
+    let(:submission) { instance_double(Submission, rates: rates) }
     let(:rates) { double }
+
     before { allow(rates).to receive(:order) }
 
     it "delegates sorting rates to the db" do

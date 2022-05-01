@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "the commenting process" do
+describe "the commenting process", type: :feature do
   let(:submission) { FactoryBot.create(:submission) }
   let(:user) { FactoryBot.create(:user) }
   let(:comment_body) { 'lalala' }

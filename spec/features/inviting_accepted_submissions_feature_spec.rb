@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'inviting accepted submissions', :include_background_job_helpers do
+describe 'inviting accepted submissions', :include_background_job_helpers, type: :feature do
   let(:setting) { FactoryBot.build(:setting, available_spots: 2) }
   let!(:user) { FactoryBot.create(:user) }
   let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
@@ -10,7 +10,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     allow(Setting).to receive(:get).and_return(setting)
   end
 
-  context "sending invitation emails" do
+  describe 'sending invitation emails' do
     let!(:accepted_submission) do
       FactoryBot.create(
         :submission,
@@ -74,7 +74,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
   end
 
-  context "confirming invitations" do
+  describe 'confirming invitations' do
     it 'confirms submission' do
       invited_submission = FactoryBot.create(
         :submission,
@@ -123,7 +123,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
   end
 
-  context 'handling exceptions' do
+  describe 'handling exceptions' do
     it 'missing invitation token' do
       visit submissions_confirm_invitation_path
       expect(page).to have_text('Something went wrong')
@@ -135,7 +135,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
   end
 
-  context "when the accepted list is empty" do
+  context 'when the accepted list is empty' do
     it "makes `Send` link inactive" do
       login_as(user, scope: :user)
       visit submissions_results_path

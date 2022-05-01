@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "testing updating settings:" do
+describe "testing updating settings", type: :feature do
   before do
     FactoryBot.create(:setting)
     login_as(FactoryBot.create(:user), scope: :user)

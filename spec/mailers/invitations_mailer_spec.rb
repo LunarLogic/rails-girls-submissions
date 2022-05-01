@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InvitationsMailer, type: :mailer do
-  let(:submission) { double email: "example@email.com", invitation_token: 'xxx' }
+  let(:submission) { instance_double(Submission, email: "example@email.com", invitation_token: 'xxx') }
   let(:url) { submissions_confirm_invitation_url.to_s }
   let(:event_dates) { double }
   let(:event_venue) { double }
