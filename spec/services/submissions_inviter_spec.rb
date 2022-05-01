@@ -65,7 +65,7 @@ describe SubmissionsInviter do
         end
 
         it "rollbacks the invitation token generation" do
-          submission = FactoryGirl.create(:to_rate_submission)
+          submission = FactoryBot.create(:to_rate_submission)
           expect(InvitationsMailer).to receive(:invitation_email)
             .with(submission, event_dates, event_venue, contact_email).and_raise(error)
 
@@ -88,7 +88,7 @@ describe SubmissionsInviter do
         end
 
         it "rollbacks bad news datetime change" do
-          submission = FactoryGirl.create(:to_rate_submission)
+          submission = FactoryBot.create(:to_rate_submission)
           expect(InvitationsMailer).to receive(:bad_news_email)
             .with(submission, available_spots, contact_email).and_raise(error)
 

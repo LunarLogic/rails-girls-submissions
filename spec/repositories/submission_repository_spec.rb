@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 describe SubmissionRepository do
-  let(:setting) { FactoryGirl.build(:setting, available_spots: 1) }
+  let(:setting) { FactoryBot.build(:setting, available_spots: 1) }
   let(:submission_repository) { described_class.new }
 
   before { allow(Setting).to receive(:get).and_return(setting) }
 
   context "all submissions are divided into valid and (automatically) rejected" do
-    let!(:valid_sub) { FactoryGirl.create(:submission) }
-    let!(:rejected_sub) { FactoryGirl.create(:submission, rejected: true) }
+    let!(:valid_sub) { FactoryBot.create(:submission) }
+    let!(:rejected_sub) { FactoryBot.create(:submission, rejected: true) }
 
     describe "#rejected" do
       subject { submission_repository.rejected }
@@ -25,12 +25,19 @@ describe SubmissionRepository do
 
   context "valid submissions are divided into rated and to rate" do
     let!(:rated_sub) {
-      FactoryGirl.create(:submission, :with_rates,
-                         rates_num: setting.required_rates_num)
+      FactoryBot.create(
+        :submission,
+        :with_rates,
+        rates_num: setting.required_rates_num
+      )
     }
+
     let!(:unrated_sub) {
-      FactoryGirl.create(:submission, :with_rates,
-                         rates_num: (setting.required_rates_num - 1))
+      FactoryBot.create(
+        :submission,
+        :with_rates,
+        rates_num: (setting.required_rates_num - 1)
+      )
     }
 
     describe "#rated" do
@@ -60,8 +67,8 @@ describe SubmissionRepository do
   end
 
   context "navigation between submissions" do
-    let!(:to_rate_submission_1) { FactoryGirl.create(:to_rate_submission, created_at: 1.hour.ago) }
-    let!(:to_rate_submission_2) { FactoryGirl.create(:to_rate_submission) }
+    let!(:to_rate_submission_1) { FactoryBot.create(:to_rate_submission, created_at: 1.hour.ago) }
+    let!(:to_rate_submission_2) { FactoryBot.create(:to_rate_submission) }
     let(:submissions) { Submission.all }
 
     describe "#next" do
@@ -109,7 +116,7 @@ describe SubmissionRepository do
     let(:expired) { (Setting.get.days_to_confirm_invitation.days + 1.day).ago }
 
     let(:unrated_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         full_name: "Unrated",
@@ -118,7 +125,7 @@ describe SubmissionRepository do
     end
 
     let(:invited_expiring_in_two_days_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         :invited,
@@ -129,7 +136,7 @@ describe SubmissionRepository do
     end
 
     let(:invited_expiring_in_two_days_submission_2) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         :invited,
@@ -140,7 +147,7 @@ describe SubmissionRepository do
     end
 
     let(:expired_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         :invited,
@@ -151,7 +158,7 @@ describe SubmissionRepository do
     end
 
     let(:confirmed_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :invited,
         :with_rates,
@@ -163,7 +170,7 @@ describe SubmissionRepository do
     end
 
     let(:confirmed_submission_2) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :invited,
         :with_rates,
@@ -175,7 +182,7 @@ describe SubmissionRepository do
     end
 
     let(:not_invited_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         full_name: "Not invited",
@@ -185,7 +192,7 @@ describe SubmissionRepository do
     end
 
     let(:not_invited_submission_2) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         full_name: "Not invited 2",
@@ -195,7 +202,7 @@ describe SubmissionRepository do
     end
 
     let(:not_invited_over_the_limit_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         full_name: "Not invited over the limit",
@@ -205,7 +212,7 @@ describe SubmissionRepository do
     end
 
     let!(:rejected_submission) {
-      FactoryGirl.create(:submission, full_name: "Rejected", rejected: true)
+      FactoryBot.create(:submission, full_name: "Rejected", rejected: true)
     }
 
     describe "#to_invite_and_to_send_bad_news" do
@@ -356,7 +363,7 @@ describe SubmissionRepository do
 
   describe '#participants' do
     let!(:confirmed_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         :invited,
@@ -366,7 +373,7 @@ describe SubmissionRepository do
     end
 
     let!(:not_confirmed_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         :invited,

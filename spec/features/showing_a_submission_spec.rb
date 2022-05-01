@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "showing a submission" do
-  let!(:submission) { FactoryGirl.create(:submission) }
-  let(:user) { FactoryGirl.create(:user) }
+  let!(:submission) { FactoryBot.create(:submission) }
+  let(:user) { FactoryBot.create(:user) }
 
   let(:filter) { :valid }
   let(:filtered_submissions_path) { "/admin/submissions/#{filter}" }

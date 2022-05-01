@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe RateCreator do
-  let(:submission) { FactoryGirl.create(:submission) }
-  let(:user) { FactoryGirl.create(:user) }
+  let(:submission) { FactoryBot.create(:submission) }
+  let(:user) { FactoryBot.create(:user) }
   let(:value) { 1 }
   subject { described_class.build(value, submission.id, user.id) }
 
@@ -14,7 +14,7 @@ RSpec.describe RateCreator do
   end
 
   context 'when the user already rated the submission' do
-    let!(:rate) { FactoryGirl.create(:rate, submission: submission, user: user, value: 3) }
+    let!(:rate) { FactoryBot.create(:rate, submission: submission, user: user, value: 3) }
 
     it 'updates the rate' do
       result = subject.call

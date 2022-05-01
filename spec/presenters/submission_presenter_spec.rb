@@ -26,10 +26,10 @@ RSpec.describe SubmissionPresenter do
     end
 
     describe "when submission is rated" do
-      before { FactoryGirl.create(:setting, required_rates_num: 2) }
+      before { FactoryBot.create(:setting, required_rates_num: 2) }
 
       # overriden with real objects since average is calculated in the db
-      let(:submission) { FactoryGirl.create(:submission, :with_rates, rates_num: 2, rates_val: 2) }
+      let(:submission) { FactoryBot.create(:submission, :with_rates, rates_num: 2, rates_val: 2) }
       let(:rates) { submission.rates }
 
       subject { submission_presenter.average_rate }
@@ -86,12 +86,12 @@ RSpec.describe SubmissionPresenter do
 
   describe "#current_user_rate_value" do
     # overriden with a real objects
-    let(:user) { FactoryGirl.create(:user) }
-    let(:submission) { FactoryGirl.create(:submission) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:submission) { FactoryBot.create(:submission) }
 
     context "when the user has rated the submission" do
       before do
-        FactoryGirl.create(:rate, submission: submission, user: user, value: 1)
+        FactoryBot.create(:rate, submission: submission, user: user, value: 1)
       end
 
       subject { submission_presenter.current_user_rate_value }

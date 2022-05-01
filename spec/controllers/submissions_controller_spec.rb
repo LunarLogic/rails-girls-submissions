@@ -4,8 +4,12 @@ RSpec.describe SubmissionsController, type: :controller do
   describe "GET #new" do
     subject { get :new }
     let!(:settings) do
-      FactoryGirl.create(:setting, beginning_of_preparation_period: "2016-06-23 17:20:53 +0200",
-                                   beginning_of_registration_period: "2016-06-24 17:20:53 +0200", beginning_of_closed_period: "2016-06-25 17:20:53 +0200")
+      FactoryBot.create(
+        :setting,
+        beginning_of_preparation_period: "2016-06-23 17:20:53 +0200",
+        beginning_of_registration_period: "2016-06-24 17:20:53 +0200",
+        beginning_of_closed_period: "2016-06-25 17:20:53 +0200"
+      )
     end
 
     context "current date falls during the preparation period" do
@@ -40,7 +44,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
     context "with vaild submission parameters" do
       let(:submission_attributes) do
-        FactoryGirl.attributes_for(:submission)
+        FactoryBot.attributes_for(:submission)
       end
 
       it "redirects to thank you page" do
@@ -68,9 +72,9 @@ RSpec.describe SubmissionsController, type: :controller do
   end
 
   describe "GET #show" do
-    let(:submission) { FactoryGirl.create(:submission) }
+    let(:submission) { FactoryBot.create(:submission) }
 
-    before { sign_in(FactoryGirl.create(:user)) }
+    before { sign_in(FactoryBot.create(:user)) }
 
     it "renders 404 if an invalid submission filter is typed in the path" do
       get :show, params: { filter: :invalid_filter, id: submission.id }

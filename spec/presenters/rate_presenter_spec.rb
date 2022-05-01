@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RatePresenter do
-  let!(:rate) { FactoryGirl.create(:rate) }
+  let!(:rate) { FactoryBot.create(:rate) }
   subject { described_class.new(rate, rate.user) }
 
   it "presents rate's user nickname" do

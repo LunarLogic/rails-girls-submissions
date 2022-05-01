@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :submission, aliases: [:to_rate_submission] do
     sequence(:full_name) { |n| "User#{n}" }
     sequence(:email) { |n| "user#{n}@domain.com" }

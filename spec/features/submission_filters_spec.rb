@@ -1,16 +1,15 @@
 require "rails_helper"
 
 describe "testing submissions filters:" do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:setting) { FactoryGirl.create(:setting) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:setting) { FactoryBot.create(:setting) }
 
   context "when there are submissions to show" do
     before do
-      FactoryGirl.create(:submission, full_name: "Applicant To Rate")
-      FactoryGirl.create(:submission, :with_rates, rates_num: setting.required_rates_num,
-                                                   full_name: "Applicant Rated")
-      FactoryGirl.create(:submission, rejected: true, full_name: "Applicant Rejected")
-      FactoryGirl.create(
+      FactoryBot.create(:submission, full_name: "Applicant To Rate")
+      FactoryBot.create(:submission, :with_rates, rates_num: setting.required_rates_num, full_name: "Applicant Rated")
+      FactoryBot.create(:submission, rejected: true, full_name: "Applicant Rejected")
+      FactoryBot.create(
         :submission,
         :with_rates,
         invitation_confirmed: true,
@@ -55,7 +54,7 @@ describe "testing submissions filters:" do
 
   context "when there are no submissions to show" do
     before do
-      FactoryGirl.create(:submission, full_name: "Applicant To Rate")
+      FactoryBot.create(:submission, full_name: "Applicant To Rate")
       login_as(user, scope: :user)
       visit admin_path
     end

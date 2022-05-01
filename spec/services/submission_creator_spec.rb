@@ -4,8 +4,8 @@ RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.describe SubmissionCreator do
   describe "#call" do
-    let(:submission) { FactoryGirl.build(:submission) }
-    let(:answer) { FactoryGirl.build(:answer, submission: submission) }
+    let(:submission) { FactoryBot.build(:submission) }
+    let(:answer) { FactoryBot.build(:answer, submission: submission) }
     let(:submission_rejector) { double(reject_if_any_rules_broken: nil) }
 
     subject { described_class.new(submission, [answer], submission_rejector).call }
@@ -19,7 +19,7 @@ RSpec.describe SubmissionCreator do
     end
 
     context "when the submission is invalid" do
-      let(:submission) { FactoryGirl.build(:submission, email: "foo") }
+      let(:submission) { FactoryBot.build(:submission, email: "foo") }
 
       it "doesn't create either the submission or the answers" do
         expect { subject }.to not_change(Submission, :count).and not_change(Answer, :count)

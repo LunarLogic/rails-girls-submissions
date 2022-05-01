@@ -6,7 +6,7 @@ RSpec.describe SubmissionRejector do
 
     context "when there are no rules" do
       let!(:rules) { [] }
-      let!(:submission) { FactoryGirl.create(:submission) }
+      let!(:submission) { FactoryBot.create(:submission) }
 
       it "doesn't reject the submission" do
         subject.reject_if_any_rules_broken(submission)
@@ -17,7 +17,7 @@ RSpec.describe SubmissionRejector do
     context "when no rules are broken" do
       let!(:rules) { [Rules::EnglishRule.new, Rules::FirstTimeRule.new] }
       let!(:submission) do
-        FactoryGirl.create(:submission, english: "fluent", first_time: true)
+        FactoryBot.create(:submission, english: "fluent", first_time: true)
       end
 
       it "doesn't reject the submission" do
@@ -29,7 +29,7 @@ RSpec.describe SubmissionRejector do
     context "when some rules are broken" do
       let!(:rules) { [Rules::EnglishRule.new, Rules::FirstTimeRule.new] }
       let!(:submission) do
-        FactoryGirl.create(:submission, english: "none", first_time: true)
+        FactoryBot.create(:submission, english: "none", first_time: true)
       end
 
       it "rejects the submission" do

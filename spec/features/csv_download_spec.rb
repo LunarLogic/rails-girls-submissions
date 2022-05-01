@@ -1,16 +1,19 @@
 require 'rails_helper'
 
 describe "csv downloading process" do
-  let(:user)    { FactoryGirl.create(:user) }
-  let(:setting) { FactoryGirl.create(:setting, available_spots: 1, required_rates_num: 1) }
+  let(:user)    { FactoryBot.create(:user) }
+  let(:setting) { FactoryBot.create(:setting, available_spots: 1, required_rates_num: 1) }
 
   context "when submissions exist" do
     before do
       allow(Setting).to receive(:get).and_return(setting)
-      FactoryGirl.create(:submission, :with_rates,
-                         rates_num: setting.required_rates_num,
-                         rates_val: 3,
-                         invitation_confirmed: true)
+      FactoryBot.create(
+        :submission,
+        :with_rates,
+        rates_num: setting.required_rates_num,
+        rates_val: 3,
+        invitation_confirmed: true
+      )
     end
 
     it "visits participants page, clicks 'Download', checks if csv file is downloaded" do

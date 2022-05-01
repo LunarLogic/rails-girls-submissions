@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SettingPresenter do
   subject { described_class.new(setting) }
-  let(:setting) { FactoryGirl.create(:setting, setting_params) }
+  let(:setting) { FactoryBot.create(:setting, setting_params) }
 
   describe "#event_dates" do
     subject { described_class.new(setting).event_dates }

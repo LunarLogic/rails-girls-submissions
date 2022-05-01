@@ -5,7 +5,7 @@ RSpec::Matchers.define_negated_matcher :not_change, :change
 describe "user submits their railsgirls application" do
   before do
     allow(Setting).to receive(:registration_period?).and_return(true)
-    FactoryGirl.create(:question)
+    FactoryBot.create(:question)
 
     visit root_path
 

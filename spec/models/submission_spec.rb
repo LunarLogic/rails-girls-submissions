@@ -2,20 +2,20 @@ require "rails_helper"
 
 RSpec.describe Submission, type: :model do
   it "has a valid factory" do
-    expect(FactoryGirl.build(:submission)).to be_valid
+    expect(FactoryBot.build(:submission)).to be_valid
   end
 
   it "requires a full_name" do
-    expect(FactoryGirl.build(:submission, full_name: "")).not_to be_valid
+    expect(FactoryBot.build(:submission, full_name: "")).not_to be_valid
   end
 
   it "requires a valid email" do
-    expect(FactoryGirl.build(:submission, email: "invalid#email.io")).not_to be_valid
-    expect(FactoryGirl.build(:submission, email: "invalid@emaiio")).not_to be_valid
+    expect(FactoryBot.build(:submission, email: "invalid#email.io")).not_to be_valid
+    expect(FactoryBot.build(:submission, email: "invalid@emaiio")).not_to be_valid
   end
 
   describe '#generate_invitation_token!' do
-    let(:submission) { FactoryGirl.create(:submission) }
+    let(:submission) { FactoryBot.create(:submission) }
 
     it 'generates invitation token' do
       submission.generate_invitation_token!
@@ -25,11 +25,11 @@ RSpec.describe Submission, type: :model do
   end
 
   describe '#invitation_expired?' do
-    before { allow(Setting).to receive(:get).and_return(FactoryGirl.build(:setting)) }
+    before { allow(Setting).to receive(:get).and_return(FactoryBot.build(:setting)) }
     let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
 
     let(:expired_submission) do
-      FactoryGirl.build(
+      FactoryBot.build(
         :submission,
         invitation_token: 'xxx',
         invitation_token_created_at: confirmation_days.ago - 1,
@@ -37,7 +37,7 @@ RSpec.describe Submission, type: :model do
       )
     end
     let(:confirmed_submission) do
-      FactoryGirl.build(
+      FactoryBot.build(
         :submission,
         invitation_token: 'xxx',
         invitation_token_created_at: confirmation_days.ago - 1,
@@ -45,7 +45,7 @@ RSpec.describe Submission, type: :model do
       )
     end
     let(:not_invited_submission) do
-      FactoryGirl.build(
+      FactoryBot.build(
         :submission,
         invitation_token: nil,
         invitation_token_created_at: nil,
@@ -67,7 +67,7 @@ RSpec.describe Submission, type: :model do
   end
 
   describe "#invitation_status" do
-    let(:submission) { FactoryGirl.build(:submission) }
+    let(:submission) { FactoryBot.build(:submission) }
 
     subject { submission.invitation_status }
 

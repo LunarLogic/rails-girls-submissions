@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe CommentCreator do
-  let!(:submission) { FactoryGirl.create(:submission) }
-  let!(:user) { FactoryGirl.create(:user) }
+  let!(:submission) { FactoryBot.create(:submission) }
+  let!(:user) { FactoryBot.create(:user) }
   let!(:comment_body) { "comment" }
   subject { described_class.build(comment_body, submission.id, user.id) }
 
