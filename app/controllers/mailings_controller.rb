@@ -20,6 +20,6 @@ class MailingsController < ApplicationController
       notice = result.message
     end
 
-    redirect_to :back, notice: notice
+    redirect_back(fallback_location: admin_path, notice: notice)
   end
 end

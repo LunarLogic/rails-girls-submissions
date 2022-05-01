@@ -1,9 +1,13 @@
-require: rubocop-rails
+require:
+  - rubocop-rails
+  - rubocop-rspec
 
 inherit_from:
 - https://relaxed.ruby.style/rubocop.yml
 
 AllCops:
+  TargetRubyVersion: 2.3
+  TargetRailsVersion: 5.1
   Exclude:
     - bin/*
     - db/migrate/*
@@ -32,3 +36,12 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/ExampleLength:
+  Max: 25

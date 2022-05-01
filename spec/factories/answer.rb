@@ -1,5 +1,8 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :answer do
-    value 3
+    association :submission
+    association :question
+
+    value { 3 }
   end
 end

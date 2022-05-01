@@ -15,8 +15,12 @@ class SubmissionCreator
   def call
     submission_rejector.reject_if_any_rules_broken(submission)
 
-    if submission_and_answers_are_valid
-      save(submission, answers)
+    if submission.valid?
+      begin
+        save!(submission, answers)
+      rescue ActiveRecord::RecordInvalid => _e
+        return Result.new({ submission: submission, answers: answers }, false)
+      end
       result_value = true
     else
       result_value = false
@@ -29,19 +33,12 @@ class SubmissionCreator
 
   attr_reader :submission, :answers, :submission_rejector
 
-  def save(submission, answers)
-    submission.save
-
+  def save!(submission, answers)
     answers.map do |a|
       a.submission = submission
-      a.save
+      a.save!
     end
-  end
 
-  def submission_and_answers_are_valid
-    # so that it runs :valid? on all of the objects and sets errors if necessary
-    submission_is_valid = submission.valid?
-    answers_are_valid = answers.map(&:valid?).all?
-    submission_is_valid && answers_are_valid
+    submission.save!
   end
 end

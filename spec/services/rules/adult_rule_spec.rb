@@ -5,13 +5,15 @@ describe Rules::AdultRule do
     subject { described_class.new.broken?(submission) }
 
     context 'when the applicant is underage' do
-      let!(:submission) { FactoryGirl.create(:submission, adult: false) }
-      it { expect(subject).to equal(true) }
+      let(:submission) { FactoryBot.create(:submission, adult: false) }
+
+      it { is_expected.to equal(true) }
     end
 
     context 'when the applicant is adult' do
-      let!(:submission) { FactoryGirl.create(:submission, adult: true) }
-      it { expect(subject).to equal(false) }
+      let(:submission) { FactoryBot.create(:submission, adult: true) }
+
+      it { is_expected.to equal(false) }
     end
   end
 end

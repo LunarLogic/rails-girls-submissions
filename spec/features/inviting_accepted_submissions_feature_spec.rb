@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'inviting accepted submissions', :include_background_job_helpers do
-  let(:setting) { FactoryGirl.build(:setting, available_spots: 2) }
-  let!(:user) { FactoryGirl.create(:user) }
+describe 'inviting accepted submissions', :include_background_job_helpers, type: :feature do
+  let(:setting) { FactoryBot.build(:setting, available_spots: 2) }
+  let!(:user) { FactoryBot.create(:user) }
   let(:confirmation_days) { Setting.get.days_to_confirm_invitation.days }
 
   before do
@@ -10,9 +10,9 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     allow(Setting).to receive(:get).and_return(setting)
   end
 
-  context "sending invitation emails" do
+  describe 'sending invitation emails' do
     let!(:accepted_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         :with_rates,
         invitation_token: nil,
@@ -22,7 +22,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
 
     let!(:rejected_submission) do
-      FactoryGirl.create(
+      FactoryBot.create(
         :submission,
         rejected: true
       )
@@ -74,9 +74,9 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
   end
 
-  context "confirming invitations" do
+  describe 'confirming invitations' do
     it 'confirms submission' do
-      invited_submission = FactoryGirl.create(
+      invited_submission = FactoryBot.create(
         :submission,
         :with_rates,
         invitation_token: 'xxx',
@@ -92,7 +92,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
 
     it "doesn't confirm submission with expired invitation token" do
-      invited_submission = FactoryGirl.create(
+      invited_submission = FactoryBot.create(
         :submission,
         :with_rates,
         invitation_token: 'zzz',
@@ -108,7 +108,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
 
     it 'show correct info when invitation is already confirmed but token expired' do
-      confirmed_submission = FactoryGirl.create(
+      confirmed_submission = FactoryBot.create(
         :submission,
         :with_rates,
         invitation_token: 'yyy',
@@ -123,7 +123,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
   end
 
-  context 'handling exceptions' do
+  describe 'handling exceptions' do
     it 'missing invitation token' do
       visit submissions_confirm_invitation_path
       expect(page).to have_text('Something went wrong')
@@ -135,7 +135,7 @@ describe 'inviting accepted submissions', :include_background_job_helpers do
     end
   end
 
-  context "when the accepted list is empty" do
+  context 'when the accepted list is empty' do
     it "makes `Send` link inactive" do
       login_as(user, scope: :user)
       visit submissions_results_path

@@ -1,4 +1,4 @@
-class Question < ActiveRecord::Base
+class Question < ApplicationRecord
   validates :text, length: { in: 1..140 }
   validates :text, presence: true
 

@@ -1,8 +1,8 @@
 require "rails_helper"
 
-describe "showing a submission" do
-  let!(:submission) { FactoryGirl.create(:submission) }
-  let(:user) { FactoryGirl.create(:user) }
+describe "showing a submission", type: :feature do
+  let!(:submission) { FactoryBot.create(:submission) }
+  let(:user) { FactoryBot.create(:user) }
 
   let(:filter) { :valid }
   let(:filtered_submissions_path) { "/admin/submissions/#{filter}" }
@@ -14,8 +14,8 @@ describe "showing a submission" do
 
   it "shows a submission and goes back to the list view" do
     click_link('Show')
-    expect(current_path).to eq submission_path(filter, submission.id)
+    expect(page).to have_current_path submission_path(filter, submission.id), ignore_query: true
     click_link('Back', class: 'link-return')
-    expect(current_path).to eq filtered_submissions_path
+    expect(page).to have_current_path filtered_submissions_path, ignore_query: true
   end
 end

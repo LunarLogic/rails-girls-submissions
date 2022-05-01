@@ -20,7 +20,7 @@ class SubmissionsController < ApplicationController
     end
   rescue StandardError => e
     logger.error(e)
-    render text: "Something went wrong. Please make sure the address you are trying to visit
+    render plain: "Something went wrong. Please make sure the address you are trying to visit
                   is correct, otherwise contact us by replying to the email you received
                   the confirmation link from."
   end

@@ -2,18 +2,21 @@ require 'rails_helper'
 
 RSpec.describe SettingPresenter do
   subject { described_class.new(setting) }
-  let(:setting) { FactoryGirl.create(:setting, setting_params) }
+
+  let(:setting) { FactoryBot.create(:setting, setting_params) }
 
   describe "#event_dates" do
     subject { described_class.new(setting).event_dates }
 
     context "when both dates are in the same month" do
       let(:setting_params) { { event_start_date: "2016-07-08", event_end_date: "2016-07-09" } }
+
       it { is_expected.to eq("8-9 July") }
     end
 
     context "when the dates aren't in the same month" do
       let(:setting_params) { { event_start_date: "2016-06-30", event_end_date: "2016-07-01" } }
+
       it { is_expected.to eq("30 June-1 July") }
     end
   end

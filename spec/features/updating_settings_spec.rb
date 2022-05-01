@@ -1,9 +1,9 @@
 require "rails_helper"
 
-describe "testing updating settings:" do
+describe "testing updating settings", type: :feature do
   before do
-    FactoryGirl.create(:setting)
-    login_as(FactoryGirl.create(:user), scope: :user)
+    FactoryBot.create(:setting)
+    login_as(FactoryBot.create(:user), scope: :user)
     visit settings_path
 
     find("#setting_available_spots").set(5)

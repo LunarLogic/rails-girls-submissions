@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe SubmissionFilterGuard do
   describe '#call' do
+    subject(:result) { described_class.new(submission, filter, submission_repository).call }
+
     let(:submission) { instance_double("Submission", status: status) }
     let(:filter) { :symbol }
     let(:submission_repository) { instance_double("SubmissionRepository") }
-
-    subject { described_class.new(submission, filter, submission_repository).call }
 
     context "when filter is forbidden" do
       before { stub_const("#{described_class}::FILTERS", []) }
@@ -14,8 +14,8 @@ RSpec.describe SubmissionFilterGuard do
       let(:status) { nil }
 
       it "returns an error" do
-        expect(subject.success).to equal(false)
-        expect(subject.message).to eq(:forbidden_filter)
+        expect(result.success).to equal(false)
+        expect(result.message).to eq(:forbidden_filter)
       end
     end
 
@@ -28,16 +28,16 @@ RSpec.describe SubmissionFilterGuard do
       let(:status) { nil }
 
       it "returns an error" do
-        expect(subject.success).to equal(false)
-        expect(subject.message).to eq(:incorrect_filter)
+        expect(result.success).to equal(false)
+        expect(result.message).to eq(:incorrect_filter)
       end
 
-      context "unless its because a to_rate submission was just rated" do
+      context "when it's not because a to_rate submission was just rated" do
         let(:status) { :rated }
 
         it "doesn't return an error" do
-          expect(subject.success).to equal(true)
-          expect(subject.message).to eq(nil)
+          expect(result.success).to equal(true)
+          expect(result.message).to eq(nil)
         end
       end
     end
@@ -51,8 +51,8 @@ RSpec.describe SubmissionFilterGuard do
       let(:status) { nil }
 
       it "returns a success" do
-        expect(subject.success).to equal(true)
-        expect(subject.message).to eq(nil)
+        expect(result.success).to equal(true)
+        expect(result.message).to eq(nil)
       end
     end
   end

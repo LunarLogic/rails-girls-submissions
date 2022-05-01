@@ -1,8 +1,8 @@
 require "rails_helper"
 
-describe "the commenting process" do
-  let(:submission) { FactoryGirl.create(:submission) }
-  let(:user) { FactoryGirl.create(:user) }
+describe "the commenting process", type: :feature do
+  let(:submission) { FactoryBot.create(:submission) }
+  let(:user) { FactoryBot.create(:user) }
   let(:comment_body) { 'lalala' }
   let(:invalid_comment_body) { 'lalala' * 100 }
 
