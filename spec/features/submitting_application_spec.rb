@@ -32,5 +32,6 @@ describe "user submits their railsgirls application" do
   it "doesn't create a submission unless all answers are present" do
     expect { action }.to not_change(Answer, :count).and not_change(Submission, :count)
     expect(current_path).not_to eq submissions_thank_you_path
+    expect(page).to have_text('Your submission needs to be corrected')
   end
 end
