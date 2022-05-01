@@ -42,6 +42,7 @@ end
 
 group :development, :test do
   gem 'awesome_print'
+  gem 'byebug', require: true
   gem 'pry-rails'
 end
 

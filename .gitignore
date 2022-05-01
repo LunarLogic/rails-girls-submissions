@@ -25,3 +25,4 @@
 # Ignore all failing integration tests' screenshots
 screenshot_*.html
 .DS_Store
+.byebug_history

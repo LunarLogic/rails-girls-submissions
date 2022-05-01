@@ -54,6 +54,7 @@ GEM
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     builder (3.2.4)
+    byebug (11.0.1)
     capistrano (3.8.2)
       airbrussh (>= 1.0.0)
       i18n
@@ -345,6 +346,7 @@ DEPENDENCIES
   awesome_print
   bcrypt_pbkdf (~> 1.0)
   better_errors
+  byebug
   capistrano (~> 3.3)
   capistrano-bundler
   capistrano-rails
