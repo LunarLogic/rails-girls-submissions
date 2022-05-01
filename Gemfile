@@ -60,6 +60,7 @@ group :development do
   gem 'listen'
   gem 'rbnacl', '>= 3.2', '< 5.0'
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
   gem 'spring'
 end
 

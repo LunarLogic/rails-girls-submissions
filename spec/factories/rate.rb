@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :rate do
     association :submission
     association :user
-    value 1
+    value { 1 }
   end
 end

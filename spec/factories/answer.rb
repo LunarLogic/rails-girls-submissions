@@ -3,6 +3,6 @@ FactoryBot.define do
     association :submission
     association :question
 
-    value 3
+    value { 3 }
   end
 end
