@@ -72,5 +72,5 @@ group :test do
   gem 'rspec-rails', '~> 5.0'
   gem 'selenium-webdriver', require: false
   gem 'timecop'
-  gem 'webdrivers', '~> 3.0'
+  gem 'webdrivers', '~> 4.0'
 end
