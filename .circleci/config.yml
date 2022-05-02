@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/LunarLogic/rails-girls-submissions
     parallelism: 1
     docker:
-      - image: circleci/ruby:2.3.8-browsers-legacy
+      - image: cimg/ruby:2.6-browsers
         environment:
           RAILS_ENV: test
           PGHOST: localhost
