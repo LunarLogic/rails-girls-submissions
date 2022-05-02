@@ -16,7 +16,7 @@ class SubmissionRepository
   def rated
     with_rates_if_any
       .having('count("rates") >= ?', Setting.get.required_rates_num)
-      .order('AVG(value) DESC')
+      .order(Arel.sql('AVG(value) DESC'))
   end
 
   def results
@@ -35,7 +35,7 @@ class SubmissionRepository
   end
 
   def participants
-    with_rates_if_any.where(invitation_confirmed: true).order('AVG(value) DESC')
+    with_rates_if_any.where(invitation_confirmed: true).order(Arel.sql('AVG(value) DESC'))
   end
 
   def first(submissions)
@@ -100,7 +100,7 @@ class SubmissionRepository
     with_rates_if_any
       .where('invitation_token IS NOT ? AND DATE(invitation_token_created_at) > ?',
              nil, Setting.get.days_to_confirm_invitation.days.ago.to_date)
-      .order('AVG(value) DESC')
+      .order(Arel.sql('AVG(value) DESC'))
   end
 
   def invited_not_expired_not_confirmed

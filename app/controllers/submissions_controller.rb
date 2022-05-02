@@ -102,7 +102,7 @@ class SubmissionsController < ApplicationController
 
   def answers_params
     result = params.require(:submission)
-                   .permit(answers_attributes: [:value, :question_id])[:answers_attributes]
+                   .permit(answers_attributes: [:choice, :question_id])[:answers_attributes]
     result ? result.values : {}
   end
 

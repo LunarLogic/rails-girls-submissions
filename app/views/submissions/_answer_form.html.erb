@@ -3,20 +3,20 @@
     <legend><%= question.text %></legend>
     <%= hidden_field_tag("submission[answers_attributes][#{a.index}][question_id]", question.id) %>
     <div>
-      <%= a.radio_button :value, :not_at_all, required: true %>
-      <%= a.label :value, "not at all", value: "not_at_all" %>
+      <%= a.radio_button :choice, :not_at_all, required: true %>
+      <%= a.label :choice, "not at all", value: "not_at_all" %>
     </div>
     <div>
-      <%= a.radio_button :value, :a_little_bit, required: true %>
-      <%= a.label :value, "a little bit", value: "a_little_bit" %>
+      <%= a.radio_button :choice, :a_little_bit, required: true %>
+      <%= a.label :choice, "a little bit", value: "a_little_bit" %>
     </div>
     <div>
-      <%= a.radio_button :value, :ok, required: true %>
-      <%= a.label :value, "ok", value: "ok" %>
+      <%= a.radio_button :choice, :ok, required: true %>
+      <%= a.label :choice, "ok", value: "ok" %>
     </div>
     <div>
-      <%= a.radio_button :value, :well, required: true %>
-      <%= a.label :value, "well", value: "well" %>
+      <%= a.radio_button :choice, :well, required: true %>
+      <%= a.label :choice, "well", value: "well" %>
     </div>
     </fieldset>
   </fieldset>

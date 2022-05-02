@@ -23,7 +23,7 @@ describe "user submits their railsgirls application", type: :feature do
   let(:action) { click_on "Apply for workshop" }
 
   it "creates a new submission" do
-    choose :submission_answers_attributes_0_value_well
+    choose :submission_answers_attributes_0_choice_well
 
     expect { action }.to change(Answer, :count).by(1).and change(Submission, :count).by(1)
     expect(page).to have_current_path submissions_thank_you_path, ignore_query: true
