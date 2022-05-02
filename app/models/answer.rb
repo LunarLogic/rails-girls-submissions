@@ -1,10 +1,10 @@
 class Answer < ApplicationRecord
-  validates :value, presence: true
+  validates :choice, presence: true
 
   belongs_to :submission
   belongs_to :question
 
-  enum value: {
+  enum choice: {
     not_at_all: 0,
     a_little_bit: 1,
     ok: 2,

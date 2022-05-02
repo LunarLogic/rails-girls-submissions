@@ -10,8 +10,8 @@ class AnswerPresenter
 
   delegate :text, to: :question, prefix: true
 
-  def value
-    answer.value.gsub("_", " ")
+  def choice
+    answer.choice.gsub("_", " ")
   end
 
   private

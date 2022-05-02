@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnswerPresenter do
-  let(:answer) { instance_double("Answer", value: "a_little_bit") }
+  let(:answer) { instance_double("Answer", choice: "a_little_bit") }
   let(:question) { instance_double("Question", text: "text") }
 
   describe "#question_text" do
@@ -10,11 +10,11 @@ RSpec.describe AnswerPresenter do
     it { is_expected.to eq(question.text) }
   end
 
-  describe "#value" do
-    subject(:value) { described_class.new(answer, question).value }
+  describe "#choice" do
+    subject(:choice) { described_class.new(answer, question).choice }
 
     it "removes underscores from answer's enum value" do
-      expect(value).to eq("a little bit")
+      expect(choice).to eq("a little bit")
     end
   end
 end
