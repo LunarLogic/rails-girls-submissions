@@ -69,7 +69,7 @@ group :test do
   gem 'database_cleaner', require: false
   gem 'factory_bot_rails', '~> 4.0', require: false
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 4.0'
+  gem 'rspec-rails', '~> 5.0'
   gem 'selenium-webdriver', require: false
   gem 'timecop'
   gem 'webdrivers', '~> 3.0'
