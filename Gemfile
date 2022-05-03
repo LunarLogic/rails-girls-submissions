@@ -1,14 +1,12 @@
 source 'https://rubygems.org'
-ruby '2.3.8'
+ruby '2.6.9'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.2.7'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 6.0'
+gem 'sass-rails', '5.0.7'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -72,5 +70,5 @@ group :test do
   gem 'rspec-rails', '~> 5.0'
   gem 'selenium-webdriver', require: false
   gem 'timecop'
-  gem 'webdrivers', '~> 4.0'
+  gem 'webdrivers', '~> 3.0'
 end
