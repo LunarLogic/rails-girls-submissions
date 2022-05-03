@@ -20,7 +20,7 @@ fetch(:default_env).merge!(rails_env: "production", rack_env: "production")
 set :ssh_options, { forward_agent: true }
 
 set :rbenv_type, :system
-set :rbenv_ruby, '2.3.8'
+set :rbenv_ruby, '2.6.9'
 
 set :keep_releases, 5
 
