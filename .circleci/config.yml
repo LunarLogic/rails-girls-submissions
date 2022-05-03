@@ -16,8 +16,13 @@ jobs:
           POSTGRES_PASSWORD: ""
     steps:
       - checkout
+      - run: |
+          ruby --version
+          node --version
 
-      - run: sudo apt-get update && sudo apt-get -y install libtool autoconf automake
+      - run:
+          name: Install libraries needed by libsodium
+          command: sudo apt-get update && sudo apt-get -y install libtool autoconf automake
 
       - type: cache-restore
         name: Restore bundle cache
