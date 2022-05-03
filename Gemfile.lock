@@ -137,8 +137,6 @@ GEM
     kgio (2.11.0)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8-node (16.10.0.0)
-    libv8-node (16.10.0.0-x86_64-linux)
     listen (3.5.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -151,8 +149,6 @@ GEM
     method_source (0.8.2)
     mini_mime (1.1.2)
     mini_portile2 (2.4.0)
-    mini_racer (0.6.2)
-      libv8-node (~> 16.10.0.0)
     minitest (5.15.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -369,7 +365,6 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   listen
-  mini_racer
   omniauth-github
   omniauth-rails_csrf_protection
   pg

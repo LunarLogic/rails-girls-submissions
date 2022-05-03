@@ -7,8 +7,6 @@ gem 'rails', '5.2.7'
 gem 'sass-rails', '5.0.7'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'mini_racer'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
