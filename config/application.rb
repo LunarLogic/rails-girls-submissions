@@ -26,7 +26,7 @@ module RailsGirlsSubmissions
       "<span class='field_with_errors'>#{html_tag}</span>".html_safe # rubocop:disable Rails/OutputSafety
     end
 
-    host = Rails.application.secrets.host
+    host = ENV['HOST']
     config.action_mailer.default_url_options = if Rails.env.production? && host
                                                  { host: host, protocol: 'https://' }
                                                else

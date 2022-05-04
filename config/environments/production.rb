@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  host = Rails.application.secrets.host
+  host = ENV['EMAIL_HOST']
   config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
 
   config.action_mailer.delivery_method = :smtp
@@ -9,8 +9,8 @@ Rails.application.configure do
     address: 'smtp.mandrillapp.com',
     port: 587,
     domain: host,
-    user_name: Rails.application.secrets.mandrill["username"],
-    password: Rails.application.secrets.mandrill["api_key"],
+    user_name: ENV['MANDRILL_USERNAME'],
+    password: ENV['MANDRILL_API_KEY'],
     authentication: 'plain',
     enable_starttls_auto: true
   }
