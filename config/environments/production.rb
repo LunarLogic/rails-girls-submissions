@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  host = ENV['HOST']
+  host = ENV['EMAIL_HOST']
   config.action_mailer.default_url_options = { host: host, protocol: 'https://' }
 
   config.action_mailer.delivery_method = :smtp
