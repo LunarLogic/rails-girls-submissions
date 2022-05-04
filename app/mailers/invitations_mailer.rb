@@ -7,7 +7,7 @@ class InvitationsMailer < ApplicationMailer
     @days_to_confirm = 14 # Setting.get.days_to_confirm_invitation
     @contact_email = 'contact@railsgirlskrakow.pl' # contact_email
 
-    mail(to: email, reply_to: contact_email, subject: 'Confirm your Rails Girls Kraków 2022 participation!')
+    mail(to: email, reply_to: @contact_email, subject: 'Confirm your Rails Girls Kraków 2022 participation!')
   end
 
   def reminder_email(submission, event_dates, event_venue, contact_email)
