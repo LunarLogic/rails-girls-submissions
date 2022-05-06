@@ -1,25 +1,22 @@
 <% content_for :title, 'Apply for Rails Girls Kraków' %>
 
-<div class="hero-section">
-  <div class="hero-section-content l-wrapper-medium">
-    <div class="info-box">
-      <h1 class="info-title">
-        <span class="info-title-small">Rails Girls Kraków</span>
-        <span class="info-title-big">Get excited and learn to build the web</span>
-      </h1>
-      <ul class="info-list">
-        <li class="info-list-item"><%= footer_presenter.event_dates_with_year %></li>
-        <li class="info-list-item">KPT, Podole 60, Kraków</li>
-        <li class="info-list-item"><a href="http://www.railsgirls.com/krakow" rel="noopener">railsgirls.com/krakow</a></li>
-      </ul>
-    </div>
+<div class="l-wrapper-medium l-wrapper--white">
+  <%= image_tag "RubyHeader.svg", alt: "Girl coding in Ruby on Rails", class: "header-image" %>
+  <div class="info-box">
+    <h1 class="info-title-small">Rails Girls Kraków</h2>
+    <h2 class="info-title-big">Get excited and learn to&nbsp;build the&nbsp;web</h2>
+    <ul class="info-list">
+      <li class="info-list-item"><%= footer_presenter.event_dates_with_year %></li>
+      <li class="info-list-item">KPT, Podole 60, Kraków</li>
+      <li class="info-list-item"><a href="http://www.railsgirls.com/krakow" rel="noopener">railsgirls.com/krakow</a></li>
+    </ul>
   </div>
-</div>
-<div class="l-wrapper-medium application-form">
-  <%= render 'form', { submission: submission, answers: answers, show_errors: show_errors, footer_presenter: footer_presenter } %>
-  <div class="form-field">
-    <small>
-      I agree to the processing of personal data provided in this document for realising the recruitment process pursuant to the Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018, item 1000) and in agreement with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation).
-    </small>
+  <div class="application-form">
+    <%= render 'form', { submission: submission, answers: answers, show_errors: show_errors, footer_presenter: footer_presenter } %>
+    <div class="form-field">
+      <small>
+        I agree to the processing of personal data provided in this document for realising the recruitment process pursuant to the Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018, item 1000) and in agreement with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation).
+      </small>
+    </div>
   </div>
 </div>
