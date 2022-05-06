@@ -37,6 +37,15 @@
   }
 }
 
+.closed-page,
+.soon-page {
+  h1 {
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px $basic-shadow;
+  }
+}
+
 .invitation-page {
   padding-top: $baseline;
 }
@@ -45,11 +54,6 @@
   padding: 1rem;
   text-align: center;
 
-  h1 {
-    color: white;
-    text-shadow: 1px 1px $basic-shadow;
-  }
-
   img {
     display: inline-block;
     margin-bottom: 3rem;
@@ -57,7 +61,7 @@
   }
 
   @include media($tablet) {
-    padding-top: 3rem;
+    padding-top: 4rem;
   }
 }
 
