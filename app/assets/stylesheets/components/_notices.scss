@@ -9,7 +9,8 @@
   background-color: $rg-red;
 
   @include media($desktop) {
-    float: left;
+    position: absolute;
     width: 400px;
+    z-index: 1;
   }
 }
