@@ -28,9 +28,23 @@ $fs1: 1.125rem;
 $fs2: 1.5rem;
 $fs3: 1.8rem;
 
+$fs-text: 16px;
+$lh-text: 24px;
+
+$fs-heading: 32px;
+$lh-heading: 44px;
+
+$fs-subheading: 18px;
+$lh-subheading: 27px;
+
 // Colors
 
-$rg-red: #e66571;
+$dark: #0a0a0a;
+$bg: #9e83f0;
+$accent: #ffce62;
+$basic-shadow: rgba(0, 0, 0, 0.3);
+
+$rg-red: #d3360b;
 $rg-navy: #132a49;
 
 $grey-super-light: #eee;
@@ -38,13 +52,8 @@ $grey-light: #ccc;
 $grey-dark: #333;
 $grey-default: #999;
 
-$pink-300: #fbecf0;
-$pink-500: #e4adbb;
-$purple-500: #775279;
-$pink-opaque: rgba(218, 158, 163, 0.32);
-
 // Misc
 
 $footer-height: $bs3;
-$event-url-prefix-w:  $bs4;
+$event-url-prefix-w: $bs4;
 $rating-widget-width: 350px;

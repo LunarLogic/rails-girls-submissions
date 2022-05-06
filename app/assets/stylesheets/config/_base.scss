@@ -7,12 +7,15 @@ html {
 }
 
 body {
+  color: $dark;
   position: relative;
   min-height: 100%;
   padding-bottom: $footer-height;
   font-family: "Poppins", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   overflow-x: hidden;
+  font-size: $fs-text;
+  line-height: $lh-text;
 }
 
 h1,
@@ -22,12 +25,14 @@ h2 {
 }
 
 h1 {
-  font-size: $bs2;
+  font-size: $fs-heading;
+  $line-height: $lh-heading;
   font-weight: 700;
 }
 
 h2 {
-  font-size: $bs1;
+  font-size: $fs-subheading;
+  $line-height: $lh-subheading;
   font-weight: 300;
 }
 

@@ -23,11 +23,12 @@
 }
 
 .applications-page {
-  background-color: $pink-300;
+  background-color: $bg;
 }
 
-.login-page, .closed-page {
-  background: image-url('cover.svg') top center no-repeat;
+.login-page,
+.closed-page {
+  background: image-url("cover.svg") top center no-repeat;
   background-size: 100% auto;
   padding-top: 400px;
 }

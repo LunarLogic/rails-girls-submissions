@@ -1,5 +1,4 @@
 .aside-widget-submission {
-
   .form-aside-link {
     display: block;
 
@@ -7,7 +6,8 @@
       width: 400px;
       height: 400px;
       margin-top: $bs1;
-      background: image-url('rails-girls-krakow-2016.png') no-repeat center bottom;
+      background: image-url("rails-girls-krakow-2016.png") no-repeat center
+        bottom;
       background-size: 100% auto;
       color: transparent;
     }
@@ -19,7 +19,7 @@
 
   @include media($tablet) {
     padding: 5rem 0;
-    background: image-url('cover.svg') no-repeat center top;
+    background: image-url("cover.svg") no-repeat center top;
     background-size: auto 100%;
     margin-bottom: -2rem;
     position: relative;
@@ -37,7 +37,7 @@
   background-color: white;
   width: 100%;
   padding: 2rem;
-  box-shadow: 0 0 30px $pink-opaque;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
 
   @include media($tablet) {
     width: 23rem;
@@ -51,6 +51,7 @@
 
 .info-title-small {
   font-size: $fs1;
+  line-height: 27px;
   color: $rg-red;
   display: block;
 }
@@ -78,7 +79,7 @@
     height: 30px;
     margin: 0 0.6rem 0 0;
     vertical-align: top;
-    background: image-url('icons-info.svg') left top no-repeat;
+    background: image-url("icons-info.svg") left top no-repeat;
     background-size: auto 100%;
   }
 
@@ -96,7 +97,7 @@
 .application-form {
   background-color: white;
   padding: 3rem 1rem 1rem;
-  box-shadow: 0 0 30px $pink-opaque;
+  box-shadow: 0 0 30px $basic-shadow;
 
   @include media($desktop) {
     padding: 5rem 9rem 1rem;
