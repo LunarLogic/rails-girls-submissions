@@ -4,7 +4,7 @@
   width: 95%;
   margin: 2rem auto;
   background-color: white;
-  box-shadow: 0 0 30px rgba(218, 158, 163, 0.32);
+  box-shadow: 0 0 30px $basic-shadow;
 
   @include media($tablet) {
     padding: 3rem 2rem;
@@ -16,12 +16,14 @@
     margin: 0 0 2rem;
   }
 
-  h1 { color: $rg-red; }
+  h1 {
+    color: $rg-red;
+  }
 
   p {
     font-size: 1.25rem;
     line-height: 1.4;
-   }
+  }
 
   .small-text {
     display: block;

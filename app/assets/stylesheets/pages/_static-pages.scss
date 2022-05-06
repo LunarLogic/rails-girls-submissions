@@ -28,9 +28,13 @@
 
 .login-page,
 .closed-page {
-  background: image-url("cover.svg") top center no-repeat;
-  background-size: 100% auto;
+  background: image-url("RubyHeader.svg") top 4rem center no-repeat;
+  background-size: 300px auto;
   padding-top: 400px;
+
+  @include media($tablet) {
+    background-size: 400px auto;
+  }
 }
 
 .invitation-page {
