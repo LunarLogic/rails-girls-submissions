@@ -22,7 +22,7 @@
     <%= f.label :gender %>
     <%= f.text_field :gender, maxLength: 255, required: true %>
   </div>
-  <div class="form-field form-field-boolean">
+  <div class="form-field form-field-boolean" style="display: flex;">
     <%= f.check_box :adult %>
     <%= f.label :adult, "I am over 18 years old" %>
   </div>
@@ -76,15 +76,17 @@
     </div>
   </fieldset>
 
-  <div class="form-field form-field-boolean">
+  <div class="form-field form-field-boolean" style="display: flex;">
     <%= f.check_box :first_time %>
     <%= f.label :first_time, "I did not take part in Rails Girls before" %>
   </div>
+
   <div class="form-field">
     <%= f.label :goals, "How are you going to use the knowledge acquired during the workshop? What are your goals and expectations?" %>
     <%= f.text_area :goals, maxlength: 500, required: true %>
     <span class="character-counter"></span>
   </div>
+
   <div class="form-field">
     <%= f.label :problems do %>
       Is there anything we should be aware of to make your experience during the workshop better?
@@ -94,13 +96,42 @@
     <%= f.text_area :problems, class: "textarea-small", maxlength: 255 %>
     <span class="character-counter"></span>
   </div>
+
   <div class="form-field form-field-boolean" style="display: flex;">
     <%= check_box_tag :processing_consent, "1", false, required: true, style: "flex-shrink: 0;" %>
     <%= label_tag :processing_consent do  %>
       I consent to the organizers processing my data for the purpose of organizing the&nbsp;workshop, as described in
-      <%= link_to 'the privacy policy', page_path("privacy_policy"), target: "_blank" %>
+      <%= link_to 'the privacy policy', page_path("privacy_policy"), target: "_blank" %>.
     <% end %>
   </div>
+
+  <div class="form-field form-field-boolean">
+    <div style="display: flex;">
+      <%= check_box_tag :covid_test_consent, "1", false, required: true, style: "flex-shrink: 0;" %>
+      <%= label_tag :covid_test_consent do  %>
+        I agree to take the COVID-19 test provided by the organizers just before the event.
+      <% end %>
+    </div>
+
+    <p>
+      <small>
+        Since Rails Girls take the form of a crash-course — many people in the same indoor space — it is important to us to ensure the safety of all participants. Therefore, we will provide a COVID-19 test for each attendee.
+      </small>
+    </p>
+  </div>
+
+  <div class="form-field form-field-boolean">
+    <div style="display: flex;">
+      <%= check_box_tag :rodo_consent, "1", false, required: true, style: "flex-shrink: 0;" %>
+      <%= label_tag :rodo_consent do  %>
+        <small>
+          I agree to the processing of personal data provided in this document for realising the recruitment process pursuant to the Personal Data Protection Act of 10 May 2018 (Journal of Laws 2018, item 1000) and in agreement with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data, and repealing Directive 95/46/EC (General Data Protection Regulation).
+        </small>
+      <% end %>
+    </div>
+
+  </div>
+
   <div class="form-field">
     <%= f.submit "Apply for workshop", class: "btn-big" %>
   </div>
