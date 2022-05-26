@@ -3,11 +3,19 @@ class SettingPresenter
     @setting = setting
   end
 
+  def first_day
+    formatted_date(setting.event_start_date)
+  end
+
+  def second_day
+    formatted_date(setting.event_end_date)
+  end
+
   def event_dates
     if setting.event_start_date.month == setting.event_end_date.month
-      "#{setting.event_start_date.day}-#{present_date(setting.event_end_date)}"
+      "#{setting.event_start_date.day}-#{formatted_date(setting.event_end_date)}"
     else
-      "#{present_date(setting.event_start_date)}-#{present_date(setting.event_end_date)}"
+      "#{formatted_date(setting.event_start_date)}-#{formatted_date(setting.event_end_date)}"
     end
   end
 
@@ -16,7 +24,7 @@ class SettingPresenter
   end
 
   def registration_ends
-    present_date(setting.end_of_registration_period)
+    formatted_date(setting.end_of_registration_period)
   end
 
   delegate :event_url, to: :setting
@@ -25,7 +33,7 @@ class SettingPresenter
 
   private
 
-  def present_date(date)
+  def formatted_date(date)
     date.strftime("%-d %B")
   end
 

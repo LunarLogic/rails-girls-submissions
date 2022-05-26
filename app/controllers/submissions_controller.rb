@@ -63,7 +63,7 @@ class SubmissionsController < ApplicationController
       render :new, locals: {
         submission: Submission.new,
         answers: build_form_answers,
-        footer_presenter: SettingPresenter.new(Setting.get),
+        setting_presenter: SettingPresenter.new(Setting.get),
         show_errors: false
       }
     else
@@ -85,7 +85,7 @@ class SubmissionsController < ApplicationController
       render :new, locals: {
         submission: result.object[:submission],
         answers: result.object[:answers],
-        footer_presenter: SettingPresenter.new(Setting.get),
+        setting_presenter: SettingPresenter.new(Setting.get),
         show_errors: true
       }
     end

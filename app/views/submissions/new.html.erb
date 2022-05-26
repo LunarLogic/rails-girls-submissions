@@ -8,7 +8,9 @@
     <ul class="info-list">
       <li class="info-list-item">
         <div class="info-list-item-label">When:</div>
-        <%= footer_presenter.event_dates_with_year %>
+        <strong><%= setting_presenter.first_day %>,</strong> Friday evening
+        <br>
+        <strong><%= setting_presenter.second_day %>,</strong> Saturday full day
       </li>
       <li class="info-list-item">
         <div class="info-list-item-label">Where:</div>
@@ -22,6 +24,6 @@
     </ul>
   </div>
   <div class="application-form">
-    <%= render 'form', { submission: submission, answers: answers, show_errors: show_errors, footer_presenter: footer_presenter } %>
+    <%= render 'form', { submission: submission, answers: answers, show_errors: show_errors, setting_presenter: setting_presenter } %>
   </div>
 </div>
